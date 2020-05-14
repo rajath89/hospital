@@ -7,3 +7,5 @@ npm install react-native-reanimated react-native-gesture-handler react-native-sc
 
 
 npm install native-base --save
+
+npm i @react-navigation/bottom-tabs --save

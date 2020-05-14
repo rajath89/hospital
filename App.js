@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Login from './components/login';
 import Signup from './components/signup';
 import Dashboard from './components/dashboard';
+import dashboardV2 from './components/dashboardV2';
 
 import { Container, Button, text, ListItem, Text } from "native-base";
 import Expo from "expo";
@@ -43,7 +44,7 @@ function MyStack() {
       />
       <Stack.Screen 
        name="Dashboard" 
-       component={Dashboard} 
+       component={dashboardV2} 
       //  options={
       //    //{ title: 'Dashboard' },
       //    {headerLeft: null} 

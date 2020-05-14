@@ -10,6 +10,7 @@ import {Upload} from './Upload' ;
 import {Ques} from './Ques';
 import { firestore } from 'firebase';
 import QuesList from './QuesList';
+import BotTab from './BotTab';
 
 //queslist
 // import {quizData} from './Questions/quizData';
@@ -66,6 +67,7 @@ export default class Dashboard extends Component {
 
 
     return (
+      
       <View style={styles.container}>
         <Text style = {styles.textStyle}>
           Hello, {this.state.displayName}
@@ -80,7 +82,7 @@ export default class Dashboard extends Component {
           onPress={() => this.signOut()}
         />
     {/* <QuesList /> */}
-        
+    {/* <BotTab /> */}
       </View>
       
       
