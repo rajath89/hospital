@@ -6,11 +6,14 @@ import Login from './components/login';
 import Signup from './components/signup';
 import Dashboard from './components/dashboard';
 import dashboardV2 from './components/dashboardV2';
+import NewQues from './components/NewQues';
 
 import { Container, Button, text, ListItem, Text } from "native-base";
 import Expo from "expo";
 
 const Stack = createStackNavigator();
+
+
 
 function MyStack() {
 
@@ -45,6 +48,15 @@ function MyStack() {
       <Stack.Screen 
        name="Dashboard" 
        component={dashboardV2} 
+      //  options={
+      //    //{ title: 'Dashboard' },
+      //    {headerLeft: null} 
+      //  }
+      />
+
+       <Stack.Screen 
+       name="Questions" 
+       component={NewQues} 
       //  options={
       //    //{ title: 'Dashboard' },
       //    {headerLeft: null} 

@@ -9,3 +9,15 @@ npm install react-native-reanimated react-native-gesture-handler react-native-sc
 npm install native-base --save
 
 npm i @react-navigation/bottom-tabs --save
+
+####
+expo install expo-camera
+expo install expo-media-library
+
+
+
+App.js->signup.js->login.js->dashboardV2.js
+										->BotTab.js
+												->dashboard.js
+												->Camera.js
+												->fire.js

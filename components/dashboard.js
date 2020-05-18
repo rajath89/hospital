@@ -11,6 +11,7 @@ import {Ques} from './Ques';
 import { firestore } from 'firebase';
 import QuesList from './QuesList';
 import BotTab from './BotTab';
+import NewQues from './NewQues';
 
 //queslist
 // import {quizData} from './Questions/quizData';
@@ -81,6 +82,17 @@ export default class Dashboard extends Component {
           title="Logout"
           onPress={() => this.signOut()}
         />
+
+
+
+
+        <Button 
+        title=" Already Registered? Click here to login"
+          //style={styles.loginText}
+          onPress={() => this.props.navigation.navigate('NewQues')}
+          />
+         
+        
     {/* <QuesList /> */}
     {/* <BotTab /> */}
       </View>

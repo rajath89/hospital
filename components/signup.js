@@ -25,6 +25,7 @@ export default class Signup extends Component {
     if(this.state.email === '' && this.state.password === '') {
       Alert.alert('Enter details to signup!')
     } else {
+      console.log(this.state.email,this.state.password);
       this.setState({
         isLoading: true,
       })
