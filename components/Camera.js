@@ -9,7 +9,10 @@ import * as MediaLibrary from 'expo-media-library'; //from 'expo-media-library';
 // import { Permissions, ImagePicker } from "expo";
 import firebase from '../database/firebase';
 
+import { AsyncStorage } from 'react-native';
+
 import * as ImagePicker from 'expo-image-picker';
+import * as DocumentPicker from 'expo-document-picker';
 
 export default class CameraComponent extends React.Component {
   // state = {
@@ -18,7 +21,8 @@ export default class CameraComponent extends React.Component {
   // };
   state={
     image:null,
-    bl:null
+    bl:null,
+    pdf:null
   }
 
  constructor(props) {
@@ -42,7 +46,30 @@ export default class CameraComponent extends React.Component {
   });
   if (!result.cancelled) {
    this.setState({ image: result.uri });
-   this.uploadImage(this.state.image); 
+   //this.uploadImage(this.state.image); 
+   this.asySt(this.state.image);
+   //console.log(this.state.image);
+  }
+ }
+
+   asySt = async (ur) => {
+     console.log("stored");
+  try {
+    await AsyncStorage.setItem('image2', ur);
+    console.log("stored");
+  } catch (error) {
+    // Error saving data
+    console.log("error");
+  }
+};
+
+
+
+  _getPdfLibrary = async () => {
+  let result = await DocumentPicker.getDocumentAsync();
+  if (!result.cancelled) {
+   this.setState({ pdf: result.uri });
+   this.uploadImage(this.state.pdf); 
    //console.log(this.state.image);
   }
  }
@@ -51,20 +78,32 @@ export default class CameraComponent extends React.Component {
   const response = await fetch(uri);
   const blob = await response.blob();
   this.setState({ bl: blob });
-  var ref = firebase.storage().ref().child("my-image");
+  var ref = firebase.storage().ref().child("testUpload");
   return ref.put(blob);
   // var ref = firebase.storage().ref().child("my-image");
   // return ref.put(blob);
 }
 
 
-  renderFileUri() {
-    if (this.state.image) {
-      //console.log(this.state.image);
-      return <Image source={{uri:this.state.image}} style={{width: 200, height: 200}}/>
+ uploadImage2 = async() => {
+   console.log("up hit");
+  const response = await fetch("file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540rajath89%252FjayHos/ImagePicker/e2ab5ebb-5925-40e6-93c8-64c881f9c79b.jpg");
+  const blob = await response.blob();
+  this.setState({ bl: blob });
+  var ref = firebase.storage().ref().child("pdf");
+  return ref.put(blob);
+  // var ref = firebase.storage().ref().child("my-image");
+  // return ref.put(blob);
+}
 
-    } 
-   }
+
+  // renderFileUri() {
+  //   if (this.state.image) {
+  //     //console.log(this.state.image);
+  //     return <Image source={{uri:this.state.image}} style={{width: 200, height: 200}}/>
+
+  //   } 
+  //  }
 
 
 //  takePicture = async function() {
@@ -150,22 +189,24 @@ render() {
   if (hasCameraPermission === null) {
    return <View />
   }
+  //,() => this.uploadImage2()
   else if (hasCameraPermission === false) {
    return <Text>Access to camera has been denied.</Text>;
   }
   else {
    return (
     <View style={{ flex: 1 }}>
-              <View>
-                {this.renderFileUri()}
-                <Text style={{textAlign:'center'}}>File Uri</Text>
-              </View>
+
 
 
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
      <Button 
-       onPress={this._getPhotoLibrary.bind(this)} 
+       onPress={this._getPhotoLibrary.bind(this),() => this.uploadImage2()} 
        title="Photo Picker Screen!"
+     />
+          <Button 
+       onPress={this._getPdfLibrary.bind(this)} 
+       title="uploadPDF"
      />
     </View>
    </View>

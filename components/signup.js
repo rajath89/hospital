@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, Button, Alert, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, Alert, ActivityIndicator,Vibration, Platform} from 'react-native';
 import firebase from '../database/firebase';
 import QuesList from './QuesList';
+
+import { Notifications } from 'expo';
+import * as Permissions from 'expo-permissions';
+import Constants from 'expo-constants';
 
 export default class Signup extends Component {
   
@@ -11,14 +15,51 @@ export default class Signup extends Component {
       displayName: '',
       email: '', 
       password: '',
-      isLoading: false
+      isLoading: false,
+      expoPushToken: '',
+      notification: {},
     }
   }
+
+
+    registerForPushNotificationsAsync = async () => {
+    if (Constants.isDevice) {
+      const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+      let finalStatus = existingStatus;
+      if (existingStatus !== 'granted') {
+        const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+        finalStatus = status;
+      }
+      if (finalStatus !== 'granted') {
+        alert('Failed to get push token for push notification!');
+        return;
+      }
+      token = await Notifications.getExpoPushTokenAsync();
+      console.log(token);
+      this.setState({ expoPushToken: token });
+    } else {
+      alert('Must use physical device for Push Notifications');
+    }
+
+    if (Platform.OS === 'android') {
+      Notifications.createChannelAndroidAsync('default', {
+        name: 'default',
+        sound: true,
+        priority: 'max',
+        vibrate: [0, 250, 250, 250],
+      });
+    }
+  };
 
   updateInputVal = (val, prop) => {
     const state = this.state;
     state[prop] = val;
     this.setState(state);
+  }
+
+
+  df=()=>{
+    console.log("new function");
   }
 
   registerUser = () => {
@@ -87,7 +128,8 @@ export default class Signup extends Component {
 
         <Text 
           style={styles.loginText}
-          onPress={() => this.props.navigation.navigate('Login')}>
+          
+          onPress={() => this.props.navigation.navigate('Login')} >
           Already Registered? Click here to login
         </Text>
                                  

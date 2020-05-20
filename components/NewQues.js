@@ -3,7 +3,13 @@ import React, { Component } from 'react';
 
 import { Text, View, Button } from 'react-native';
 import { quizData } from "./Questions/quizData";
+import Icon from 'react-native-vector-icons/FontAwesome';
 // import console = require('console');
+
+import update from 'immutability-helper';
+
+import { AsyncStorage } from 'react-native';
+
 
 export default class NewQues extends Component {
     // constructor(props) {
@@ -18,8 +24,10 @@ export default class NewQues extends Component {
         score: 0,
         disabled: true,
         isEnd: false,
-        op:null
+        op:null,
+        ans:[]
       };
+
 
 
       loadQuizData = () => {
@@ -31,6 +39,8 @@ export default class NewQues extends Component {
             options: quizData[this.state.currentQuestion].options
           };
         });
+
+        console.log("from load",this.state.options,this.state.answer,this.state.answer);
         
       };
     
@@ -53,11 +63,35 @@ export default class NewQues extends Component {
         }
     
         this.setState({
-          currentQuestion: this.state.currentQuestion + 1,
-          op:null
+          currentQuestion: this.state.currentQuestion + 1
+          //,
+          //op:null
         });
         console.log(this.state.currentQuestion);
       };
+
+        _storeData = async () => {
+        try {
+          await AsyncStorage.setItem(quizData[this.state.currentQuestion].id, this.state.op);
+          console.log("stored");
+          
+        } catch (error) {
+          // Error saving data
+        }
+      };
+
+      vv = async (an) =>{
+        console.log(typeof JSON.stringify(this.state.op));
+        var g=JSON.stringify(this.state.op);
+        try {
+          await AsyncStorage.setItem(JSON.stringify(this.state.questions), JSON.stringify(an));
+          console.log("stored");
+          
+        } catch (error) {
+          // Error saving data
+          console.log("err");
+        }
+      }
 
 
       componentDidUpdate(prevProps, prevState) {
@@ -66,16 +100,44 @@ export default class NewQues extends Component {
             return {
               disabled: true,
               questions: quizData[this.state.currentQuestion].question,
-              options: quizData[this.state.currentQuestion].options,
-              answer: quizData[this.state.currentQuestion].answer
+              options: quizData[this.state.currentQuestion].options
             };
           });
         }
       }
       //check answer
       checkAnswer = answer => {
-          console.log(answer);
-        this.setState({ myAnswer: answer, disabled: false,op:answer });
+        var arr=[]
+        var arr2=[]
+
+        arr.push(answer);
+        arr=[...this.state.ans]
+        var t=[];
+        var state1 = [];
+        
+         var ques1=this.state.questions;
+         var ans=this.state.myAnswer;
+         var ans2=answer;
+         var mystate={
+          ques1,
+          ans,
+          ans2
+        };
+
+        //AsyncStorage.setItem("keyQ", this.state.op).then(console.log("stored"));
+          
+
+        //this._storeData().then(console.log);
+
+        const clone = JSON.parse(JSON.stringify(mystate));
+        state1.push(clone);
+        //console.log(state1);
+
+
+
+        //console.log("not state",arr2);
+        this.setState({ myAnswer: answer, disabled: false,op:answer, ans:[mystate,...this.state.ans]});
+        console.log("after",this.state.ans);
       };
       finishHandler = () => {
         if (this.state.currentQuestion === quizData.length - 1) {
@@ -91,7 +153,7 @@ export default class NewQues extends Component {
           <Text>{this.state.questions} </Text>
 
           {options.map(option => (
-            <Button title={option} key={this.state.questions.id} onPress={() => this.checkAnswer(option)}/>
+            <Button title={option} key={this.state.questions.id} onPress={() => {this.checkAnswer(option),this.vv(option)}}/>
               
             
              
@@ -100,6 +162,7 @@ export default class NewQues extends Component {
            {currentQuestion < quizData.length - 1 && (<Button title="next" onPress={this.nextQuestionHandler} disabled={this.state.disabled}/>)}
            <Text>option clicked : {this.state.op} </Text>
            <Text>Ques id :{quizData[this.state.currentQuestion].id}</Text>
+           <Icon name="home" size={29}/>
         </View>
          )
             
@@ -109,61 +172,3 @@ export default class NewQues extends Component {
  
 }
 
-
-// if(isEnd) {
-//     return (
-//      <Text>game over</Text>
-//     );
-//   }else {
-//       return (
-//         <View className="App">
-//           <Text>{this.state.questions} </Text>
-
-//           {options.map(option => (
-//             <p
-//               key={option.id}
-//               className={`ui floating message options
-//          ${myAnswer === option ? "selected" : null}
-//          `}
-//               onClick={() => this.checkAnswer(option)}
-//             >
-//               {option}
-//             </p>
-//           ))}
-//           {currentQuestion < quizData.length - 1 && (
-//             <button
-//               className="ui inverted button"
-//               disabled={this.state.disabled}
-//               onClick={this.nextQuestionHandler}
-//             >
-//               Next
-//             </button>
-//           )}
-//           {/* //adding a finish button */}
-//           {currentQuestion === quizData.length - 1 && (
-//             <button className="ui inverted button" onClick={this.finishHandler}>
-//               Finish
-//             </button>
-//           )}
-//         </View>
-//       );
-
-//     //}
- 
-// //     <Container>
-  
-// //     <Content>
-// //       <Card>
-// //         <CardItem>
-// //           <Body>
-// //             <Text>
-// //                card Content
-// //             </Text>
-// //           </Body>
-// //         </CardItem>
-// //       </Card>
-// //     </Content>
-// //   </Container>
-     
-// //  );
-// }

@@ -6,6 +6,10 @@ import dashboard from './dashboard';
 import CameraComponent from './Camera';
 import Fire from './fire';
 
+import mulImUp from './mulImUp';
+
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 // function HomeScreen() {
 //   return (
 //     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -27,10 +31,28 @@ const Tab = createBottomTabNavigator();
 export default function BotTab() {
   return (
 
-      <Tab.Navigator>
-        <Tab.Screen name="Home" component={dashboard} />
+      <Tab.Navigator
+      screenOptions={({ route }) => ({
+          tabBarIcon: ({  size }) => {
+            let iconName;
+
+            if (route.name === 'Home') {
+              iconName = 'home';
+            } else if (route.name === 'Info') {
+              iconName = 'settings';
+            } else if (route.name === 'Upload') {
+              iconName = 'rocket';
+            }
+
+            // You can return any component that you like here!
+            return <Icon name={iconName} size={22} color="#3740FE"/>;
+          },
+        })}
+
+      >
+        <Tab.Screen name="Home" component={dashboard}/>
         <Tab.Screen name="Upload" component={CameraComponent} />
-        <Tab.Screen name="Settings" component={Fire} />
+        <Tab.Screen name="Info" component={Fire} />
       </Tab.Navigator>
 
   );

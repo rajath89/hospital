@@ -74,23 +74,25 @@ export default class Dashboard extends Component {
           Hello, {this.state.displayName}
         </Text>
 
-        <QuesList/> 
+        
         
 
-        <Button
-          color="#3740FE"
-          title="Logout"
-          onPress={() => this.signOut()}
-        />
+
 
 
 
 
         <Button 
-        title=" Already Registered? Click here to login"
+        title=" GoTo Ques screen"
           //style={styles.loginText}
-          onPress={() => this.props.navigation.navigate('NewQues')}
+          onPress={() => this.props.navigation.navigate('Questions',{screen:'NewQues'})}
           />
+
+                  <Button
+          color="#3740FE"
+          title="Logout"
+          onPress={() => this.signOut()}
+        />
          
         
     {/* <QuesList /> */}

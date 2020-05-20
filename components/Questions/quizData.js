@@ -32,19 +32,19 @@ export const quizData = [
     answer: `New Delhi`
   },
   {
-    id: 1,
+    id: "1",
     question: `Do you have Diabetes ?`,
     options: [`Yes`, `No`],
     answer: `Elon Musk`
   },
   {
-    id: 3,
+    id: "3",
     question: `Do you smoke?`,
     options: [`Yes`, `No`],
     answer: `Jeff Bezo`
   },
   {
-    id: 4,
+    id: "4",
     question: `Do you have pain or discomfort in one or both arms`,
     options: [`Yes`, `No`],
     answer: `River Nile`

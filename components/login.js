@@ -4,6 +4,8 @@ import firebase from '../database/firebase';
 
 import {QuesList} from './QuesList';
 
+import { AsyncStorage } from 'react-native';
+
 
 export default class Login extends Component {
   
@@ -22,6 +24,68 @@ export default class Login extends Component {
     this.setState(state);
   }
 
+
+  _storeData = async () => {
+  try {
+    await AsyncStorage.setItem('key1', this.state.email);
+    
+  } catch (error) {
+    // Error saving data
+  }
+};
+
+// async _retrieveData() {
+//   try {
+//     const value = await AsyncStorage.getItem('key1');
+//     if (value !== null) {
+//       // We have data!!
+//       console.log(value);
+//     }
+//   } catch (error) {
+//     // Error retrieving data
+//   }
+// }
+
+_retrieveData = async () => {
+  try {
+    const value = await AsyncStorage.getItem('key1');
+    if (value !== null) {
+      // We have data!!
+      console.log(value);
+    }
+  } catch (error) {
+    // Error retrieving data
+  }
+};
+
+
+getMultiple = async () => {
+
+  let values
+  try {
+    values = await AsyncStorage.multiGet(["\" Do you have hypertension ?\"","0","image2"])
+  } catch(e) {
+    // read error
+  }
+  console.log(values)
+
+  // example console.log output:
+  // [ ['@MyApp_user', 'myUserValue'], ['@MyApp_key', 'myKeyValue'] ]
+}
+
+
+getAllKeys = async () => {
+  let keys = []
+  try {
+    keys = await AsyncStorage.getAllKeys()
+  } catch(e) {
+    // read key error
+  }
+
+  console.log(keys)
+  // example console.log result:
+  // ['@MyApp_user', '@MyApp_key']
+}
   userLogin = () => {
     if(this.state.email === '' && this.state.password === '') {
       Alert.alert('Enter details to signin!')
@@ -29,7 +93,12 @@ export default class Login extends Component {
       this.setState({
         isLoading: true,
       })
-      console.log(this.state.email,this.state.password);
+      var today = new Date();
+      var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+      var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      var dateTime = date+' '+time;
+      console.log(dateTime);
+      //console.log(this.state.email,this.state.password);
       firebase
       .auth()
       .signInWithEmailAndPassword(this.state.email, this.state.password)
@@ -74,7 +143,7 @@ export default class Login extends Component {
         <Button
           color="#3740FE"
           title="Signin"
-          onPress={() => this.userLogin()}
+          onPress={() => {this.userLogin(),this._storeData(),this.getMultiple();}}
         />   
         {/* <QuesList /> */}
 
