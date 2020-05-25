@@ -11,6 +11,11 @@ import NewQues from './components/NewQues';
 import { Container, Button, text, ListItem, Text } from "native-base";
 import Expo from "expo";
 
+
+
+
+
+
 const Stack = createStackNavigator();
 
 
@@ -68,8 +73,10 @@ function MyStack() {
 
 export default function App() {
   return (
+  
     <NavigationContainer>
       <MyStack />
     </NavigationContainer>
+   
   );
 }

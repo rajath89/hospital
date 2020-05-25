@@ -1,27 +1,3 @@
-# /register -> collect all details and push to firebase
-# /login -> get time of login
-# /upload -> upload image to fb and get img_url
-
-
-
-# import flask
-# from flask_cors import CORS, cross_origin
-# from flask import request, jsonify
-
-# app = flask.Flask(__name__)
-# app.config["DEBUG"] = True
-# cors = CORS(app)
-# app.config['CORS_HEADERS'] = 'Content-Type'
-
-
-# @app.route('/test', methods=['GET'])
-# @cross_origin()
-# def home():
-# 	k={"msg":"rec"}
-# 	return jsonify(k)
-
-# app.run()
-
 import pyrebase
 
 config = {
@@ -40,11 +16,129 @@ firebase=pyrebase.initialize_app(config)
 storage=firebase.storage()
 
 db = firebase.database()
-users = db.child("users").get()
-print(users.val())
 
-# path_on_cloud="images2/new2.jpg"
-# path_local="/home/bspwm/Pictures/ArcoLinux-2019-09-23-1569250074_screenshot_1366x768.jpg"
-# imgurl=storage.child(path_on_cloud).put(path_local)
-# img_url=storage.child(path_on_cloud).get_url(imgurl['downloadTokens'])
-# print(img_url)
+
+
+import flask
+from flask_cors import CORS, cross_origin
+from flask import request, jsonify
+
+from flask_apscheduler import APScheduler #pip install Flask-APScheduler
+
+app = flask.Flask(__name__)
+scheduler = APScheduler()
+app.config["DEBUG"] = True
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
+
+
+
+
+def scheduledTask():
+    print("This task is running every 5sec")
+
+
+@app.route('/test', methods=['GET'])
+@cross_origin()
+def home():
+	k={"msg":"rec"}
+	return jsonify(k)
+
+
+@app.route('/login', methods=['GET','POST'])
+@cross_origin()
+def login():
+	if request.method == "POST":
+		#k=request.data
+		k1=request.json
+		print(k1.keys())
+		uName=k1["username"]
+
+		del k1["username"]
+		#print(type(k1["username"]),k1["time"])
+		# st=str(k.decode("utf-8"))
+		#lt={"loginINfo":k1["time"]}
+		db.child("users").child(uName.split("@")[0]).child("loginDetails").push(k1)
+
+	return jsonify({"login":"success"})
+
+
+
+@app.route('/register', methods=['GET','POST'])
+@cross_origin()
+def register():
+	if request.method == "POST":
+		#k=request.data
+		k1=request.json
+
+		uName=k1["username"]
+
+		tok=k1["expoToken"]
+
+		del k1["expoToken"]
+
+		del k1["username"]
+
+		db.child("users").child(uName.split("@")[0]).child("RegisterDetails").push(k1)
+		db.child("users").child(uName.split("@")[0]).child("ExpoToken").push(tok)
+
+	return jsonify({"register":"success"})
+
+
+
+@app.route('/questions', methods=['GET','POST'])
+@cross_origin()
+def questions():
+	if request.method == "POST":
+		#k=request.data
+		k1=request.json
+		
+		uName=k1["username"]
+
+		del k1["username"]
+
+		db.child("users").child(uName.split("@")[0]).child("questions").push(k1)
+
+	return jsonify({"questions":"success"})
+
+
+@app.route('/getRegister', methods=['GET','POST'])
+@cross_origin()
+def getRegister():
+
+	#fdict={}
+	if request.method == "POST":
+		k1=request.json
+		uName=k1["username"]
+
+		del k1["username"]
+
+
+
+
+		users = db.child("users").child(uName.split("@")[0]).child("RegisterDetails").get()
+		#print(users.val())
+
+		if users.val() is not None:
+
+			#pp.pprint(list(dict(users.val())))
+			#print(users.val())
+			f=list(dict(users.val()))
+			fD=dict(users.val())[f[0]]
+
+			return jsonify(fD)
+
+		else:
+			return jsonify({"msg":"user not yet registerd"})
+
+
+
+if __name__ == '__main__':
+    #scheduler.add_job(id ='Scheduled task', func = scheduledTask, trigger = 'interval', seconds=5)#hours = 1
+    #scheduler.start()
+    app.run()
+
+
+
+
+

@@ -10,6 +10,12 @@ npm install native-base --save
 
 npm i @react-navigation/bottom-tabs --save
 
+npm i react-native-dashboard --save
+
+npm install react-native-cardview --save
+
+npm install react-native-elements
+
 ####
 expo install expo-camera
 expo install expo-media-library
@@ -20,6 +26,8 @@ npm install --save expo-image-picker-multiple
 expo install expo-document-picker
 
 npm install --save react-native-vector-icons
+
+expo install react-native-appearance
 
 ####
 npm install immutability-helper --save
@@ -46,3 +54,67 @@ console.log(dateTime);
 
 
 <Tab.Screen name="Info" component={Fire} />
+
+
+
+
+#######asynchStorage#########
+
+Login --> {"username":"test@gmail.com"}
+
+NewQues --> {
+	"Do you have hypertension":"yes",
+	"smoking":"No",
+	.
+	.
+	.
+}
+
+Camera --> {
+	"image1":"uri of image",
+	"image2":"uri of image",
+	.
+	.
+	.
+}
+
+
+############SERVER########
+
+login--> {
+"username":"test@gmail.com",
+"time":"11:22:33"
+}
+
+
+register--> {
+	"username":"test@gmail.com",
+	"expoToken":"ExpoToken[nowaibhwGROHogbWHOG]"
+}
+
+
+###RETURNS PROMISE###
+(async () => {
+  const rawResponse = await fetch('http://localhost:5000/login', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({"username": "jsTest@gmail.com", "time": "11:22:33"})
+  });
+  const content = await rawResponse.json();
+
+  console.log(content);
+})();
+
+
+####MERGE K:V PAIRS######
+const keys = ['height', 'width'];
+const values = ['12px', '24px'];
+const merged = keys.reduce((obj, key, index) => ({ ...obj, [key]: values[index] }), {});
+
+
+
+
+"{\"expoToken\":\"ExponentPushToken[RI0yxlLmbY1Wc5bvCmLEoh]\",\"expoToken1\":\"ExponentPushToken[RI0yxlLmbY1Wc5bvCmLEoh]\"}"

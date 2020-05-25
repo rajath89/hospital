@@ -1,8 +1,31 @@
 import firebase from '../database/firebase';
 import { divide } from "react-native-reanimated";
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, Button, Alert, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Alert, ActivityIndicator,TouchableOpacity } from 'react-native';
 import NewQues from './NewQues';
+
+import SingleCardView from 'react-native-simple-card';
+
+import { Card,Divider,Button, Overlay} from 'react-native-elements';
+
+
+
+
+
+
+
+
+
+
+
+const items = [
+  { name: 'Me', background: '#3498db', icon: 'user' },
+  { name: 'Family', background: '#ef0202', icon: 'gratipay' },
+  { name: 'Lovely', background: '#efcf02', icon: 'heart' },
+  { name: 'Team', background: '#02ef1d', icon: 'users' },
+  // { name: 'Friends', background: '#02cbef', icon: 'group' },
+  // { name: 'Calendars', background: '#ef5802', icon: 'calendar' },
+];
 
 class Fire extends Component {
     // constructor(props) {
@@ -86,15 +109,76 @@ class Fire extends Component {
   //     )
   // }
 
-    render() { 
-        return ( 
-            <View>
-                <Text>firejs</Text>    
-            </View>
-            
-            
-         );
-    }
+  on1 =  () =>{
+    console.log("clicked");
+  }
+
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.headerText}>Set Button Color In React Native.</Text>
+
+        <View style={[{ width: "90%", margin: 10, height:120,backgroundColor: "#3740FE" }]}>
+          <TouchableOpacity style={{ height: 50, marginTop: 10 }} onPress={this.on1}>
+    <Text>My button</Text>
+</TouchableOpacity>
+        </View>
+
+      <View style={[{ width: "90%", margin: 10, height:120,backgroundColor: "#3740FE" }]}>
+
+      <TouchableOpacity
+        style={styles.button}
+        onPress={this.on1}
+      >
+        <Text>Press Here</Text>
+      </TouchableOpacity>
+    </View>
+
+    </View>
+    );
+  }
 }
- 
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     justifyContent: "center",
+//     alignItems: "center",
+//     backgroundColor: "#F5FCFF"
+//   },
+//   headerText: {
+//     fontSize: 20,
+//     textAlign: "center",
+//     margin: 10,
+//     fontWeight: "bold"
+//   },
+//   button: {
+//     padding: 20,
+//     fontSize: 15,
+//     fontFamily: "arial",
+//     width: 400,
+//     height: 100,
+//     textAlign: "center"
+//   }
+// });
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    paddingHorizontal: 10
+  },
+  button: {
+    alignItems: "center",
+    backgroundColor: "#DDDDDD",
+    padding: 10
+  },
+  countContainer: {
+    alignItems: "center",
+    padding: 10
+  }
+});
+
+
 export default Fire;

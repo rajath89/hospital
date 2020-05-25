@@ -1,0 +1,16 @@
+[sudo] pip install pigar
+[sudo] pip install gunicorn
+
+run => pigar --> req.txt --> gunicorn==19.0.0
+
+
+
+touch Procfile => web: gunicorn app:app
+
+heroku login
+
+heroku create flask-app
+
+git push heroku master
+
+

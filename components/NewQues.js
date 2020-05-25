@@ -29,6 +29,57 @@ export default class NewQues extends Component {
       };
 
 
+  getMultiple = async () => {
+
+  let values
+  try {
+    values = await AsyncStorage.multiGet(['expoToken', 'expoToken1','\" Do you have hypertension ?\"'])
+  } catch(e) {
+    // read error
+  }
+  if(values){
+  //console.log(values.length);
+  //console.log(JSON.stringify(values));
+
+  var object = Object.fromEntries(values);
+  console.log(object);
+  this.setState({ob:object});
+  console.log(this.state.ob);
+  console.log(JSON.stringify(this.state.ob));
+
+  var myArray = new Array();
+  myArray.push(this.state.ob);
+//alert(JSON.stringify(myArray));
+console.log(myArray);
+
+  
+
+  (async () => {
+  const rawResponse = await fetch('https://flask-app47.herokuapp.com/questions', {//exp://192.168.0.104:19000
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({"username": "jason", "questionDetails":myArray[0]})
+  });
+  const content = await rawResponse.json();
+
+  console.log(content);
+  //console.log(object);
+})();
+
+ 
+
+
+
+
+}
+ 
+}
+
+
+
 
       loadQuizData = () => {
         // console.log(quizData[0].question)
@@ -140,6 +191,7 @@ export default class NewQues extends Component {
         console.log("after",this.state.ans);
       };
       finishHandler = () => {
+        console.log("finished");
         if (this.state.currentQuestion === quizData.length - 1) {
           this.setState({
             isEnd: true
@@ -161,8 +213,15 @@ export default class NewQues extends Component {
 
            {currentQuestion < quizData.length - 1 && (<Button title="next" onPress={this.nextQuestionHandler} disabled={this.state.disabled}/>)}
            <Text>option clicked : {this.state.op} </Text>
+
+
+            {currentQuestion === quizData.length - 1 && (
+            <Button title="Finish" className="ui inverted button" onPress={this.finishHandler}/>
+              
+            
+          )}
            <Text>Ques id :{quizData[this.state.currentQuestion].id}</Text>
-           <Icon name="home" size={29}/>
+           
         </View>
          )
             

@@ -8,6 +8,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@paraboly/react-native-card": "^0.3.0",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-native-firebase/firestore": "^7.0.1",
     "@react-navigation/bottom-tabs": "^5.4.4",
@@ -26,10 +27,18 @@
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-37.0.1.tar.gz",
+    "react-native-appearance": "~0.3.3",
+    "react-native-cardview": "^2.0.5",
+    "react-native-cardview-wayne": "^1.0.7",
+    "react-native-circular-card-view": "^0.1.2",
+    "react-native-dashboard": "0.0.4",
+    "react-native-elements": "^2.0.0",
     "react-native-gesture-handler": "^1.6.1",
+    "react-native-hype-card": "^1.0.2",
     "react-native-reanimated": "^1.8.0",
     "react-native-safe-area-context": "^1.0.0",
     "react-native-screens": "^2.7.0",
+    "react-native-simple-card": "^1.0.1",
     "react-native-vector-icons": "^6.6.0",
     "react-native-web": "~0.11.7"
   },

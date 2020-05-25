@@ -39,7 +39,7 @@ export default function BotTab() {
             if (route.name === 'Home') {
               iconName = 'home';
             } else if (route.name === 'Info') {
-              iconName = 'settings';
+              iconName = 'tag';
             } else if (route.name === 'Upload') {
               iconName = 'rocket';
             }

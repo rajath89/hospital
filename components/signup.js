@@ -6,6 +6,8 @@ import QuesList from './QuesList';
 import { Notifications } from 'expo';
 import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
+import { AsyncStorage } from 'react-native';
+
 
 export default class Signup extends Component {
   
@@ -21,6 +23,18 @@ export default class Signup extends Component {
     }
   }
 
+  
+  //   componentDidMount() {
+  //   this.registerForPushNotificationsAsync();
+
+  //   // Handle notifications that are received or selected while the app
+  //   // is open. If the app was closed and then opened by tapping the
+  //   // notification (rather than just tapping the app icon to open it),
+  //   // this function will fire on the next tick after the app starts
+  //   // with the notification data.
+  //   //this._notificationSubscription = Notifications.addListener(this._handleNotification);
+  // }
+
 
     registerForPushNotificationsAsync = async () => {
     if (Constants.isDevice) {
@@ -34,9 +48,25 @@ export default class Signup extends Component {
         alert('Failed to get push token for push notification!');
         return;
       }
+      console.log("hit");
       token = await Notifications.getExpoPushTokenAsync();
-      console.log(token);
+      //console.log(token);
+
       this.setState({ expoPushToken: token });
+
+      // if(this.state.expoPushToken){
+      //   console.log(this.state.expoPushToken);
+      // }
+
+      
+      this.getRegDetails();
+
+      //store expotoken in Asyncstorage
+      this._storeData();
+
+
+
+
     } else {
       alert('Must use physical device for Push Notifications');
     }
@@ -50,6 +80,57 @@ export default class Signup extends Component {
       });
     }
   };
+
+
+
+  _storeData = async () => {
+
+  console.log("expoToken stored");
+  if(this.state.expoPushToken){
+
+
+  try {
+    await AsyncStorage.setItem('expoToken1', this.state.expoPushToken);
+    
+  } catch (error) {
+    // Error saving data
+  }
+  } 
+};
+
+
+getRegDetails = () => {
+
+
+  console.log("hit from registerForPushNotificationsAsync");
+
+  if(this.state.expoPushToken){
+
+
+
+  (async () => {
+  const rawResponse = await fetch('https://flask-app47.herokuapp.com/register', {//exp://192.168.0.104:19000
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({"username": this.state.email, "expoToken": this.state.expoPushToken,"displayName":this.state.displayName})
+  });
+  const content = await rawResponse.json();
+
+  console.log(content);
+})();
+
+}
+
+
+  // example console.log output:
+  // [ ['@MyApp_user', 'myUserValue'], ['@MyApp_key', 'myKeyValue'] ]
+}
+
+
+
 
   updateInputVal = (val, prop) => {
     const state = this.state;
@@ -123,7 +204,7 @@ export default class Signup extends Component {
         <Button
           color="#3740FE"
           title="Signup"
-          onPress={() => this.registerUser()}
+          onPress={() => {this.registerUser(),this.registerForPushNotificationsAsync()}}
         />
 
         <Text 

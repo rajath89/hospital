@@ -90,7 +90,7 @@ export default class CameraComponent extends React.Component {
   const response = await fetch("file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540rajath89%252FjayHos/ImagePicker/e2ab5ebb-5925-40e6-93c8-64c881f9c79b.jpg");
   const blob = await response.blob();
   this.setState({ bl: blob });
-  var ref = firebase.storage().ref().child("pdf");
+  var ref = firebase.storage().ref().child("uuf");
   return ref.put(blob);
   // var ref = firebase.storage().ref().child("my-image");
   // return ref.put(blob);
