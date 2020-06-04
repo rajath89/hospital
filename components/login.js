@@ -21,10 +21,10 @@ export default class Login extends Component {
 
 
 
-    componentDidMount() {
-    this.getMultiple();
+  //   componentDidMount() {
+  //   this.getMultiple();
 
-  }
+  // }
 
 
 
@@ -223,7 +223,7 @@ console.log(myArray);
         <Button
           color="#3740FE"
           title="Signin"
-          onPress={() => {this.userLogin(),this.getDateTime(),this._retrieveData();}}
+          onPress={() => {this.userLogin()}}
         />   
         {/* <QuesList /> */}
 

@@ -20,6 +20,11 @@ npm install react-native-elements
 expo install expo-camera
 expo install expo-media-library
 
+npm install @react-native-community/cameraroll --save
+########COMPONENT######
+     // <Tab.Screen name="Info" component={Fire} />
+####
+
 ###
 npm install --save expo-image-picker-multiple
 

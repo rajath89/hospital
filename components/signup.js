@@ -23,17 +23,27 @@ export default class Signup extends Component {
     }
   }
 
-  
-  //   componentDidMount() {
-  //   this.registerForPushNotificationsAsync();
+          clearAll = async () => {
+  try {
+    await AsyncStorage.clear()
+  } catch(e) {
+    // clear error
+  }
 
-  //   // Handle notifications that are received or selected while the app
-  //   // is open. If the app was closed and then opened by tapping the
-  //   // notification (rather than just tapping the app icon to open it),
-  //   // this function will fire on the next tick after the app starts
-  //   // with the notification data.
-  //   //this._notificationSubscription = Notifications.addListener(this._handleNotification);
+  console.log('cleared')
+}
+
+
+  //   componentDidMount() {
+  //         this.setState({
+  //         isLoading: false,
+  //         displayName: '',
+  //         email: '', 
+  //         password: ''
+  //       })
+
   // }
+  
 
 
     registerForPushNotificationsAsync = async () => {
@@ -83,26 +93,47 @@ export default class Signup extends Component {
 
 
 
-  _storeData = async () => {
+//   _storeData = async () => {
 
-  console.log("expoToken stored");
-  if(this.state.expoPushToken){
+//   console.log("expoToken stored");
+//   if(this.state.expoPushToken){
 
 
-  try {
-    await AsyncStorage.setItem('expoToken1', this.state.expoPushToken);
+//   try {
+//     await AsyncStorage.setItem('expoToken1', this.state.expoPushToken);
     
-  } catch (error) {
-    // Error saving data
+//   } catch (error) {
+//     // Error saving data
+//   }
+//   } 
+// };
+
+
+_storeData = async () => {
+  const firstPair = ["expoToken1", this.state.expoPushToken]
+  const secondPair = ["username/email", this.state.email]
+  try {
+    await AsyncStorage.multiSet([firstPair, secondPair])
+  } catch(e) {
+    //save error
   }
-  } 
-};
+
+  console.log("Done.");
+        this.setState({
+          isLoading: false
+          //displayName: '',
+          //email: '', 
+          //password: ''
+        });
+
+}
 
 
 getRegDetails = () => {
 
 
   console.log("hit from registerForPushNotificationsAsync");
+
 
   if(this.state.expoPushToken){
 
@@ -122,11 +153,21 @@ getRegDetails = () => {
   console.log(content);
 })();
 
+
+  // this.setState({
+  //         isLoading: false
+
+  //       });
+
 }
 
+        // this.setState({
+        //   isLoading: false,
+        //   displayName: '',
+        //   email: '', 
+        //   password: ''
+        // })
 
-  // example console.log output:
-  // [ ['@MyApp_user', 'myUserValue'], ['@MyApp_key', 'myKeyValue'] ]
 }
 
 
@@ -159,13 +200,10 @@ getRegDetails = () => {
           displayName: this.state.displayName
         })
         console.log('User registered successfully!')
-        this.setState({
-          isLoading: false,
-          displayName: '',
-          email: '', 
-          password: ''
-        })
-        this.props.navigation.navigate('Login')
+
+
+        this.props.navigation.navigate('Login');
+        this.registerForPushNotificationsAsync();
       })
       .catch(error => this.setState({ errorMessage: error.message }))      
     }
@@ -204,13 +242,13 @@ getRegDetails = () => {
         <Button
           color="#3740FE"
           title="Signup"
-          onPress={() => {this.registerUser(),this.registerForPushNotificationsAsync()}}
+          onPress={() => {this.registerUser()}}
         />
 
         <Text 
           style={styles.loginText}
           
-          onPress={() => this.props.navigation.navigate('Login')} >
+          onPress={() => {this.props.navigation.navigate('Login')}} >
           Already Registered? Click here to login
         </Text>
                                  

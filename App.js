@@ -7,6 +7,7 @@ import Signup from './components/signup';
 import Dashboard from './components/dashboard';
 import dashboardV2 from './components/dashboardV2';
 import NewQues from './components/NewQues';
+import AfterQuestions from './components/afterques';
 
 import { Container, Button, text, ListItem, Text } from "native-base";
 import Expo from "expo";
@@ -62,6 +63,15 @@ function MyStack() {
        <Stack.Screen 
        name="Questions" 
        component={NewQues} 
+      //  options={
+      //    //{ title: 'Dashboard' },
+      //    {headerLeft: null} 
+      //  }
+      />
+
+             <Stack.Screen 
+       name="AfterQuestions" 
+       component={AfterQuestions} 
       //  options={
       //    //{ title: 'Dashboard' },
       //    {headerLeft: null} 

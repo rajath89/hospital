@@ -29,54 +29,54 @@ export default class NewQues extends Component {
       };
 
 
-  getMultiple = async () => {
+//   getMultiple = async () => {
 
-  let values
-  try {
-    values = await AsyncStorage.multiGet(['expoToken', 'expoToken1','\" Do you have hypertension ?\"'])
-  } catch(e) {
-    // read error
-  }
-  if(values){
-  //console.log(values.length);
-  //console.log(JSON.stringify(values));
+//   let values
+//   try {
+//     values = await AsyncStorage.multiGet(['expoToken', 'expoToken1','\" Do you have hypertension ?\"'])
+//   } catch(e) {
+//     // read error
+//   }
+//   if(values){
+//   //console.log(values.length);
+//   //console.log(JSON.stringify(values));
 
-  var object = Object.fromEntries(values);
-  console.log(object);
-  this.setState({ob:object});
-  console.log(this.state.ob);
-  console.log(JSON.stringify(this.state.ob));
+//   var object = Object.fromEntries(values);
+//   console.log(object);
+//   this.setState({ob:object});
+//   console.log(this.state.ob);
+//   console.log(JSON.stringify(this.state.ob));
 
-  var myArray = new Array();
-  myArray.push(this.state.ob);
-//alert(JSON.stringify(myArray));
-console.log(myArray);
+//   var myArray = new Array();
+//   myArray.push(this.state.ob);
+// //alert(JSON.stringify(myArray));
+// console.log(myArray);
 
   
 
-  (async () => {
-  const rawResponse = await fetch('https://flask-app47.herokuapp.com/questions', {//exp://192.168.0.104:19000
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({"username": "jason", "questionDetails":myArray[0]})
-  });
-  const content = await rawResponse.json();
+//   (async () => {
+//   const rawResponse = await fetch('https://flask-app47.herokuapp.com/questions', {//exp://192.168.0.104:19000
+//     method: 'POST',
+//     headers: {
+//       'Accept': 'application/json',
+//       'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify({"username": "jason", "questionDetails":myArray[0]})
+//   });
+//   const content = await rawResponse.json();
 
-  console.log(content);
-  //console.log(object);
-})();
+//   console.log(content);
+//   //console.log(object);
+// })();
 
  
 
 
 
 
-}
+// }
  
-}
+// }
 
 
 
@@ -132,10 +132,10 @@ console.log(myArray);
       };
 
       vv = async (an) =>{
-        console.log(typeof JSON.stringify(this.state.op));
+        //console.log(typeof JSON.stringify(this.state.op));
         var g=JSON.stringify(this.state.op);
         try {
-          await AsyncStorage.setItem(JSON.stringify(this.state.questions), JSON.stringify(an));
+          await AsyncStorage.setItem(this.state.questions, an);
           console.log("stored");
           
         } catch (error) {
@@ -190,22 +190,157 @@ console.log(myArray);
         this.setState({ myAnswer: answer, disabled: false,op:answer, ans:[mystate,...this.state.ans]});
         console.log("after",this.state.ans);
       };
+
+
+
+
+
+//flush all keys
+
+        clearAll = async () => {
+  try {
+    await AsyncStorage.clear()
+  } catch(e) {
+    // clear error
+  }
+
+  console.log('cleared')
+}
+
+
+removeFew = async () => {
+  console.log('cleared all ques keys before');
+  const keys = ['@MyApp_USER_1', '@MyApp_USER_2']
+  try {
+
+    arr1=this.getQues();
+    await AsyncStorage.multiRemove(arr1);
+    
+  } catch(e) {
+    // remove error
+  }
+
+  console.log('cleared all ques keys after');
+
+}
+
+
+//get all keys
+getAllKeys = async () => {
+  let keys = [];
+  console.log("get keys");
+  try {
+    keys = await AsyncStorage.getAllKeys()
+  } catch(e) {
+    // read key error
+  }
+
+  console.log(keys);
+  //this.clearAll();
+  // example console.log result:
+  // ['@MyApp_user', '@MyApp_key']
+}
+
+getQues = () => {
+  var myarray= new Array();
+  for(var i=0;i<quizData.length;i++){
+    myarray.push(quizData[i].question);
+  }
+
+  return myarray;
+}
+
+getMultiple = async () => {
+
+  let values
+  try {
+    arr=this.getQues();
+    values = await AsyncStorage.multiGet(arr);
+  } catch(e) {
+    // read error
+  }
+  console.log(values);
+  if(values){
+      var object = Object.fromEntries(values);
+      console.log(object);
+
+        var quesA = new Array();
+        quesA.push(object);
+//alert(JSON.stringify(myArray));
+        console.log(quesA);
+
+        //sending to backend
+          (async () => {
+  const rawResponse = await fetch('https://flask-app47.herokuapp.com/questions', {//exp://192.168.0.104:19000
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({"username": "jason", "questionDetails":quesA[0]})
+  });
+  const content = await rawResponse.json();
+
+  if(content){
+    console.log("before");
+    console.log(content);
+    console.log("after");
+    
+  }
+
+
+  
+  //console.log(object);
+})();
+
+
+  }
+
+  console.log("outside");
+//console.log(content);
+this.removeFew();
+
+
+
+
+  // example console.log output:
+  // [ ['@MyApp_user', 'myUserValue'], ['@MyApp_key', 'myKeyValue'] ]
+}
+
+
+
       finishHandler = () => {
         console.log("finished");
         if (this.state.currentQuestion === quizData.length - 1) {
           this.setState({
             isEnd: true
           });
+
+                  //if(this.state.isEnd){
+          this.props.navigation.navigate('AfterQuestions',{screen:'Afterques'});
+        //}
         }
-      };
+        //this.getAllKeys();
+        //console.log(this.getQues());
+
+//#################uncomment getmultiple####
+        //this.getMultiple();
+
+
+
+
+
+};
+    
+
     render() { 
         const { options, myAnswer, currentQuestion, isEnd } = this.state;
         return (
                     <View>
           <Text>{this.state.questions} </Text>
 
-          {options.map(option => (
-            <Button title={option} key={this.state.questions.id} onPress={() => {this.checkAnswer(option),this.vv(option)}}/>
+          {options.map(option => (          //,this.vv(option)
+            <Button title={option} key={this.state.questions.id} onPress={() => {this.checkAnswer(option)}}/>
               
             
              
@@ -217,6 +352,12 @@ console.log(myArray);
 
             {currentQuestion === quizData.length - 1 && (
             <Button title="Finish" className="ui inverted button" onPress={this.finishHandler}/>
+              
+            
+          )}
+
+                        {currentQuestion === quizData.length - 1 && (
+            <Button title="Finish2" className="ui inverted button" onPress={()=>this.getAllKeys()}/>
               
             
           )}

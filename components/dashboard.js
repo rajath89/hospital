@@ -12,6 +12,7 @@ import { firestore } from 'firebase';
 import QuesList from './QuesList';
 import BotTab from './BotTab';
 import NewQues from './NewQues';
+import Afterques from './afterques';
 
 //queslist
 // import {quizData} from './Questions/quizData';
@@ -79,14 +80,44 @@ export default class Dashboard extends Component {
 
 
 
+                       <Button 
+        title="View Profile"
+          //style={styles.loginText}
+          onPress={() => this.props.navigation.navigate('AfterQuestions',{screen:'Afterques'})}
+          />
 
+                          <Button 
+        title="Update Profile"
+          //style={styles.loginText}
+          onPress={() => this.props.navigation.navigate('AfterQuestions',{screen:'Afterques'})}
+          />
+
+                          <Button 
+        title="FAQ"
+          //style={styles.loginText}
+          onPress={() => this.props.navigation.navigate('AfterQuestions',{screen:'Afterques'})}
+          />
+
+                                    <Button 
+        title="Learning Materials"
+          //style={styles.loginText}
+          onPress={() => this.props.navigation.navigate('AfterQuestions',{screen:'Afterques'})}
+          />
+
+                                    <Button 
+        title=" GoTo afQues scren"
+          //style={styles.loginText}
+          onPress={() => this.props.navigation.navigate('AfterQuestions',{screen:'Afterques'})}
+          />
 
 
         <Button 
-        title=" GoTo Ques screen"
+        title=" GoTo Ques scren"
           //style={styles.loginText}
           onPress={() => this.props.navigation.navigate('Questions',{screen:'NewQues'})}
           />
+
+
 
                   <Button
           color="#3740FE"

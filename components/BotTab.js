@@ -40,7 +40,8 @@ export default function BotTab() {
               iconName = 'home';
             } else if (route.name === 'Info') {
               iconName = 'tag';
-            } else if (route.name === 'Upload') {
+            } 
+            else if (route.name === 'Upload') {
               iconName = 'rocket';
             }
 
@@ -53,6 +54,7 @@ export default function BotTab() {
         <Tab.Screen name="Home" component={dashboard}/>
         <Tab.Screen name="Upload" component={CameraComponent} />
         <Tab.Screen name="Info" component={Fire} />
+   
       </Tab.Navigator>
 
   );
