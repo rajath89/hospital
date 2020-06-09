@@ -10,8 +10,6 @@ from requests.exceptions import ConnectionError
 from requests.exceptions import HTTPError
 
 
-# Basic arguments. You should extend this function with the push features you
-# want to use, or simply pass in a `PushMessage` object.
 def send_push_message(token, message, extra=None):
     try:
         response = PushClient().publish(
@@ -19,7 +17,7 @@ def send_push_message(token, message, extra=None):
                         body=message,
                         data=extra))
     except PushServerError as exc:
-        # Encountered some likely formatting/validation error.
+        
         rollbar.report_exc_info(
             extra_data={
                 'token': token,
@@ -30,23 +28,20 @@ def send_push_message(token, message, extra=None):
             })
         raise
     except (ConnectionError, HTTPError) as exc:
-        # Encountered some Connection or HTTP error - retry a few times in
-        # case it is transient.
+
         rollbar.report_exc_info(
             extra_data={'token': token, 'message': message, 'extra': extra})
         raise self.retry(exc=exc)
 
     try:
-        # We got a response back, but we don't know whether it's an error yet.
-        # This call raises errors so we can handle them with normal exception
-        # flows.
+
         response.validate_response()
     except DeviceNotRegisteredError:
         # Mark the push token as inactive
         from notifications.models import PushToken
         PushToken.objects.filter(token=token).update(active=False)
     except PushResponseError as exc:
-        # Encountered some other per-notification error.
+       
         rollbar.report_exc_info(
             extra_data={
                 'token': token,
@@ -56,4 +51,4 @@ def send_push_message(token, message, extra=None):
             })
         raise self.retry(exc=exc)
 
-send_push_message("ExponentPushToken[RI0yxlLmbY1Wc5bvCmLEoh]","msh")
+send_push_message("ExponentPushToken[RI0yxlLmbY1Wc5bvCmLEoh]","push message")

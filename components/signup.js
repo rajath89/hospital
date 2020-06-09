@@ -110,8 +110,8 @@ export default class Signup extends Component {
 
 
 _storeData = async () => {
-  const firstPair = ["expoToken1", this.state.expoPushToken]
-  const secondPair = ["username/email", this.state.email]
+  const firstPair = ["Token", this.state.expoPushToken]
+  const secondPair = ["globalName", this.state.email]
   try {
     await AsyncStorage.multiSet([firstPair, secondPair])
   } catch(e) {

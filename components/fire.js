@@ -183,39 +183,151 @@
 
 // export default Fire;
 
+//####################################3
+// import React, { Component } from 'react';
+// import { Text, View, StyleSheet } from 'react-native';
+// import Dashboard from 'react-native-dashboard';
+// //import { ImageBrowser } from 'expo-multiple-media-imagepicker';
+ 
+// const items = [
+//   { name: 'View Profile',icon: 'user' },
+//   { name: 'Update Profile',icon: 'gratipay' },
+//   { name: 'Ans Questions',icon: 'heart' },
+//   { name: 'Go to FAQ', icon: 'users' },
+//   { name: 'Learning Materials', icon: 'group' },
+//   { name: 'Logout', icon: 'group' }
+// ];
+ 
+// export default class Fire extends Component {
+//   _card = el => {
+//     console.log('Card: ' + el.name)
+//   };
+//   render() {
+//     return (
+//       <View style={styles.container}>
+//         <Dashboard items={items} background={true} card={this._card} column={2} />
+//       </View>
+//     );
+//   }
+// }
+ 
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: '#ecf0f1',
+//   },
+// });
 
-import React, { Component } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
-import Dashboard from 'react-native-dashboard';
-//import { ImageBrowser } from 'expo-multiple-media-imagepicker';
- 
-const items = [
-  { name: 'Me',icon: 'user' },
-  { name: 'Family',icon: 'gratipay' },
-  { name: 'Lovely',icon: 'heart' },
-  { name: 'Team', icon: 'users' },
-  { name: 'Friends', icon: 'group' },
-  { name: 'Friends', icon: 'group' }
-];
- 
-export default class Fire extends Component {
-  _card = el => {
-    console.log('Card: ' + el.name)
-  };
+
+
+import * as React from 'react';
+import { Text, View, StyleSheet, Image } from 'react-native';
+import Constants from 'expo-constants';
+import { Button } from 'react-native-elements';
+import { Divider } from 'react-native-elements';
+const profileImg ="https://reactnativemaster.com/wp-content/uploads/2019/11/React-native-master-logo-only.png"
+
+export default class Fire extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Dashboard items={items} background={true} card={this._card} column={2} />
+        <View style={styles.card}>
+ 
+        <Button
+  title="View Profile"
+  type="clear"
+/>
+        </View>
+        <View style={styles.hairline} />
+
+        <View style={styles.card}>
+ 
+        <Button
+  title="Update profile"
+  type="clear"
+/>
+        </View>
+        <View style={styles.hairline} />
+        
+        <View style={styles.card}>
+ 
+ <Button
+title="Questions"
+type="clear"
+/>
+ </View>
+
+ <View style={styles.hairline} />
+ <View style={styles.card}>
+ 
+ <Button
+title="FAQs"
+type="clear"
+/>
+ </View>
+
+ <View style={styles.hairline} />
+ <View style={styles.card}>
+ 
+ <Button
+title="Learning Materials"
+type="clear"
+/>
+ </View>
+
+ <View style={styles.hairline} />
+ <View style={styles.card}>
+ 
+ <Button
+title="Logout"
+type="clear"
+/>
+ </View>
+
+
+ 
       </View>
     );
   }
 }
- 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'center',
+    paddingTop: Constants.statusBarHeight,
     backgroundColor: '#ecf0f1',
+    padding: 8,
+    alignItems:"center"
   },
+  card:{
+    height:70,
+    width:"80%",
+    backgroundColor:"white",
+    borderRadius:15,
+    borderWidth: 1,
+    borderColor: '#3740FE',
+    elevation:10,
+    padding:10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.5,
+    shadowRadius: 5
+  },
+  profileImg:{
+    width:30,
+    height:30,
+    borderRadius:50,
+    marginRight:10,
+  },
+  header: {
+    flexDirection:"row",
+  },
+  hairline: {
+    
+    height: 8,
+    width: 165
+  }
 });
 
 

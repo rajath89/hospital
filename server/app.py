@@ -84,6 +84,24 @@ def register():
 
 	return jsonify({"register":"success"})
 
+@app.route('/updatePro', methods=['GET','POST'])
+@cross_origin()
+def updatePro():
+	if request.method == "POST":
+		#k=request.data
+		k1=request.json
+
+		uName=k1["username"]
+
+
+
+		del k1["username"]
+
+		db.child("users").child(uName.split("@")[0]).child("ProfileDetails").push(k1)
+
+
+	return jsonify({"UpdateProfile":"success"})
+
 
 
 @app.route('/questions', methods=['GET','POST'])
@@ -102,7 +120,7 @@ def questions():
 	return jsonify({"questions":"success"})
 
 
-@app.route('/getRegister', methods=['GET','POST'])
+@app.route('/getProfile', methods=['GET','POST'])
 @cross_origin()
 def getRegister():
 
@@ -116,7 +134,7 @@ def getRegister():
 
 
 
-		users = db.child("users").child(uName.split("@")[0]).child("RegisterDetails").get()
+		users = db.child("users").child(uName.split("@")[0]).child("ProfileDetails").get()
 		#print(users.val())
 
 		if users.val() is not None:

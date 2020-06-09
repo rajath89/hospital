@@ -14,6 +14,8 @@ import { AsyncStorage } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import * as DocumentPicker from 'expo-document-picker';
 
+
+
 export default class CameraComponent extends React.Component {
   // state = {
   //   hasCameraPermission: null,
@@ -22,7 +24,10 @@ export default class CameraComponent extends React.Component {
   state={
     image:null,
     bl:null,
-    pdf:null
+    pdf:null,
+    globName:'',
+    pd:false
+    
   }
 
  constructor(props) {
@@ -30,12 +35,35 @@ export default class CameraComponent extends React.Component {
   this.state = {
    hasCameraPermission: null,
    image: null,
+   ind:0,
+   par:null
   }
  }
+
+
+ async _retrieveData() {
+  try {
+    const value = await AsyncStorage.getItem('globalName');
+    if (value !== null) {
+      // We have data!!
+      console.log(value);
+      this.setState({
+        globName:value
+      });
+      console.log("from state:",this.state.globName);
+    }
+  } catch (error) {
+    // Error retrieving data
+  }
+}
 
  async componentDidMount() {
   const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
   this.setState({ hasCameraPermission: status === "granted" });
+
+  this._retrieveData();
+
+  
  }
 
 
@@ -46,7 +74,7 @@ export default class CameraComponent extends React.Component {
   });
   if (!result.cancelled) {
    this.setState({ image: result.uri });
-   //this.uploadImage(this.state.image); 
+   this.uploadImage(this.state.image); 
    this.asySt(this.state.image);
    //console.log(this.state.image);
   }
@@ -68,33 +96,101 @@ export default class CameraComponent extends React.Component {
   _getPdfLibrary = async () => {
   let result = await DocumentPicker.getDocumentAsync();
   if (!result.cancelled) {
-   this.setState({ pdf: result.uri });
+   this.setState({ pdf: result.uri,pd:true });
    this.uploadImage(this.state.pdf); 
    //console.log(this.state.image);
+   //console.log(st);
   }
  }
+
+
 
  uploadImage = async(uri) => {
   const response = await fetch(uri);
   const blob = await response.blob();
   this.setState({ bl: blob });
-  var ref = firebase.storage().ref().child("testUpload");
+  var today = new Date();
+  var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  var dateTime = date+time;
+
+
+  var ref = firebase.storage().ref().child(this.state.globName.split("@")[0]+"/cagreport/"+this.state.par+"("+dateTime+")");
+  
+  
+  //console.log(this.state.ind);
+  //this.setState({ ind:1 });
+  console.log("par",this.state.par);
   return ref.put(blob);
   // var ref = firebase.storage().ref().child("my-image");
   // return ref.put(blob);
 }
 
+parameter=(para)=>{
+  console.log(para);
+  this.setState({ par:para });
+  console.log(this.state.par);
+  
 
- uploadImage2 = async() => {
-   console.log("up hit");
-  const response = await fetch("file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540rajath89%252FjayHos/ImagePicker/e2ab5ebb-5925-40e6-93c8-64c881f9c79b.jpg");
-  const blob = await response.blob();
-  this.setState({ bl: blob });
-  var ref = firebase.storage().ref().child("uuf");
-  return ref.put(blob);
-  // var ref = firebase.storage().ref().child("my-image");
-  // return ref.put(blob);
 }
+
+render() {
+  const { image, hasCameraPermission } = this.state;
+  if (hasCameraPermission === null) {
+   return <View />
+  }
+  //,() => this.uploadImage2()
+  else if (hasCameraPermission === false) {
+   return <Text>Access to camera has been denied.</Text>;
+  }
+  else {
+   return (
+    <View style={{ flex: 1 }}>
+
+
+
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      <Text>CAG report</Text>
+     <Button 
+       onPress={()=>{this._getPhotoLibrary(),this.parameter("CAG")}} 
+       title="upload report in image format"
+     />
+          <Button 
+       onPress={()=>{this._getPdfLibrary(),this.parameter("CAG_PDF")}} 
+       title="upload report in pdf format"
+     />
+
+<Text>Discharge report</Text>
+     <Button 
+       onPress={()=>{this._getPhotoLibrary(),this.parameter("Discharge")}} 
+       title="upload report in image format"
+     />
+          <Button 
+       onPress={()=>{this._getPdfLibrary(),this.parameter("Discharge_PDF")}} 
+       title="upload report in pdf format"
+     />
+
+
+
+    </View>
+   </View>
+   );
+  }
+ }
+}
+
+
+
+//  uploadImage2 = async() => {
+//    console.log("up hit");
+//   const response = await fetch("file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540rajath89%252FjayHos/ImagePicker/e2ab5ebb-5925-40e6-93c8-64c881f9c79b.jpg");
+//   const blob = await response.blob();
+//   this.setState({ bl: blob });
+//   var ref = firebase.storage().ref().child("uuf");
+//   return ref.put(blob);
+//   // var ref = firebase.storage().ref().child("my-image");
+//   // return ref.put(blob);
+// }
 
 
   // renderFileUri() {
@@ -183,37 +279,6 @@ export default class CameraComponent extends React.Component {
 //     }
 //   }
 // }
-
-render() {
-  const { image, hasCameraPermission } = this.state;
-  if (hasCameraPermission === null) {
-   return <View />
-  }
-  //,() => this.uploadImage2()
-  else if (hasCameraPermission === false) {
-   return <Text>Access to camera has been denied.</Text>;
-  }
-  else {
-   return (
-    <View style={{ flex: 1 }}>
-
-
-
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-     <Button 
-       onPress={this._getPhotoLibrary.bind(this),() => this.uploadImage2()} 
-       title="Photo Picker Screen!"
-     />
-          <Button 
-       onPress={this._getPdfLibrary.bind(this)} 
-       title="uploadPDF"
-     />
-    </View>
-   </View>
-   );
-  }
- }
-}
 
 
 

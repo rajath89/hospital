@@ -15,16 +15,17 @@ export default class Login extends Component {
       email: '', 
       password: '',
       isLoading: false,
-      ob:{}
+      ob:{},
+      globName:''
     }
   }
 
 
 
-  //   componentDidMount() {
-  //   this.getMultiple();
-
-  // }
+    componentDidMount() {
+    //this.getMultiple();
+      this._retrieveData();
+  }
 
 
 
@@ -42,32 +43,39 @@ export default class Login extends Component {
   } catch (error) {
     // Error saving data
   }
-};
+}
 
-// async _retrieveData() {
-//   try {
-//     const value = await AsyncStorage.getItem('key1');
-//     if (value !== null) {
-//       // We have data!!
-//       console.log(value);
-//     }
-//   } catch (error) {
-//     // Error retrieving data
-//   }
-// }
-
-_retrieveData = async () => {
-  console.log("hit");
+async _retrieveData() {
   try {
-    const value = await AsyncStorage.getItem('expoToken1');
+    const value = await AsyncStorage.getItem('globalName');
     if (value !== null) {
       // We have data!!
-      console.log("stored token",value);
+      console.log(value);
+      this.setState({
+        globName:value
+      });
+      console.log("from state:",this.state.globName);
     }
   } catch (error) {
     // Error retrieving data
   }
-};
+}
+
+// _retrieveData = async () => {
+//   console.log("hit");
+//   try {
+//     const value = await AsyncStorage.getItem('expoToken1');
+//     if (value !== null) {
+//       // We have data!!
+//       console.log("stored token",value);
+//     }
+//   } catch (error) {
+//     // Error retrieving data
+//   }
+// };
+
+
+
 
 
 getDateTime = () => {
@@ -91,7 +99,7 @@ getDateTime = () => {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({"username": this.state.email, "time": dateTime})
+    body: JSON.stringify({"username": this.state.globName, "time": dateTime})
   });
   const content = await rawResponse.json();
 
@@ -118,55 +126,66 @@ getAllKeys = async () => {
 }
 
 
-getMultiple = async () => {
+// getMultiple = async () => {
 
-  let values
-  try {
-    values = await AsyncStorage.multiGet(['expoToken', 'expoToken1','\" Do you have hypertension ?\"'])
-  } catch(e) {
-    // read error
-  }
-  if(values){
-  //console.log(values.length);
-  //console.log(JSON.stringify(values));
+//   let values
+//   try {
+//     values = await AsyncStorage.multiGet(['expoToken', 'expoToken1','\" Do you have hypertension ?\"'])
+//   } catch(e) {
+//     // read error
+//   }
+//   if(values){
+//   //console.log(values.length);
+//   //console.log(JSON.stringify(values));
 
-  var object = Object.fromEntries(values);
-  console.log(object);
-  this.setState({ob:object});
-  console.log(this.state.ob);
-  console.log(JSON.stringify(this.state.ob));
+//   var object = Object.fromEntries(values);
+//   console.log(object);
+//   this.setState({ob:object});
+//   console.log(this.state.ob);
+//   console.log(JSON.stringify(this.state.ob));
 
-  var myArray = new Array();
-  myArray.push(this.state.ob);
-//alert(JSON.stringify(myArray));
-console.log(myArray);
+//   var myArray = new Array();
+//   myArray.push(this.state.ob);
+// //alert(JSON.stringify(myArray));
+// console.log(myArray);
 
   
 
-  (async () => {
-  const rawResponse = await fetch('https://flask-app47.herokuapp.com/questions', {//exp://192.168.0.104:19000
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({"username": "jason", "questionDetails":myArray[0]})
-  });
-  const content = await rawResponse.json();
+//   (async () => {
+//   const rawResponse = await fetch('https://flask-app47.herokuapp.com/questions', {//exp://192.168.0.104:19000
+//     method: 'POST',
+//     headers: {
+//       'Accept': 'application/json',
+//       'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify({"username": "jason", "questionDetails":myArray[0]})
+//   });
+//   const content = await rawResponse.json();
 
-  console.log(content);
-  //console.log(object);
-})();
+//   console.log(content);
+//   //console.log(object);
+// })();
 
  
 
 
 
 
-}
+// }
   // example console.log output:
   // [ ['@MyApp_user', 'myUserValue'], ['@MyApp_key', 'myKeyValue'] ]
-}
+// }
+
+
+clearAll = async () => {
+  console.log("cleared");
+  try {
+    await AsyncStorage.clear()
+  } catch(e) {
+    // clear error
+  }
+
+};
 
 
 
@@ -196,6 +215,7 @@ console.log(myArray);
     }
   }
 
+
   render() {
     if(this.state.isLoading){
       return(
@@ -223,7 +243,7 @@ console.log(myArray);
         <Button
           color="#3740FE"
           title="Signin"
-          onPress={() => {this.userLogin()}}
+          onPress={() => {this.userLogin(),this.getDateTime()}}
         />   
         {/* <QuesList /> */}
 
@@ -236,6 +256,7 @@ console.log(myArray);
     );
   }
 }
+
 
 const styles = StyleSheet.create({
   container: {

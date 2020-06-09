@@ -1,9 +1,11 @@
 
 import React, { Component } from 'react';
 
-import { Text, View, Button } from 'react-native';
+import { Text, View , StyleSheet,  TouchableOpacity} from 'react-native';
+import { Button } from 'react-native-elements';
 import { quizData } from "./Questions/quizData";
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {CheckBox} from "native-base"
 // import console = require('console');
 
 import update from 'immutability-helper';
@@ -18,6 +20,7 @@ export default class NewQues extends Component {
     // }
 
     state = {
+        globName:'',
         currentQuestion: 0,
         myAnswer: null,
         options: [],
@@ -27,6 +30,36 @@ export default class NewQues extends Component {
         op:null,
         ans:[]
       };
+
+
+
+
+
+
+
+
+
+      async _retrieveData() {
+        try {
+          const value = await AsyncStorage.getItem('globalName');
+          if (value !== null) {
+            // We have data!!
+            console.log(value);
+            this.setState({
+              globName:value
+            });
+            console.log("from state:",this.state.globName);
+            if(this.state.globName){
+              //this.getMultiple();
+              console.log("globNmae");
+              //this.getMultiple();
+              console.log("after getmultiple");
+            }
+          }
+        } catch (error) {
+          // Error retrieving data
+        }
+      }
 
 
 //   getMultiple = async () => {
@@ -91,12 +124,14 @@ export default class NewQues extends Component {
           };
         });
 
-        console.log("from load",this.state.options,this.state.answer,this.state.answer);
+        //console.log("from load",this.state.options,this.state.answer,this.state.answer);
         
       };
     
       componentDidMount() {
         this.loadQuizData();
+        console.log("wfew3rfere");
+        this._retrieveData();
       }
 
 
@@ -118,7 +153,7 @@ export default class NewQues extends Component {
           //,
           //op:null
         });
-        console.log(this.state.currentQuestion);
+        //console.log(this.state.currentQuestion);
       };
 
         _storeData = async () => {
@@ -188,7 +223,7 @@ export default class NewQues extends Component {
 
         //console.log("not state",arr2);
         this.setState({ myAnswer: answer, disabled: false,op:answer, ans:[mystate,...this.state.ans]});
-        console.log("after",this.state.ans);
+        //console.log("after",this.state.ans);
       };
 
 
@@ -225,17 +260,18 @@ removeFew = async () => {
 }
 
 
-//get all keys
+// get all keys
 getAllKeys = async () => {
   let keys = [];
   console.log("get keys");
   try {
-    keys = await AsyncStorage.getAllKeys()
+    keys = await AsyncStorage.getAllKeys();
+    console.log(keys);
   } catch(e) {
     // read key error
   }
 
-  console.log(keys);
+  //console.log(keys);
   //this.clearAll();
   // example console.log result:
   // ['@MyApp_user', '@MyApp_key']
@@ -267,7 +303,7 @@ getMultiple = async () => {
         var quesA = new Array();
         quesA.push(object);
 //alert(JSON.stringify(myArray));
-        console.log(quesA);
+        console.log("##########before sending",quesA[0]);
 
         //sending to backend
           (async () => {
@@ -277,7 +313,7 @@ getMultiple = async () => {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({"username": "jason", "questionDetails":quesA[0]})
+    body: JSON.stringify({"username": this.state.globName, "questionDetails":quesA[0]})
   });
   const content = await rawResponse.json();
 
@@ -308,6 +344,11 @@ this.removeFew();
 }
 
 
+ Separator= () =>{
+  return <View style={styles.separator} />;
+}
+
+
 
       finishHandler = () => {
         console.log("finished");
@@ -315,8 +356,11 @@ this.removeFew();
           this.setState({
             isEnd: true
           });
+          
+
 
                   //if(this.state.isEnd){
+                    this.getMultiple();
           this.props.navigation.navigate('AfterQuestions',{screen:'Afterques'});
         //}
         }
@@ -336,31 +380,49 @@ this.removeFew();
     render() { 
         const { options, myAnswer, currentQuestion, isEnd } = this.state;
         return (
-                    <View>
-          <Text>{this.state.questions} </Text>
+                    <View style={styles.container}>
+          <Text style={styles.header}>{this.state.questions} </Text>
 
-          {options.map(option => (          //,this.vv(option)
-            <Button title={option} key={this.state.questions.id} onPress={() => {this.checkAnswer(option)}}/>
+          <View style={[{ width: "90%", margin: 10, backgroundColor: "#f6f6f6" }]}>
+
+          {options.map(option => ( 
+                     //,this.vv(option)
+                     <React.Fragment>
+            <Button title={option} type="solid" raised="true" buttonStyle={styles.btstyle} key={this.state.questions.id} onPress={() => {this.checkAnswer(option),this.vv(option)}}/>
+            <View style={styles.separator}/>
+            </React.Fragment>
+              
               
             
              
           ))}
 
-           {currentQuestion < quizData.length - 1 && (<Button title="next" onPress={this.nextQuestionHandler} disabled={this.state.disabled}/>)}
-           <Text>option clicked : {this.state.op} </Text>
 
 
+
+          </View>
+
+          <View style={[{ width: "40%", margin: 10, backgroundColor: "#f6f6f6" }]}>
+
+           {currentQuestion < quizData.length - 1 && (<Button title="next" type="solid" raised="true" buttonStyle={styles.btstyle} onPress={this.nextQuestionHandler} disabled={this.state.disabled}/>)}
+           </View>
+           
+
+           <View style={[{ width: "40%", margin: 10, backgroundColor: "#f6f6f6" }]}>
             {currentQuestion === quizData.length - 1 && (
-            <Button title="Finish" className="ui inverted button" onPress={this.finishHandler}/>
+            <Button title="Finish" type="solid" raised="true" buttonStyle={styles.btstyle} className="ui inverted button" onPress={this.finishHandler}/>
               
             
           )}
 
-                        {currentQuestion === quizData.length - 1 && (
+          </View>
+
+                        {/* {currentQuestion === quizData.length - 1 && (
             <Button title="Finish2" className="ui inverted button" onPress={()=>this.getAllKeys()}/>
               
             
-          )}
+          )} */}
+          <Text>option clicked : {this.state.op} </Text>
            <Text>Ques id :{quizData[this.state.currentQuestion].id}</Text>
            
         </View>
@@ -371,4 +433,58 @@ this.removeFew();
 }
  
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#f6f6f6',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  
+  header:{
+    fontSize:25,
+    fontWeight:"bold",
+    color:"#364f6b",
+    marginBottom:40,
+    marginLeft:20,
+    marginRight:20
+  },
+  item:{
+    width:"80%",
+    backgroundColor:"#fff",
+    borderRadius:20,
+    padding:10,
+    marginBottom:10,
+    flexDirection:"row",
+  },
+  checkBoxTxt:{
+    marginLeft:20
+  },
+  button: {
+    padding: 20,
+    fontSize: 15,
+    fontFamily: "arial",
+    width: 400,
+    height: 40,
+    textAlign: "center"
+  },
+  btstyle:{
+  
+    borderRadius:15,
+    borderWidth: 1,
+    borderColor: '#3740FE',
+    elevation:10,
+    
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.5,
+    shadowRadius: 10
+  },
+  separator: {
+    marginVertical: 8,
+    borderBottomColor: 'white',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+});
 

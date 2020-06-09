@@ -83,13 +83,13 @@ export default class Dashboard extends Component {
                        <Button 
         title="View Profile"
           //style={styles.loginText}
-          onPress={() => this.props.navigation.navigate('AfterQuestions',{screen:'Afterques'})}
+          onPress={() => this.props.navigation.navigate('View Profile',{screen:'viewPro'})}
           />
 
                           <Button 
         title="Update Profile"
           //style={styles.loginText}
-          onPress={() => this.props.navigation.navigate('AfterQuestions',{screen:'Afterques'})}
+          onPress={() => this.props.navigation.navigate('Update Profile',{screen:'updatePro'})}
           />
 
                           <Button 
