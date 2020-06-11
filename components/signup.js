@@ -58,9 +58,9 @@ export default class Signup extends Component {
         alert('Failed to get push token for push notification!');
         return;
       }
-      console.log("hit");
+      console.log("hit expo token");
       token = await Notifications.getExpoPushTokenAsync();
-      //console.log(token);
+      console.log("token:",token);
 
       this.setState({ expoPushToken: token });
 

@@ -16,16 +16,17 @@ export default class Login extends Component {
       password: '',
       isLoading: false,
       ob:{},
-      globName:''
+      globName:'',
+      bool:false
     }
   }
 
 
 
-    componentDidMount() {
-    //this.getMultiple();
-      this._retrieveData();
-  }
+  //   componentDidMount() {
+  //   //this.getMultiple();
+  //     this._retrieveData();
+  // }
 
 
 
@@ -52,9 +53,10 @@ async _retrieveData() {
       // We have data!!
       console.log(value);
       this.setState({
-        globName:value
+        globName:value,
+        bool:true
       });
-      console.log("from state:",this.state.globName);
+      console.log("from state:",this.state.globName,this.state.bool);
     }
   } catch (error) {
     // Error retrieving data
@@ -76,6 +78,33 @@ async _retrieveData() {
 
 
 
+//check bool state and perform post request
+componentDidUpdate(prevProps, prevState) {
+  if (prevState.bool !== this.state.bool) {
+    console.log('bool state has changed.');
+    console.log("hit");
+    var today = new Date();
+    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    var dateTime = date+' '+time;
+    (async () => {
+    const rawResponse = await fetch('https://flask-app47.herokuapp.com/login', {//exp://192.168.0.104:19000
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({"username": this.state.globName, "time": dateTime})
+    });
+    const content = await rawResponse.json();
+  
+    console.log(content);
+  })();
+  }
+}
+
+
+
 
 
 getDateTime = () => {
@@ -87,24 +116,32 @@ getDateTime = () => {
   //   // read error
   // }
   // console.log(values);
-  console.log("hit");
-  var today = new Date();
-  var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-  var dateTime = date+' '+time;
-  (async () => {
-  const rawResponse = await fetch('https://flask-app47.herokuapp.com/login', {//exp://192.168.0.104:19000
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({"username": this.state.globName, "time": dateTime})
-  });
-  const content = await rawResponse.json();
+  this._retrieveData();
+  console.log("after ret:",this.state.bool);
+  // if(this.state.bool){
+  //   console.log(this.state.bool);
 
-  console.log(content);
-})();
+  //   console.log("hit");
+  //   var today = new Date();
+  //   var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+  //   var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  //   var dateTime = date+' '+time;
+  //   (async () => {
+  //   const rawResponse = await fetch('https://flask-app47.herokuapp.com/login', {//exp://192.168.0.104:19000
+  //     method: 'POST',
+  //     headers: {
+  //       'Accept': 'application/json',
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify({"username": this.state.globName, "time": dateTime})
+  //   });
+  //   const content = await rawResponse.json();
+  
+  //   console.log(content);
+  // })();
+
+  //}
+
 
 
   // example console.log output:
