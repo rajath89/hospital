@@ -150,6 +150,37 @@ def getRegister():
 			return jsonify({"msg":"user not yet registerd"})
 
 
+@app.route('/CAGdetails', methods=['GET','POST'])
+@cross_origin()
+def CAGdetails():
+	if request.method == "POST":
+		#k=request.data
+		k1=request.json
+		
+		uName=k1["username"]
+
+		del k1["username"]
+
+		db.child("users").child(uName.split("@")[0]).child("CAG_ReportDetails").push(k1)
+
+	return jsonify({"cagDetails":"success"})
+
+@app.route('/comments', methods=['GET','POST'])
+@cross_origin()
+def comments():
+	if request.method == "POST":
+		#k=request.data
+		k1=request.json
+		
+		uName=k1["username"]
+
+		del k1["username"]
+
+		db.child("users").child(uName.split("@")[0]).child("comments").push(k1)
+
+	return jsonify({"comments":"success"})
+
+
 
 if __name__ == '__main__':
     #scheduler.add_job(id ='Scheduled task', func = scheduledTask, trigger = 'interval', seconds=5)#hours = 1

@@ -1,7 +1,7 @@
 
 
 import React from 'react';
-import { Text, View, TouchableOpacity, Image,Button,StyleSheet } from 'react-native';
+import { Text, View, TouchableOpacity, Image,Button,StyleSheet,TextInput } from 'react-native';
 import * as Permissions from 'expo-permissions';
 import { Camera } from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library'; //from 'expo-media-library';
@@ -26,7 +26,10 @@ export default class CameraComponent extends React.Component {
     bl:null,
     pdf:null,
     globName:'',
-    pd:false
+    pd:false,
+    CAG: '', 
+    hemoglobin: '',
+    isLoading: false,
     
   }
 
@@ -134,6 +137,40 @@ parameter=(para)=>{
 
 }
 
+updateInputVal = (val, prop) => {
+  const state = this.state;
+  state[prop] = val;
+  this.setState(state);
+}
+
+subMit=()=>{
+  console.log(this.state);
+  const df=this.state.CAG;
+  const df1=this.state.hemoglobin;
+
+  var arr=new Array();
+  arr.push({"CAG":df});
+  arr.push({"Hemoglobin":df1});
+  console.log(arr);
+
+  (async () => {
+    const rawResponse = await fetch('https://flask-app47.herokuapp.com/CAGdetails', {//exp://192.168.0.104:19000
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({"username": this.state.globName,"CAG_DischargeDetails":arr})
+    });
+    const content = await rawResponse.json();
+  
+    console.log(content);
+    // if(content){
+    //     this.setState({isLoading:false,obj:content})
+    // }
+  })();
+}
+
 render() {
   const { image, hasCameraPermission } = this.state;
   if (hasCameraPermission === null) {
@@ -145,11 +182,15 @@ render() {
   }
   else {
    return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.container}>
+
+  
+ 
+                       
 
 
 
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+    {/* <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}> */}
       <Text>CAG report</Text>
      <Button 
        onPress={()=>{this._getPhotoLibrary(),this.parameter("CAG")}} 
@@ -170,14 +211,71 @@ render() {
        title="upload report in pdf format"
      />
 
+     
 
 
-    </View>
+
+    {/* </View> */}
+
+    <TextInput
+          style={styles.inputStyle}
+          placeholder="CAG"
+          value={this.state.CAG}
+          onChangeText={(val) => this.updateInputVal(val, 'CAG')}
+        />
+        <TextInput
+          style={styles.inputStyle}
+          placeholder="Hemoglobin%"
+          value={this.state.hemoglobin}
+          onChangeText={(val) => this.updateInputVal(val, 'hemoglobin')}
+          maxLength={15}
+          
+        /> 
+
+    <Button
+          color="#3740FE"
+          title="Submit"
+          onPress={() =>this.subMit()}
+        />  
    </View>
    );
   }
  }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    padding: 35,
+    backgroundColor: '#fff'
+  },
+  inputStyle: {
+    width: '100%',
+    marginBottom: 15,
+    paddingBottom: 15,
+    alignSelf: "center",
+    borderColor: "#ccc",
+    borderBottomWidth: 1
+  },
+  loginText: {
+    color: '#3740FE',
+    marginTop: 25,
+    textAlign: 'center'
+  },
+  preloader: {
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#fff'
+  }
+});
 
 
 
