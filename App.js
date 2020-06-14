@@ -10,6 +10,7 @@ import NewQues from './components/NewQues';
 import AfterQuestions from './components/afterques';
 import updatePro from './components/updatePro';
 import viewPro from './components/viewPro';
+import pdfViewer from './components/pdfviewer';
 
 import { Container, Button, text, ListItem, Text } from "native-base";
 import Expo from "expo";
@@ -96,7 +97,17 @@ function MyStack() {
       //    {headerLeft: null} 
       //  }
       />
-    </Stack.Navigator>
+    
+
+<Stack.Screen 
+name="Learning Materials" 
+component={pdfViewer} 
+//  options={
+//    //{ title: 'Dashboard' },
+//    {headerLeft: null} 
+//  }
+/>
+</Stack.Navigator>
 
     
 

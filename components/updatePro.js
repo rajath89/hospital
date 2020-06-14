@@ -161,7 +161,7 @@ export default class updatePro extends Component {
 
         <Button
           color="#3740FE"
-          title="Signup"
+          title="Update"
           onPress={() => {this.upPro()}}
         />
 

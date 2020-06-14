@@ -13,6 +13,7 @@ import QuesList from './QuesList';
 import BotTab from './BotTab';
 import NewQues from './NewQues';
 import Afterques from './afterques';
+import pdfViewer from './pdfviewer';
 
 //queslist
 // import {quizData} from './Questions/quizData';
@@ -101,7 +102,7 @@ export default class Dashboard extends Component {
                                     <Button 
         title="Learning Materials"
           //style={styles.loginText}
-          onPress={() => this.props.navigation.navigate('AfterQuestions',{screen:'Afterques'})}
+          onPress={() => this.props.navigation.navigate('Learning Materials',{screen:'pdfViewer'})}
           />
 
                                     <Button 
