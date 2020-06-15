@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TextInput, Button, Alert, ActivityIndicator,Vib
 import firebase from '../database/firebase';
 import Dashboard from './dashboard';
 import { AsyncStorage } from 'react-native';
-
+import { ToastAndroid } from 'react-native';
 
 export default class updatePro extends Component {
   
@@ -110,7 +110,8 @@ export default class updatePro extends Component {
         
     //   })
     //   .catch(error => this.setState({ errorMessage: error.message })) 
-    this.props.navigation.navigate('Dashboard');     
+    ToastAndroid.show('Profile details are updated', ToastAndroid.SHORT);
+    this.props.navigation.navigate('Cardio App');     
     }
   }
 

@@ -11,6 +11,7 @@ import {CheckBox} from "native-base"
 import update from 'immutability-helper';
 
 import { AsyncStorage } from 'react-native';
+import { ToastAndroid } from 'react-native';
 
 
 export default class NewQues extends Component {
@@ -361,6 +362,7 @@ this.removeFew();
 
                   //if(this.state.isEnd){
                     this.getMultiple();
+          ToastAndroid.show('Questions are updated in db', ToastAndroid.SHORT);
           this.props.navigation.navigate('AfterQuestions',{screen:'Afterques'});
         //}
         }

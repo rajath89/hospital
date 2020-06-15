@@ -11,6 +11,7 @@ import AfterQuestions from './components/afterques';
 import updatePro from './components/updatePro';
 import viewPro from './components/viewPro';
 import pdfViewer from './components/pdfviewer';
+import Faqpage from './components/faqPage';
 
 import { Container, Button, text, ListItem, Text } from "native-base";
 import Expo from "expo";
@@ -55,7 +56,7 @@ function MyStack() {
         }
       />
       <Stack.Screen 
-       name="Dashboard" 
+       name="Cardio App" 
        component={dashboardV2} 
       //  options={
       //    //{ title: 'Dashboard' },
@@ -107,6 +108,16 @@ component={pdfViewer}
 //    {headerLeft: null} 
 //  }
 />
+
+<Stack.Screen 
+name="FAQ page" 
+component={Faqpage} 
+//  options={
+//    //{ title: 'Dashboard' },
+//    {headerLeft: null} 
+//  }
+/>
+
 </Stack.Navigator>
 
     

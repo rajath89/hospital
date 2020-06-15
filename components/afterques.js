@@ -13,6 +13,7 @@ import { AsyncStorage } from 'react-native';
 
 import * as ImagePicker from 'expo-image-picker';
 import * as DocumentPicker from 'expo-document-picker';
+import { ToastAndroid } from 'react-native';
 
 
 
@@ -160,9 +161,10 @@ subMit=()=>{
     const content = await rawResponse.json();
   
     console.log(content);
-    // if(content){
-    //     this.setState({isLoading:false,obj:content})
-    // }
+    if(content){
+        //this.setState({isLoading:false,obj:content})
+        ToastAndroid.show('Report and details are updated', ToastAndroid.SHORT);
+    }
   })();
 }
 

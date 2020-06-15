@@ -246,7 +246,7 @@ clearAll = async () => {
           email: '', 
           password: ''
         })
-        this.props.navigation.navigate('Dashboard')
+        this.props.navigation.navigate('Cardio App')
       })
       .catch(error => this.setState({ errorMessage: error.message }))
     }

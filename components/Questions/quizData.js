@@ -26,26 +26,123 @@
 //   ];
 export const quizData = [
   {
-    id: 0,
-    question: ` Do you have hypertension ?`,
+    id: "0",
+    question: ` Diabetes`,
     options: [`Yes`, `No`],
     answer: `New Delhi`
   },
   {
     id: "1",
-    question: `Do you have Diabetes ?`,
+    question: `Hypertension`,
     options: [`Yes`, `No`],
     answer: `Elon Musk`
   },
   {
-    id: "3",
-    question: `Do you smoke?`,
+    id: "2",
+    question: `Smoking`,
     options: [`Yes`, `No`],
     answer: `Jeff Bezo`
   },
   {
+    id: "3",
+    question: `Obesity`,
+    options: [`Yes`, `No`],
+    answer: `River Nile`
+  },
+  {
     id: "4",
-    question: `Do you have pain or discomfort in one or both arms`,
+    question: `Lack of physical activity`,
+    options: [`Yes`, `No`],
+    answer: `River Nile`
+  },
+  {
+    id: "5",
+    question: ` Alcohol`,
+    options: [`Yes`, `No`],
+    answer: `River Nile`
+  },
+  {
+    id: "6",
+    question: `In female Post Menopausal`,
+    options: [`Yes`, `No`],
+    answer: `River Nile`
+  },
+  {
+    id: "7",
+    question: `Consumption of fruits daily`,
+    options: [`Yes`, `No`],
+    answer: `River Nile`
+  },
+  {
+    id: "8",
+    question: `Chronic KIdney Disease`,
+    options: [`Yes`, `No`],
+    answer: `River Nile`
+  },
+  {
+    id: "9",
+    question: `Chest Pain`,
+    options: [`Yes`, `No`],
+    answer: `River Nile`
+  },
+  {
+    id: "10",
+    question: `Pain or discomfort in one or both arms`,
+    options: [`Yes`, `No`],
+    answer: `River Nile`
+  },
+  {
+    id: "11",
+    question: `Pain or discomfort in Jaw neck,back or stomach`,
+    options: [`Yes`, `No`],
+    answer: `River Nile`
+  },
+  {
+    id: "12",
+    question: `Sweating`,
+    options: [`Yes`, `No`],
+    answer: `River Nile`
+  },
+  {
+    id: "13",
+    question: `Shortness of breathe or cough at night`,
+    options: [`Yes`, `No`],
+    answer: `River Nile`
+  },
+  {
+    id: "14",
+    question: `Swelling of lower limbs`,
+    options: [`Yes`, `No`],
+    answer: `River Nile`
+  },
+  {
+    id: "15",
+    question: `Loss of consciousness`,
+    options: [`Yes`, `No`],
+    answer: `River Nile`
+  },
+  
+  {
+    id: "16",
+    question: `Post procedure complications`,
+    options: [`Black tarry stools`, `Skin rashes`,`Muscle pain`,`Swelling at sight of procedure`,`None`],
+    answer: `River Nile`
+  },
+  {
+    id: "17",
+    question: `Medication`,
+    options: [`Yes`, `No`],
+    answer: `River Nile`
+  },
+  {
+    id: "18",
+    question: `Regular OPD follow up`,
+    options: [`Yes`, `No`],
+    answer: `River Nile`
+  },
+  {
+    id: "19",
+    question: `Diet (Fruits,pulses and vegetables)`,
     options: [`Yes`, `No`],
     answer: `River Nile`
   }

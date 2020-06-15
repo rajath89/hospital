@@ -225,10 +225,42 @@ import { Text, View, StyleSheet, Image } from 'react-native';
 import Constants from 'expo-constants';
 import { Button } from 'react-native-elements';
 import { Divider } from 'react-native-elements';
+import firebase from '../database/firebase';
 const profileImg ="https://reactnativemaster.com/wp-content/uploads/2019/11/React-native-master-logo-only.png"
 
 export default class Fire extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = { 
+      uid: '',
+
+    }
+  }
+
+
+  signOut = () => {
+    firebase.auth().signOut().then(() => {
+      this.props.navigation.navigate('Login')
+    })
+    .catch(error => this.setState({ errorMessage: error.message }))
+    
+  } 
+
+
+
+
   render() {
+
+    this.state = { 
+      displayName: firebase.auth().currentUser.displayName,
+      uid: firebase.auth().currentUser.uid
+
+
+      
+    } 
+
+
     return (
       <View style={styles.container}>
         <View style={styles.card}>
@@ -236,6 +268,7 @@ export default class Fire extends React.Component {
         <Button
   title="View Profile"
   type="clear"
+  onPress={() => this.props.navigation.navigate('View Profile',{screen:'viewPro'})}
 />
         </View>
         <View style={styles.hairline} />
@@ -245,6 +278,7 @@ export default class Fire extends React.Component {
         <Button
   title="Update profile"
   type="clear"
+  onPress={() => this.props.navigation.navigate('Update Profile',{screen:'updatePro'})}
 />
         </View>
         <View style={styles.hairline} />
@@ -254,6 +288,7 @@ export default class Fire extends React.Component {
  <Button
 title="Questions"
 type="clear"
+onPress={() => this.props.navigation.navigate('Questions',{screen:'NewQues'})}
 />
  </View>
 
@@ -263,6 +298,7 @@ type="clear"
  <Button
 title="FAQs"
 type="clear"
+onPress={() => this.props.navigation.navigate('AfterQuestions',{screen:'Afterques'})}
 />
  </View>
 
@@ -272,6 +308,7 @@ type="clear"
  <Button
 title="Learning Materials"
 type="clear"
+onPress={() => this.props.navigation.navigate('Learning Materials',{screen:'pdfViewer'})}
 />
  </View>
 
@@ -281,6 +318,7 @@ type="clear"
  <Button
 title="Logout"
 type="clear"
+onPress={() => this.signOut()}
 />
  </View>
 

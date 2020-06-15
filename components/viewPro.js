@@ -119,8 +119,8 @@ getprof = () => {
     return (
       <View style={styles.container}>  
 
-      <Text>fetched</Text>
-      <Text>{this.state.obj.ProfileDet.Age}</Text>
+      <Text>fetched proDetails from api</Text>
+      {/* <Text>{this.state.obj.ProfileDet.Age}</Text> */}
                         
       </View>
     );
