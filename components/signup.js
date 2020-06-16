@@ -59,10 +59,25 @@ export default class Signup extends Component {
         return;
       }
       console.log("hit expo token");
-      token = await Notifications.getExpoPushTokenAsync();
+      try {
+        token = await Notifications.getExpoPushTokenAsync();
+    } catch (e) {
+        console.error(e);
+    }
+    console.log("after hit expo token");
+
+
+      
+      
       console.log("token:",token);
 
-      this.setState({ expoPushToken: token });
+      if(token){
+        this.setState({ expoPushToken: token });
+      }else{
+        this.setState({ expoPushToken: "token not fetched" });
+      }
+
+      
 
       // if(this.state.expoPushToken){
       //   console.log(this.state.expoPushToken);
@@ -72,7 +87,7 @@ export default class Signup extends Component {
       this.getRegDetails();
 
       //store expotoken in Asyncstorage
-      this._storeData();
+      //this._storeData();
 
 
 
@@ -161,12 +176,15 @@ getRegDetails = () => {
 
 }
 
-        // this.setState({
-        //   isLoading: false,
-        //   displayName: '',
-        //   email: '', 
-        //   password: ''
-        // })
+this.setState({
+  isLoading: false,
+  displayName: '',
+  email: '', 
+  password: ''
+});
+
+//this.registerForPushNotificationsAsync();
+this.props.navigation.navigate('Login');
 
 }
 
@@ -184,11 +202,29 @@ getRegDetails = () => {
     console.log("new function");
   }
 
+  setStringValue = async (value) => {
+    try {
+      await AsyncStorage.setItem('globalName', value)
+    } catch(e) {
+      // save error
+    }
+    this.registerForPushNotificationsAsync();
+    console.log('Done.');
+    this.setState({
+      isLoading: false
+      // displayName: '',
+      // email: '', 
+      // password: ''
+    });
+  }
+
   registerUser = () => {
     if(this.state.email === '' && this.state.password === '') {
       Alert.alert('Enter details to signup!')
     } else {
       console.log(this.state.email,this.state.password);
+      this.setStringValue(this.state.email);
+      
       this.setState({
         isLoading: true,
       })
@@ -199,11 +235,17 @@ getRegDetails = () => {
         res.user.updateProfile({
           displayName: this.state.displayName
         })
-        console.log('User registered successfully!')
+        console.log('User registered successfully!');
+        // this.setState({
+        //   isLoading: false,
+        //   displayName: '',
+        //   email: '', 
+        //   password: ''
+        // });
 
-
-        this.props.navigation.navigate('Login');
-        this.registerForPushNotificationsAsync();
+        // //this.registerForPushNotificationsAsync();
+        // this.props.navigation.navigate('Login');
+        
       })
       .catch(error => this.setState({ errorMessage: error.message }))      
     }
