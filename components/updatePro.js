@@ -5,6 +5,10 @@ import Dashboard from './dashboard';
 import { AsyncStorage } from 'react-native';
 import { ToastAndroid } from 'react-native';
 
+import { Notifications } from 'expo';
+import * as Permissions from 'expo-permissions';
+import Constants from 'expo-constants';
+
 export default class updatePro extends Component {
   
   constructor() {
@@ -19,6 +23,7 @@ export default class updatePro extends Component {
       globName:'',
 
       isLoading: false,
+      expoPushToken:''
 
     }
   }
@@ -55,6 +60,74 @@ export default class updatePro extends Component {
   }
 
 
+
+    registerForPushNotificationsAsync = async () => {
+    if (Constants.isDevice) {
+      const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+      let finalStatus = existingStatus;
+      if (existingStatus !== 'granted') {
+        const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+        finalStatus = status;
+      }
+      if (finalStatus !== 'granted') {
+        alert('Failed to get push token for push notification!');
+        return;
+      }
+      console.log("hit expo token");
+      try {
+        token = await Notifications.getExpoPushTokenAsync();
+        if (token){
+          this.setState({ expoPushToken: token });
+        }else{
+             this.setState({ expoPushToken: "token not fetched" });
+           }
+    } catch (e) {
+        console.error(e);
+    }
+    console.log("after hit expo token");
+
+
+      
+      
+      //console.log("token:",token);
+
+      // if(token){
+      //   this.setState({ expoPushToken: token });
+      // }else{
+      //   this.setState({ expoPushToken: "token not fetched" });
+      // }
+
+      
+
+      // if(this.state.expoPushToken){
+      //   console.log(this.state.expoPushToken);
+      // }
+
+      
+
+
+
+
+
+    } else {
+      alert('Must use physical device for Push Notifications');
+    }
+
+    if (Platform.OS === 'android') {
+      Notifications.createChannelAndroidAsync('default', {
+        name: 'default',
+        sound: true,
+        priority: 'max',
+        vibrate: [0, 250, 250, 250],
+      });
+    }
+  };
+
+
+
+
+
+
   updateInputVal = (val, prop) => {
     const state = this.state;
     state[prop] = val;
@@ -62,6 +135,9 @@ export default class updatePro extends Component {
   }
 
   upprof = () => {
+
+
+    this.registerForPushNotificationsAsync();
 
     (async () => {
     const rawResponse = await fetch('https://flask-app47.herokuapp.com/updatePro', {//exp://192.168.0.104:19000
@@ -111,18 +187,28 @@ export default class updatePro extends Component {
     //   })
     //   .catch(error => this.setState({ errorMessage: error.message })) 
     ToastAndroid.show('Profile details are updated', ToastAndroid.SHORT);
-    this.props.navigation.navigate('Cardio App');     
+    this.setState({ 
+      displayName: '',
+      email: '', 
+      Name:'',
+      Gender:'',
+      Age:'',
+      MobNumber:'',
+      globName:'',
+
+      isLoading: false})
+    //this.props.navigation.navigate('Cardio App');     
     }
   }
 
   render() {
-    if(this.state.isLoading){
-      return(
-        <View style={styles.preloader}>
-          <ActivityIndicator size="large" color="#9E9E9E"/>
-        </View>
-      )
-    }    
+    // if(this.state.isLoading){
+    //   return(
+    //     <View style={styles.preloader}>
+    //       <ActivityIndicator size="large" color="#9E9E9E"/>
+    //     </View>
+    //   )
+    // }    
     return (
       <View style={styles.container}>  
         <TextInput
@@ -165,7 +251,7 @@ export default class updatePro extends Component {
           title="Update"
           onPress={() => {this.upPro()}}
         />
-
+        <Text>token : {this.state.expoPushToken}</Text>
 
                                  
       </View>

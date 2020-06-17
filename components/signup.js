@@ -239,7 +239,7 @@ this.props.navigation.navigate('Login');
       Alert.alert('Enter details to signup!')
     } else {
       console.log(this.state.email,this.state.password);
-      this.setStringValue(this.state.email);
+      
       
       this.setState({
         isLoading: true,
@@ -251,6 +251,9 @@ this.props.navigation.navigate('Login');
         res.user.updateProfile({
           displayName: this.state.displayName
         })
+
+        this.setStringValue(this.state.email);
+
         console.log('User registered successfully!');
        //this.getRegDetails();
         // this.setState({
