@@ -147,34 +147,48 @@ _storeData = async () => {
 getRegDetails = () => {
 
 
-  console.log("hit from registerForPushNotificationsAsync");
-
-
-  if(this.state.expoPushToken){
-
-
+  console.log("hit from getregDet");
 
   (async () => {
-  const rawResponse = await fetch('https://flask-app47.herokuapp.com/register', {//exp://192.168.0.104:19000
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({"username": this.state.email, "expoToken": this.state.expoPushToken,"displayName":this.state.displayName})
-  });
-  const content = await rawResponse.json();
+    const rawResponse = await fetch('https://flask-app47.herokuapp.com/register', {//exp://192.168.0.104:19000
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({"username": this.state.email, "expoToken": "not fetched:watch updateProDetails","displayName":this.state.displayName})
+    });
+    const content = await rawResponse.json();
+  
+    console.log(content);
+  })();
 
-  console.log(content);
-})();
+
+//   if(this.state.expoPushToken){
 
 
-  // this.setState({
-  //         isLoading: false
 
-  //       });
+//   (async () => {
+//   const rawResponse = await fetch('https://flask-app47.herokuapp.com/register', {//exp://192.168.0.104:19000
+//     method: 'POST',
+//     headers: {
+//       'Accept': 'application/json',
+//       'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify({"username": this.state.email, "expoToken": "not fetched:watch updateProDetails","displayName":this.state.displayName})
+//   });
+//   const content = await rawResponse.json();
 
-}
+//   console.log(content);
+// })();
+
+
+//   // this.setState({
+//   //         isLoading: false
+
+//   //       });
+
+// }
 
 this.setState({
   isLoading: false,
@@ -208,14 +222,16 @@ this.props.navigation.navigate('Login');
     } catch(e) {
       // save error
     }
-    this.registerForPushNotificationsAsync();
+    //this.registerForPushNotificationsAsync();
+    this.getRegDetails();
     console.log('Done.');
-    this.setState({
-      isLoading: false
-      // displayName: '',
-      // email: '', 
-      // password: ''
-    });
+    // this.setState({
+    //   isLoading: false,
+    //   displayName: '',
+    //   email: '', 
+    //   password: ''
+    // });
+    // this.props.navigation.navigate('Login');
   }
 
   registerUser = () => {
@@ -236,6 +252,7 @@ this.props.navigation.navigate('Login');
           displayName: this.state.displayName
         })
         console.log('User registered successfully!');
+       //this.getRegDetails();
         // this.setState({
         //   isLoading: false,
         //   displayName: '',
