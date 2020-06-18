@@ -22,6 +22,7 @@ export default class NewQues extends Component {
 
     state = {
         globName:'',
+        qid:null,
         currentQuestion: 0,
         myAnswer: null,
         options: [],
@@ -121,7 +122,8 @@ export default class NewQues extends Component {
           return {
             questions: quizData[this.state.currentQuestion].question,
             answer: quizData[this.state.currentQuestion].answer,
-            options: quizData[this.state.currentQuestion].options
+            options: quizData[this.state.currentQuestion].options,
+            qid:quizData[this.state.currentQuestion].id
           };
         });
 
@@ -137,16 +139,58 @@ export default class NewQues extends Component {
 
 
 
+
+
+      getStatus=(id,mans)=>{
+        var ids=[9,77,79,45,67];
+        flag=false;
+        //console.log("from stst",mans);
+        for(var i=0;i<ids.length;i++){
+          if(ids[i]==id){
+            console.log(mans=="None")
+             
+              flag=true;
+            }
+
+            
+            //flag=true;
+            
+          }
+          
+        
+        return flag
+        }
+
+
+
       nextQuestionHandler = () => {
         // console.log('test')
-        const { myAnswer, answer, score } = this.state;
+        const { myAnswer, answer, score,qid } = this.state;
+        console.log(quizData[this.state.currentQuestion].id,myAnswer,quizData[this.state.currentQuestion].answer);
     
-        if (myAnswer === answer) {
-          this.setState({
-            score: score + 1
-            //op:null
-           // quizData[this.state.currentQuestion].id
-          });
+        if (myAnswer === quizData[this.state.currentQuestion].answer && this.getStatus(quizData[this.state.currentQuestion].id,myAnswer)) {
+          console.log("visit hospital");
+
+          this.props.navigation.navigate('AfterQuestions',{screen:'Afterques'});
+
+          // this.setState({
+          //   score: score + 1
+          //   //op:null
+          //  // quizData[this.state.currentQuestion].id
+          // });
+        }else if(quizData[this.state.currentQuestion].id=="16"){
+          flag=false;
+          if(myAnswer==="None"){
+            console.log("proceed");
+          }else{
+            flag=true;
+          }
+
+
+          if(flag==true){
+            this.props.navigation.navigate('AfterQuestions',{screen:'Afterques'});
+          }
+
         }
     
         this.setState({

@@ -12,6 +12,7 @@ import updatePro from './components/updatePro';
 import viewPro from './components/viewPro';
 import pdfViewer from './components/pdfviewer';
 import Faqpage from './components/faqPage';
+import MyDrawer from './components/drawnav';
 
 import { Container, Button, text, ListItem, Text } from "native-base";
 import Expo from "expo";
@@ -131,6 +132,7 @@ export default function App() {
   //theme={DarkTheme}
     <NavigationContainer>
       <MyStack />
+     
     </NavigationContainer>
    
   );

@@ -83,7 +83,7 @@ export const quizData = [
     id: "9",
     question: `Chest Pain`,
     options: [`Yes`, `No`],
-    answer: `River Nile`
+    answer: `Yes`
   },
   {
     id: "10",
@@ -126,13 +126,13 @@ export const quizData = [
     id: "16",
     question: `Post procedure complications`,
     options: [`Black tarry stools`, `Skin rashes`,`Muscle pain`,`Swelling at sight of procedure`,`None`],
-    answer: `River Nile`
+    answer: `None`
   },
   {
     id: "17",
     question: `Medication`,
     options: [`Yes`, `No`],
-    answer: `River Nile`
+    answer: `Yes`
   },
   {
     id: "18",
