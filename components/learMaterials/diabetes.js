@@ -18,6 +18,9 @@ export default class Diabetes extends Component {
   state = {
     isVisible: false,
     isVisible2:false,
+    isVisible3:false,
+    isVisible4:'',
+    isVisible5:null,
     result: null
   }
 
@@ -90,7 +93,7 @@ export default class Diabetes extends Component {
             <Icon name="window-close-o" size={35} color="black" style={{position: 'absolute',left: 300,right: 0,top: 120,bottom: 0}}  onPress = {() => 
                   this.setState({ isVisible:!this.state.isVisible})}/>
                 
-              <Text style={styles.paragraph}>
+ <Text style={styles.paragraph}>
               The food we eat contains carbohydrates which are broken
 down into glucose by digestion and is released into the
 blood.
@@ -98,7 +101,9 @@ Insulin is a hormone naturally released by the pancreas
 which helps the cells to take up glucose.
 Diabetes can result from the ineffectiveness of the action of insulin - because
 body develops resistance to its action or insufficient release from pancreas.
-              </Text>
+              </Text> 
+
+
               
 {/* 
               <Button title="Click To Close Modal" onPress = {() => 
@@ -126,57 +131,142 @@ body develops resistance to its action or insufficient release from pancreas.
         </View>
         <View style={styles.hairline} />
 
+
+        
+        
         <View style={styles.card}>
 
+
         <Modal animationType = {"slide"} transparent = {false}
-            visible = {this.state.isVisible2}
+            visible = {this.state.isVisible3}
             onRequestClose = {() =>{ console.log("Modal has been closed.") } }>
             {/*All views of Modal*/}
             {/*Animation can be slide, slide, none*/}
             <View style = {styles.modal}>
-            {/* <WebView
-        source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/hospitalusers-44f06.appspot.com/o/mobile_app-_final_pdf.pdf?alt=media&token=a66ce6ff-a2e3-4dd9-93b8-9c8447c61304' }}
-        style={{ marginTop: 20,maxHeight: 500,width: 320,flex: 1 }}
-      /> */}
-              <Button title="Open WebBrowser" onPress={this._handlePressButtonAsync} />
-            <Text>{this.state.result && JSON.stringify(this.state.result)}</Text>
-            <Button title="Click To Close Modal" onPress = {() =>this.setState({ isVisible2:!this.state.isVisible2})}/>
-            </View>
-            </Modal>
- 
-        <Button
-  title="Know your normal levels"
-  type="clear"
-  onPress = {() => {this.setState({ isVisible2: true})}}
-/>
-        </View>
-        <View style={styles.hairline} />
-        
-        <View style={styles.card}>
+            <Icon name="window-close-o" size={35} color="black" style={{position: 'absolute',left: 300,right: 0,top: 120,bottom: 0}}  onPress = {() => 
+                  this.setState({ isVisible3:!this.state.isVisible3})}/>
+                
+              <Text style={styles.paragraph}>
+              Diabetes is a major risk factor for stroke and heart
+disease.It can also affect the kidneys, retina, nerves in the
+long run, especially if it remains uncontrolled.
+Other major risk factors are smoking, high
+cholesterol, high blood pressure, physical
+inactivity or obesity.If you have diabetes, it’s very important to have
+regular check-ups.Work closely with your healthcare provider to
+manage your diabetes and reduce any other risk
+factors
+              </Text>
+              
+{/* 
+              <Button title="Click To Close Modal" onPress = {() => 
+                  this.setState({ isVisible:!this.state.isVisible})}/> */}
+                 
+
+                  
+
+              
+
+</View>
+</Modal>
  
  <Button
 title="Why should I control my diabetes"
 type="clear"
+onPress = {() => {this.setState({ isVisible3: true})}}
 
 />
  </View>
 
  <View style={styles.hairline} />
  <View style={styles.card}>
+
+ <Modal animationType = {"slide"} transparent = {false}
+            visible = {this.state.isVisible4}
+            onRequestClose = {() =>{ console.log("Modal has been closed.") } }>
+            {/*All views of Modal*/}
+            {/*Animation can be slide, slide, none*/}
+            <View style = {styles.modal}>
+            <Icon name="window-close-o" size={35} color="black" style={{position: 'absolute',left: 300,right: 0,top: 120,bottom: 0}}  onPress = {() => 
+                  this.setState({ isVisible4:!this.state.isVisible4})}/>
+                
+              <Text style={styles.paragraph}>
+• Manage your weight, blood pressure and cholesterol with a heart-healthy eating
+plan that is low in saturated fat, trans fat, salt (sodium) and added sugars.
+• Be physically active. Aim for at least 150 minutes of moderate-intensity
+physical activity, such as brisk walking, or 75 minutes of vigorous-intensity
+aerobic activity each week.
+• Lower your blood pressure, if it’s too high. Aim for a normal blood pressure
+which is less than 120 mm Hg for the systolic (upper) number and less than
+80 mm Hg for the diastolic (lower) number.
+• Don’t smoke, and avoid second-hand smoke.
+• If you take medications, take them exactly as directed. If you have questions
+about the dosage or side effects, ask your healthcare provider or pharmacist.
+• Limit your alcohol intake.
+              </Text>
+              
+{/* 
+              <Button title="Click To Close Modal" onPress = {() => 
+                  this.setState({ isVisible:!this.state.isVisible})}/> */}
+                 
+
+                  
+
+              
+
+</View>
+</Modal>
  
  <Button
 title="How should I control my diabetes"
 type="clear"
+onPress = {() => {this.setState({ isVisible4: true})}}
 
 />
  </View>
 
  <View style={styles.hairline} />
  <View style={styles.card}>
+
+ <Modal animationType = {"slide"} transparent = {false}
+            visible = {this.state.isVisible5}
+            onRequestClose = {() =>{ console.log("Modal has been closed.") } }>
+            {/*All views of Modal*/}
+            {/*Animation can be slide, slide, none*/}
+            <View style = {styles.modal}>
+            <Icon name="window-close-o" size={35} color="black" style={{position: 'absolute',left: 300,right: 0,top: 120,bottom: 0}}  onPress = {() => 
+                  this.setState({ isVisible5:!this.state.isVisible5})}/>
+                
+              <Text style={styles.paragraph}>
+USE MORE
+vegetables, fruits, whole grains, beans,
+rajma, turmeric, chia seeds, oats, legumes,
+nuts, plant-based proteins, lean animal
+proteins, skinless poultry, fish, low
+glycemic foods like apples, almonds.
+AVOID
+sweetened drinks, salt, red meat, refined
+ carbohydrates like added sugars and full-fat dairy
+products, highly processed foods, tropical oils like
+coconut and palm oil.
+              </Text>
+              
+{/* 
+              <Button title="Click To Close Modal" onPress = {() => 
+                  this.setState({ isVisible:!this.state.isVisible})}/> */}
+                 
+
+                  
+
+              
+
+</View>
+</Modal>
  
  <Button
 title="Diabetes and diet"
 type="clear"
+onPress = {() => {this.setState({ isVisible5: true})}}
 
 />
  </View>
