@@ -111,7 +111,7 @@ export default class Diabetes extends Component {
         <Button
   title="Cholestrol"
   type="clear"
-  onPress={() => this.props.navigation.navigate('Update Profile',{screen:'updatePro'})}
+  
 />
         </View>
         <View style={styles.hairline} />
@@ -121,7 +121,7 @@ export default class Diabetes extends Component {
  <Button
 title="Blood Pressure"
 type="clear"
-onPress={() => this.props.navigation.navigate('Questions',{screen:'NewQues'})}
+
 />
  </View>
 
@@ -131,7 +131,7 @@ onPress={() => this.props.navigation.navigate('Questions',{screen:'NewQues'})}
  <Button
 title="Smoking"
 type="clear"
-onPress={() => this.props.navigation.navigate('FAQ page',{screen:'Faqpage'})}
+
 />
  </View>
 
@@ -141,7 +141,7 @@ onPress={() => this.props.navigation.navigate('FAQ page',{screen:'Faqpage'})}
  <Button
 title="Physical Activity"
 type="clear"
-onPress={() => this.props.navigation.navigate('Learning Materials',{screen:'pdfViewer'})}
+
 />
  </View>
  <View style={styles.hairline} />
@@ -151,7 +151,7 @@ onPress={() => this.props.navigation.navigate('Learning Materials',{screen:'pdfV
  <Button
 title="Heart Attack or Myocardial infraction"
 type="clear"
-onPress={() => this.props.navigation.navigate('FAQ page',{screen:'Faqpage'})}
+
 />
  </View>
 
@@ -162,7 +162,7 @@ onPress={() => this.props.navigation.navigate('FAQ page',{screen:'Faqpage'})}
  <Button
 title="Angioplasty and life after angioplasty"
 type="clear"
-onPress={() => this.props.navigation.navigate('FAQ page',{screen:'Faqpage'})}
+
 />
  </View>
 

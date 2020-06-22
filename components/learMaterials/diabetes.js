@@ -87,7 +87,7 @@ export default class Diabetes extends Component {
             {/*All views of Modal*/}
             {/*Animation can be slide, slide, none*/}
             <View style = {styles.modal}>
-            <Icon name="window-close-o" size={35} color="black" style={{position: 'absolute',left: 300,right: 0,top: 20,bottom: 0}}  onPress = {() => 
+            <Icon name="window-close-o" size={35} color="black" style={{position: 'absolute',left: 300,right: 0,top: 120,bottom: 0}}  onPress = {() => 
                   this.setState({ isVisible:!this.state.isVisible})}/>
                 
               <Text style={styles.paragraph}>
@@ -157,7 +157,7 @@ body develops resistance to its action or insufficient release from pancreas.
  <Button
 title="Why should I control my diabetes"
 type="clear"
-onPress={() => this.props.navigation.navigate('Questions',{screen:'NewQues'})}
+
 />
  </View>
 
@@ -167,7 +167,7 @@ onPress={() => this.props.navigation.navigate('Questions',{screen:'NewQues'})}
  <Button
 title="How should I control my diabetes"
 type="clear"
-onPress={() => this.props.navigation.navigate('FAQ page',{screen:'Faqpage'})}
+
 />
  </View>
 
@@ -177,7 +177,7 @@ onPress={() => this.props.navigation.navigate('FAQ page',{screen:'Faqpage'})}
  <Button
 title="Diabetes and diet"
 type="clear"
-onPress={() => this.props.navigation.navigate('Learning Materials',{screen:'pdfViewer'})}
+
 />
  </View>
 
