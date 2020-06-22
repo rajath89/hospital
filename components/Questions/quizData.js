@@ -75,7 +75,7 @@ export const quizData = [
   },
   {
     id: "8",
-    question: `Chronic KIdney Disease`,
+    question: `Chronic Kidney Disease`,
     options: [`Yes`, `No`],
     answer: `River Nile`
   },

@@ -20,6 +20,7 @@ import { Container, Button, text, ListItem, Text } from "native-base";
 import Expo from "expo";
 import Visit from './components/visithos';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import CameraComponent from './components/Camera';
 
 
 
@@ -132,6 +133,16 @@ component={Visit}
    //{ title: 'Dashboard' },
    {headerLeft: null} 
  }
+/>
+
+
+<Stack.Screen 
+name="CAG & Discharge" 
+component={CameraComponent} 
+//  options={
+//    //{ title: 'Dashboard' },
+    
+//  }
 />
 
 <Stack.Screen 

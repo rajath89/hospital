@@ -166,6 +166,7 @@ import Constants from 'expo-constants';
 import { Button } from 'react-native-elements';
 import { Divider } from 'react-native-elements';
 import firebase from '../database/firebase';
+import CameraComponent from './Camera';
 const profileImg ="https://reactnativemaster.com/wp-content/uploads/2019/11/React-native-master-logo-only.png"
 
 export default class Fire extends React.Component {
@@ -203,22 +204,14 @@ export default class Fire extends React.Component {
 
     return (
       <View style={styles.container}>
-        <View style={styles.card}>
- 
-        <Button
-  title="View Profile"
-  type="clear"
-  onPress={() => this.props.navigation.navigate('View Profile',{screen:'viewPro'})}
-/>
-        </View>
-        <View style={styles.hairline} />
+
 
         <View style={styles.card}>
  
         <Button
-  title="Update profile"
+  title="CAG & Discharge Report upload"
   type="clear"
-  onPress={() => this.props.navigation.navigate('Update Profile',{screen:'updatePro'})}
+  onPress={() => this.props.navigation.navigate('CAG & Discharge')}
 />
         </View>
         <View style={styles.hairline} />

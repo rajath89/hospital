@@ -7,6 +7,7 @@ import CameraComponent from './Camera';
 import Fire from './fire';
 
 import mulImUp from './mulImUp';
+import profile from './profile';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -42,8 +43,8 @@ export default function BotTab() {
             // } else if (route.name === 'Info') {
             //   iconName = 'tag';
             // } 
-            else if (route.name === 'Upload') {
-              iconName = 'rocket';
+            else if (route.name === 'Profile') {
+              iconName = 'user';
             }
 
             // You can return any component that you like here!
@@ -53,7 +54,7 @@ export default function BotTab() {
 
       >
         <Tab.Screen name="Home" component={dashboard}/>
-        <Tab.Screen name="Upload" component={CameraComponent} />
+        <Tab.Screen name="Profile" component={profile} />
         {/* <Tab.Screen name="Info" component={Fire} /> */}
    
       </Tab.Navigator>
