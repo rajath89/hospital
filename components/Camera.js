@@ -1,7 +1,7 @@
 
 
 import React from 'react';
-import { Text, View, TouchableOpacity, Image,Button,StyleSheet,TextInput ,Picker} from 'react-native';
+import { Text, View, TouchableOpacity, Image,Button,StyleSheet,TextInput ,Picker,ScrollView} from 'react-native';
 import * as Permissions from 'expo-permissions';
 import { Camera } from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library'; //from 'expo-media-library';
@@ -194,6 +194,7 @@ render() {
   }
   else {
    return (
+     <ScrollView>
     <View style={styles.container}>
 
   
@@ -303,6 +304,7 @@ render() {
           onPress={() =>this.subMit()}
         />  
    </View>
+   </ScrollView>
    );
   }
  }

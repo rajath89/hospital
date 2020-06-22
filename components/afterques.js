@@ -164,6 +164,7 @@ subMit=()=>{
     if(content){
         //this.setState({isLoading:false,obj:content})
         ToastAndroid.show('Report and details are updated', ToastAndroid.SHORT);
+        this.props.navigation.navigate('Cardio App');
     }
   })();
 }
