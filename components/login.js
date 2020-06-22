@@ -39,7 +39,38 @@ export default class Login extends Component {
 
   _storeData = async () => {
   try {
-    await AsyncStorage.setItem('email/username', this.state.email);
+    const val=await AsyncStorage.setItem('globalName', this.state.email);
+
+    if(val!==null){
+      this.setState({
+        globName:val,
+        bool:true
+      });
+
+    }
+
+    console.log("from state single login:",this.state.globName,this.state.bool);
+
+    
+  } catch (error) {
+    // Error saving data
+  }
+}
+
+_storeData2 = async () => {
+  try {
+    const val=await AsyncStorage.setItem('globalName', this.state.email);
+
+    if(val!==null){
+      this.setState({
+        globName:val
+        
+      });
+
+    }
+
+    console.log("from state single login:",this.state.globName);
+
     
   } catch (error) {
     // Error saving data
@@ -57,6 +88,10 @@ async _retrieveData() {
         bool:true
       });
       console.log("from state:",this.state.globName,this.state.bool);
+    }else if(value==null){
+
+      this._storeData();
+
     }
   } catch (error) {
     // Error retrieving data
@@ -87,6 +122,7 @@ componentDidUpdate(prevProps, prevState) {
     var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
     var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
     var dateTime = date+' '+time;
+    this._storeData2();
     (async () => {
     const rawResponse = await fetch('https://flask-app47.herokuapp.com/login', {//exp://192.168.0.104:19000
       method: 'POST',
@@ -94,7 +130,7 @@ componentDidUpdate(prevProps, prevState) {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({"username": this.state.globName, "time": dateTime})
+      body: JSON.stringify({"username": this.state.email, "time": dateTime})
     });
     const content = await rawResponse.json();
   
@@ -116,7 +152,13 @@ getDateTime = () => {
   //   // read error
   // }
   // console.log(values);
-  this._retrieveData();
+
+  //this._storeData();
+  //this._retrieveData();
+  this.setState({
+    //globName:value,
+    bool:true
+  });
   console.log("after ret:",this.state.bool);
   // if(this.state.bool){
   //   console.log(this.state.bool);
@@ -232,7 +274,9 @@ clearAll = async () => {
     } else {
       this.setState({
         isLoading: true,
-      })
+      });
+
+      this._storeData();
 
       //console.log(this.state.email,this.state.password);
       firebase
@@ -243,7 +287,7 @@ clearAll = async () => {
         console.log('User logged-in successfully!')
         this.setState({
           isLoading: false,
-          email: '', 
+           
           password: ''
         })
         this.props.navigation.navigate('Cardio App')
@@ -286,7 +330,7 @@ clearAll = async () => {
 
         <Text 
           style={styles.loginText}
-          onPress={() => {this.props.navigation.navigate('Signup'),this.getAllKeys()}}>
+          onPress={() => {this.props.navigation.navigate('Signup')}}>
           Don't have account? Click here to signup
         </Text>                          
       </View>
