@@ -193,6 +193,8 @@ render() {
        onPress={()=>{this._getPhotoLibrary(),this.parameter("BP_rep")}} 
        title="upload report in image format"
      />
+
+<Text style={{justifyContent:'center',left:140}}>OR</Text>
           <Button 
        onPress={()=>{this._getPdfLibrary(),this.parameter("BP_PDF_rep")}} 
        title="upload report in pdf format"
@@ -203,10 +205,14 @@ render() {
        onPress={()=>{this._getPhotoLibrary(),this.parameter("LAB_rep")}} 
        title="upload report in image format"
      />
+
+<Text style={{justifyContent:'center',left:140}}>OR</Text>
           <Button 
        onPress={()=>{this._getPdfLibrary(),this.parameter("LAB_PDF_rep")}} 
        title="upload report in pdf format"
+       
      />
+     <View style={styles.hairline} />
 
      
 
@@ -264,6 +270,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#fff'
+  },
+  hairline: {
+    
+    height: 15,
+    width: 165
   }
 });
 

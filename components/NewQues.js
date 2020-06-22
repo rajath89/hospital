@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
 
-import { Text, View , StyleSheet,  TouchableOpacity} from 'react-native';
+import { Text, View , StyleSheet,  TouchableOpacity,Alert} from 'react-native';
 import { Button } from 'react-native-elements';
 import { quizData } from "./Questions/quizData";
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -23,6 +23,7 @@ export default class NewQues extends Component {
     state = {
         globName:'',
         qid:null,
+        abnormalID:null,
         currentQuestion: 0,
         myAnswer: null,
         options: [],
@@ -30,7 +31,9 @@ export default class NewQues extends Component {
         disabled: true,
         isEnd: false,
         op:null,
-        ans:[]
+        ans:[],
+        decide:'',
+        msg:""
       };
 
 
@@ -141,25 +144,49 @@ export default class NewQues extends Component {
 
 
 
+
+
       getStatus=(id,mans)=>{
-        var ids=[9,77,79,45,67];
+        var ids=[9,15];
+        var ids2=[2,5,18];
         flag=false;
+        const mg = {2:"stop smoking",5:"Limit Alcohol", 18:"Add fruits,pulses and vegetables,Reduce meat intake"};
         //console.log("from stst",mans);
         for(var i=0;i<ids.length;i++){
           if(ids[i]==id){
             console.log(mans=="None")
              
               flag=true;
+              this.setState({
+                decide: "abnormal",
+                abnormalID:id
+  
+              });
             }
+        }
 
+        for(var i=0;i<ids2.length;i++){
+          if(ids2[i]==id){
+
+            varMg=mg[id]
+            console.log(varMg);
             
-            //flag=true;
-            
-          }
+             
+              flag=true;
+              this.setState({
+                decide: "normal",
+                msg:varMg
+  
+              });
+            }
+        }
           
         
         return flag
         }
+
+        
+
 
 
 
@@ -171,7 +198,7 @@ export default class NewQues extends Component {
         if (myAnswer === quizData[this.state.currentQuestion].answer && this.getStatus(quizData[this.state.currentQuestion].id,myAnswer)) {
           console.log("visit hospital");
 
-          this.props.navigation.navigate('AfterQuestions',{screen:'Afterques'});
+          //this.props.navigation.navigate('AfterQuestions',{screen:'Afterques'});
 
           // this.setState({
           //   score: score + 1
@@ -188,7 +215,9 @@ export default class NewQues extends Component {
 
 
           if(flag==true){
-            this.props.navigation.navigate('AfterQuestions',{screen:'Afterques'});
+            this.setAbnormalID16();
+            
+            this.props.navigation.navigate('Message');
           }
 
         }
@@ -225,6 +254,28 @@ export default class NewQues extends Component {
       }
 
 
+      setAbnormalID = async (value) => {
+        try {
+          await AsyncStorage.setItem('ID',this.state.abnormalID )
+        } catch(e) {
+          // save error
+        }
+      
+        console.log('abnormal id set Done.')
+      }
+
+
+      setAbnormalID16 = async (value) => {
+        try {
+          await AsyncStorage.setItem('ID',"16" );
+        } catch(e) {
+          // save error
+        }
+      
+        console.log('abnormal id set Done.')
+      }
+
+
       componentDidUpdate(prevProps, prevState) {
         if (this.state.currentQuestion !== prevState.currentQuestion) {
           this.setState(() => {
@@ -235,6 +286,48 @@ export default class NewQues extends Component {
             };
           });
         }
+
+                if (prevState.decide !== this.state.decide ) {
+          console.log('decide state has changed.',this.state.decide);
+          if(this.state.decide=="abnormal"){
+            console.log("log hit from compondidup after decide abnormal");
+            // this.setState({
+            //   modBool: false
+
+            // });
+            this.setAbnormalID();
+            console.log("abnormal id:",this.state.abnormalID);
+            this.setState({
+              
+              decide:null
+
+            });
+            this.props.navigation.navigate('Message');
+          }
+          else if(this.state.decide=="normal"){
+            console.log("non fatal");
+            // ToastAndroid.showWithGravity(
+            //   'All Your Base Are Belong To Us',
+            //   ToastAndroid.SHORT,
+            //   ToastAndroid.CENTER
+            // );
+            fg=this.state.msg;
+            Alert.alert(
+              fg
+           );
+            this.setState({
+              modBool: true,
+              decide:null
+
+            });
+          }
+          
+        }
+        if (prevState.questions !== this.state.questions) {
+          console.log('ques state has changed.',this.state.questions);
+          
+        }
+
       }
       //check answer
       checkAnswer = answer => {
@@ -407,7 +500,7 @@ this.removeFew();
                   //if(this.state.isEnd){
                     this.getMultiple();
           ToastAndroid.show('Questions are updated in db', ToastAndroid.SHORT);
-          this.props.navigation.navigate('AfterQuestions',{screen:'Afterques'});
+          this.props.navigation.navigate('BP & Lab reports',{screen:'Afterques'});
         //}
         }
         //this.getAllKeys();

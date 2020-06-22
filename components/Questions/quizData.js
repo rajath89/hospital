@@ -41,7 +41,7 @@ export const quizData = [
     id: "2",
     question: `Smoking`,
     options: [`Yes`, `No`],
-    answer: `Jeff Bezo`
+    answer: `Yes`
   },
   {
     id: "3",
@@ -59,7 +59,7 @@ export const quizData = [
     id: "5",
     question: ` Alcohol`,
     options: [`Yes`, `No`],
-    answer: `River Nile`
+    answer: `Yes`
   },
   {
     id: "6",
@@ -119,7 +119,7 @@ export const quizData = [
     id: "15",
     question: `Loss of consciousness`,
     options: [`Yes`, `No`],
-    answer: `River Nile`
+    answer: `Yes`
   },
   
   {
@@ -133,16 +133,17 @@ export const quizData = [
     question: `Medication`,
     options: [`Yes`, `No`],
     answer: `Yes`
-  },
+  }
+  ,
   {
     id: "18",
-    question: `Regular OPD follow up`,
+    question: `Diet (Fruits,pulses and vegetables)`,
     options: [`Yes`, `No`],
-    answer: `River Nile`
+    answer: `No`
   },
   {
     id: "19",
-    question: `Diet (Fruits,pulses and vegetables)`,
+    question: `Regular OPD follow up`,
     options: [`Yes`, `No`],
     answer: `River Nile`
   }

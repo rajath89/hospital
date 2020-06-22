@@ -3,14 +3,20 @@ import Faqpage from './faqPage';
 import Fire from './dashboard';
 import * as React from 'react';
 
+import { Modal, Button, View,Text, StyleSheet } from 'react-native';
+
 const Drawer = createDrawerNavigator();
 
 export default function MyDrawer() {
   return (
-    <Drawer.Navigator>
+    
+            <Drawer.Navigator>
       <Drawer.Screen name="Dashboard" component={Fire} />
       <Drawer.Screen name="Feed" component={Faqpage} />
       
     </Drawer.Navigator>
+
+
+
   );
 }

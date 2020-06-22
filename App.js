@@ -13,9 +13,13 @@ import viewPro from './components/viewPro';
 import pdfViewer from './components/pdfviewer';
 import Faqpage from './components/faqPage';
 import MyDrawer from './components/drawnav';
+import Diabetes from './components/learMaterials/diabetes';
+
 
 import { Container, Button, text, ListItem, Text } from "native-base";
 import Expo from "expo";
+import Visit from './components/visithos';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 
@@ -32,7 +36,7 @@ function MyStack() {
 
   return (
     <Stack.Navigator
-      initialRouteName="Signup"
+      initialRouteName="Login"
       screenOptions={{
         headerTitleAlign: 'center',
         headerStyle: {
@@ -59,10 +63,12 @@ function MyStack() {
       <Stack.Screen 
        name="Cardio App" 
        component={dashboardV2} 
-      //  options={
-      //    //{ title: 'Dashboard' },
-      //    {headerLeft: null} 
-      //  }
+       options={
+         { headerLeft: null }
+        //  {headerLeft: () => (
+        //    <Icon.Button name="gear" size={25} backgroundColor="#009387" onPress={()=>navigation.openDrawer()}></Icon.Button>
+        //  )} 
+       }
       />
 
        <Stack.Screen 
@@ -75,7 +81,7 @@ function MyStack() {
       />
 
              <Stack.Screen 
-       name="AfterQuestions" 
+       name="BP & Lab reports" 
        component={AfterQuestions} 
       //  options={
       //    //{ title: 'Dashboard' },
@@ -119,6 +125,24 @@ component={Faqpage}
 //  }
 />
 
+<Stack.Screen 
+name="Message" 
+component={Visit} 
+ options={
+   //{ title: 'Dashboard' },
+   {headerLeft: null} 
+ }
+/>
+
+<Stack.Screen 
+name="Diabetes" 
+component={Diabetes} 
+//  options={
+//    //{ title: 'Dashboard' },
+//    {headerLeft: null} 
+//  }
+/>
+
 </Stack.Navigator>
 
     
@@ -137,3 +161,6 @@ export default function App() {
    
   );
 }
+
+
+

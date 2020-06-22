@@ -11,7 +11,7 @@ export default function dashboardV2() {
   return (
     
     
-    <MyDrawer />
+    <BotTab />
     
   );
 }

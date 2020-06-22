@@ -1,7 +1,7 @@
 
 
 import React from 'react';
-import { Text, View, TouchableOpacity, Image,Button,StyleSheet,TextInput } from 'react-native';
+import { Text, View, TouchableOpacity, Image,Button,StyleSheet,TextInput ,Picker} from 'react-native';
 import * as Permissions from 'expo-permissions';
 import { Camera } from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library'; //from 'expo-media-library';
@@ -30,7 +30,11 @@ export default class CameraComponent extends React.Component {
     pd:false,
     CAG: '', 
     hemoglobin: '',
+    PTCA:'',
+    EF:'',
+    SerumCreatinine:'',
     isLoading: false,
+    selected2:null
     
   }
 
@@ -44,6 +48,11 @@ export default class CameraComponent extends React.Component {
   }
  }
 
+ onValueChange2(value) {
+  this.setState({
+    selected2: value
+  });
+}
 
  async _retrieveData() {
   try {
@@ -152,7 +161,8 @@ subMit=()=>{
   var arr=new Array();
   arr.push({"CAG":df});
   arr.push({"Hemoglobin":df1});
-  console.log(arr);
+  //console.log(arr);
+  console.log(this.state);
 
   (async () => {
     const rawResponse = await fetch('https://flask-app47.herokuapp.com/CAGdetails', {//exp://192.168.0.104:19000
@@ -161,7 +171,7 @@ subMit=()=>{
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({"username": this.state.globName,"CAG_DischargeDetails":arr})
+      body: JSON.stringify({"username": this.state.globName,"CAG_DischargeDetails":this.state})
     });
     const content = await rawResponse.json();
   
@@ -193,11 +203,78 @@ render() {
 
 
     {/* <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}> */}
-      <Text>CAG report</Text>
+      
+     
+
+
+
+    {/* </View> */}
+
+
+    <Text style={{color: "gray"}}>CAG</Text>
+
+<Picker
+  placeholder="CAG"
+  selectedValue={this.state.CAG}
+  // style={{ height: 50,left:240,width:100 }}
+  style={ styles.inputStyle2 }
+  onValueChange={(itemValue, itemIndex) => this.setState({ CAG: itemValue })}>
+  <Picker.Item label="SVD" value="SVD" />
+  <Picker.Item label="DVD" value="DVD" />
+  <Picker.Item label="TVD" value="TVD" />
+  
+</Picker>
+
+<Text style={{color: "gray"}}>PTCA</Text>
+
+<Picker
+  placeholder="PTCA"
+  selectedValue={this.state.PTCA}
+  // style={{ height: 50,left:240,width:100 }}
+  style={ styles.inputStyle2 }
+  onValueChange={(itemValue, itemIndex) => this.setState({ PTCA: itemValue })}>
+  <Picker.Item label="LMCA" value="LMCA" />
+  <Picker.Item label="LAD" value="LAD" />
+  <Picker.Item label="LCX" value="LCX" />
+  <Picker.Item label="RCA" value="RCA" />
+  
+</Picker>
+
+
+        <TextInput
+          style={styles.inputStyle}
+          placeholder="Hemoglobin%"
+          value={this.state.hemoglobin}
+          onChangeText={(val) => this.updateInputVal(val, 'hemoglobin')}
+          maxLength={15}
+          
+        /> 
+
+<TextInput
+          style={styles.inputStyle}
+          placeholder="EF%"
+          value={this.state.EF}
+          onChangeText={(val) => this.updateInputVal(val, 'EF')}
+          maxLength={15}
+          
+        /> 
+
+<TextInput
+          style={styles.inputStyle}
+          placeholder="Serum Creatinine"
+          value={this.state.SerumCreatinine}
+          onChangeText={(val) => this.updateInputVal(val, 'SerumCreatinine')}
+          maxLength={15}
+          
+        /> 
+
+<Text>CAG report</Text>
      <Button 
        onPress={()=>{this._getPhotoLibrary(),this.parameter("CAG")}} 
        title="upload report in image format"
      />
+
+     <Text style={{justifyContent:'center',left:140}}>OR</Text>
           <Button 
        onPress={()=>{this._getPdfLibrary(),this.parameter("CAG_PDF")}} 
        title="upload report in pdf format"
@@ -208,35 +285,21 @@ render() {
        onPress={()=>{this._getPhotoLibrary(),this.parameter("Discharge")}} 
        title="upload report in image format"
      />
+
+<Text style={{justifyContent:'center',left:140}}>OR</Text>
           <Button 
        onPress={()=>{this._getPdfLibrary(),this.parameter("Discharge_PDF")}} 
+       style={{paddingBottom:15}}
        title="upload report in pdf format"
      />
 
-     
+<View style={styles.hairline} />
 
-
-
-    {/* </View> */}
-
-    <TextInput
-          style={styles.inputStyle}
-          placeholder="CAG"
-          value={this.state.CAG}
-          onChangeText={(val) => this.updateInputVal(val, 'CAG')}
-        />
-        <TextInput
-          style={styles.inputStyle}
-          placeholder="Hemoglobin%"
-          value={this.state.hemoglobin}
-          onChangeText={(val) => this.updateInputVal(val, 'hemoglobin')}
-          maxLength={15}
-          
-        /> 
 
     <Button
           color="#3740FE"
           title="Submit"
+          
           onPress={() =>this.subMit()}
         />  
    </View>
@@ -262,6 +325,14 @@ const styles = StyleSheet.create({
     borderColor: "#ccc",
     borderBottomWidth: 1
   },
+  inputStyle2: {
+    width: '100%',
+    marginBottom: 15,
+    paddingBottom: 15,
+    alignSelf: "center",
+    borderColor: "#ccc",
+    borderBottomWidth: 1
+  },
   loginText: {
     color: '#3740FE',
     marginTop: 25,
@@ -276,6 +347,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#fff'
+  },
+  hairline: {
+    
+    height: 8,
+    width: 165
   }
 });
 

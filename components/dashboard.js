@@ -233,7 +233,7 @@ onPress={() => this.props.navigation.navigate('Questions',{screen:'NewQues'})}
  </View>
 
  <View style={styles.hairline} />
- <View style={styles.card}>
+ {/* <View style={styles.card}>
  
  <Button
 title="FAQs"
@@ -242,7 +242,7 @@ onPress={() => this.props.navigation.navigate('FAQ page',{screen:'Faqpage'})}
 />
  </View>
 
- <View style={styles.hairline} />
+ <View style={styles.hairline} /> */}
  <View style={styles.card}>
  
  <Button
