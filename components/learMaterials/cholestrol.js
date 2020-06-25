@@ -11,7 +11,7 @@ import * as WebBrowser from 'expo-web-browser';
 
  
 
-export default class Diabetes extends Component {
+export default class Cholestrol extends Component {
 
 
 
@@ -37,7 +37,7 @@ export default class Diabetes extends Component {
 <View style={styles.container}>
 
 <WebView
-        source={{ uri: 'https://parikshith21.github.io/jhs-learning/diab.html' }}
+        source={{ uri: 'https://parikshith21.github.io/jhs-learning/chol.html' }}
         style={{ maxHeight: 700,width:380 ,flex: 1 }}
       />
       </View>

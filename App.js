@@ -14,6 +14,12 @@ import pdfViewer from './components/pdfviewer';
 import Faqpage from './components/faqPage';
 import MyDrawer from './components/drawnav';
 import Diabetes from './components/learMaterials/diabetes';
+import Cholestrol from './components/learMaterials/cholestrol';
+import BP from './components/learMaterials/bp';
+import Smoking from './components/learMaterials/smoking';
+import PA from './components/learMaterials/pa';
+import HA from './components/learMaterials/ha';
+import AP from './components/learMaterials/ap';
 
 
 import { Container, Button, text, ListItem, Text } from "native-base";
@@ -21,6 +27,7 @@ import Expo from "expo";
 import Visit from './components/visithos';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import CameraComponent from './components/Camera';
+// import Smoking from './components/learMaterials/smoking';
 
 
 
@@ -148,6 +155,60 @@ component={CameraComponent}
 <Stack.Screen 
 name="Diabetes" 
 component={Diabetes} 
+//  options={
+//    //{ title: 'Dashboard' },
+//    {headerLeft: null} 
+//  }
+/>
+
+<Stack.Screen 
+name="Cholestrol" 
+component={Cholestrol} 
+//  options={
+//    //{ title: 'Dashboard' },
+//    {headerLeft: null} 
+//  }
+/>
+
+<Stack.Screen 
+name="Blood Pressure" 
+component={BP} 
+//  options={
+//    //{ title: 'Dashboard' },
+//    {headerLeft: null} 
+//  }
+/>
+
+<Stack.Screen 
+name="Smoking" 
+component={Smoking} 
+//  options={
+//    //{ title: 'Dashboard' },
+//    {headerLeft: null} 
+//  }
+/>
+
+<Stack.Screen 
+name="Physical Activity" 
+component={PA} 
+//  options={
+//    //{ title: 'Dashboard' },
+//    {headerLeft: null} 
+//  }
+/>
+
+<Stack.Screen 
+name="Heart Attack" 
+component={HA} 
+//  options={
+//    //{ title: 'Dashboard' },
+//    {headerLeft: null} 
+//  }
+/>
+
+<Stack.Screen 
+name="Angioplasty" 
+component={AP} 
 //  options={
 //    //{ title: 'Dashboard' },
 //    {headerLeft: null} 

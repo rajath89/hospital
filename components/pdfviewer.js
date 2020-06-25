@@ -70,6 +70,7 @@ import { Button } from 'react-native-elements';
 
 import { Modal, View,Text, StyleSheet } from 'react-native';
 import { WebView } from 'react-native-webview';
+import { CheckBox } from 'react-native-elements'
 
 
  
@@ -77,7 +78,8 @@ import { WebView } from 'react-native-webview';
 export default class Diabetes extends Component {
   state = {
     isVisible: false,
-    isVisible2:false
+    isVisible2:false,
+    kannada:false
   }
 
 
@@ -88,12 +90,20 @@ export default class Diabetes extends Component {
 
 
 <View style={styles.container}>
+
+{/* <CheckBox
+  title="check"
+  checked={false}
+  onPress={() => this.setState({kannada: !this.state.kannada})}
+/> */}
+
+
         <View style={styles.card}>
 
         
  
         <Button
-  title="Diabetes"
+  title={this.state.kannada == false ? 'Diabetes' : 'ಮಧುಮೇಹ (ಸಕ್ಕರೆ ರೋಗ)'} 
   type="clear"
   
   onPress={() => this.props.navigation.navigate('Diabetes')}
@@ -111,6 +121,8 @@ export default class Diabetes extends Component {
         <Button
   title="Cholestrol"
   type="clear"
+
+  onPress={() => this.props.navigation.navigate('Cholestrol')}
   
 />
         </View>
@@ -121,7 +133,7 @@ export default class Diabetes extends Component {
  <Button
 title="Blood Pressure"
 type="clear"
-
+onPress={() => this.props.navigation.navigate('Blood Pressure')}
 />
  </View>
 
@@ -132,6 +144,8 @@ type="clear"
 title="Smoking"
 type="clear"
 
+onPress={() => this.props.navigation.navigate('Smoking')}
+
 />
  </View>
 
@@ -141,7 +155,7 @@ type="clear"
  <Button
 title="Physical Activity"
 type="clear"
-
+onPress={() => this.props.navigation.navigate('Physical Activity')}
 />
  </View>
  <View style={styles.hairline} />
@@ -151,7 +165,7 @@ type="clear"
  <Button
 title="Heart Attack or Myocardial infraction"
 type="clear"
-
+onPress={() => this.props.navigation.navigate('Heart Attack')}
 />
  </View>
 
@@ -162,7 +176,7 @@ type="clear"
  <Button
 title="Angioplasty and life after angioplasty"
 type="clear"
-
+onPress={() => this.props.navigation.navigate('Angioplasty')}
 />
  </View>
 

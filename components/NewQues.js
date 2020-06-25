@@ -4,21 +4,20 @@ import React, { Component } from 'react';
 import { Text, View , StyleSheet,  TouchableOpacity,Alert} from 'react-native';
 import { Button } from 'react-native-elements';
 import { quizData } from "./Questions/quizData";
+import {quizData2} from "./Questions/quizData2";
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {CheckBox} from "native-base"
+
 // import console = require('console');
 
 import update from 'immutability-helper';
 
 import { AsyncStorage } from 'react-native';
 import { ToastAndroid } from 'react-native';
+import { CheckBox } from 'react-native-elements';
 
 
 export default class NewQues extends Component {
-    // constructor(props) {
-    //     super(props);
-    //     this.state = {  }
-    // }
+
 
     state = {
         globName:'',
@@ -33,18 +32,14 @@ export default class NewQues extends Component {
         op:null,
         ans:[],
         decide:'',
-        msg:""
+        msg:"",
+        kannada:false,
+        quizDecide:quizData
       };
 
+      
 
-
-
-
-
-
-
-
-      async _retrieveData() {
+async _retrieveData() {
         try {
           const value = await AsyncStorage.getItem('globalName');
           if (value !== null) {
@@ -67,94 +62,59 @@ export default class NewQues extends Component {
       }
 
 
-//   getMultiple = async () => {
 
-//   let values
-//   try {
-//     values = await AsyncStorage.multiGet(['expoToken', 'expoToken1','\" Do you have hypertension ?\"'])
-//   } catch(e) {
-//     // read error
-//   }
-//   if(values){
-//   //console.log(values.length);
-//   //console.log(JSON.stringify(values));
-
-//   var object = Object.fromEntries(values);
-//   console.log(object);
-//   this.setState({ob:object});
-//   console.log(this.state.ob);
-//   console.log(JSON.stringify(this.state.ob));
-
-//   var myArray = new Array();
-//   myArray.push(this.state.ob);
-// //alert(JSON.stringify(myArray));
-// console.log(myArray);
-
-  
-
-//   (async () => {
-//   const rawResponse = await fetch('https://flask-app47.herokuapp.com/questions', {//exp://192.168.0.104:19000
-//     method: 'POST',
-//     headers: {
-//       'Accept': 'application/json',
-//       'Content-Type': 'application/json'
-//     },
-//     body: JSON.stringify({"username": "jason", "questionDetails":myArray[0]})
-//   });
-//   const content = await rawResponse.json();
-
-//   console.log(content);
-//   //console.log(object);
-// })();
-
- 
-
-
-
-
-// }
- 
-// }
 
 
 
 
       loadQuizData = () => {
         // console.log(quizData[0].question)
-        this.setState(() => {
-          return {
-            questions: quizData[this.state.currentQuestion].question,
-            answer: quizData[this.state.currentQuestion].answer,
-            options: quizData[this.state.currentQuestion].options,
-            qid:quizData[this.state.currentQuestion].id
-          };
-        });
 
-        //console.log("from load",this.state.options,this.state.answer,this.state.answer);
+        if(this.state.kannada==false){
+          this.setState(() => {
+            return {
+              questions: quizData[this.state.currentQuestion].question,
+              answer: quizData[this.state.currentQuestion].answer,
+              options: quizData[this.state.currentQuestion].options,
+              qid:quizData[this.state.currentQuestion].id,
+              quizDecide:"quizData"
+            };
+          });
+        }
+        else if(this.state.kannada==true){
+
+          this.setState(() => {
+            return {
+              questions: quizData2[this.state.currentQuestion].question,
+              answer: quizData2[this.state.currentQuestion].answer,
+              options: quizData2[this.state.currentQuestion].options,
+              qid:quizData2[this.state.currentQuestion].id,
+              quizDecide:"quizData2"
+            };
+          });
+  
+
+        }
         
       };
     
       componentDidMount() {
         this.loadQuizData();
-        console.log("wfew3rfere");
+        console.log(quizData.length);
         this._retrieveData();
       }
 
 
-
-
-
-
-
-      getStatus=(id,mans)=>{
+getStatus=(id)=>{
         var ids=[9,15];
         var ids2=[2,5,18];
-        flag=false;
-        const mg = {2:"stop smoking",5:"Limit Alcohol", 18:"Add fruits,pulses and vegetables,Reduce meat intake"};
+        var flag=false;
+        const mg = {2:"stop smoking",5:"Limit Alcohol", 18:"Add fruits,pulses and vegetables to your diet and Reduce meat intake"};
+        const mg2 = {2:"ಧೂಮಪಾನ ನಿಲ್ಲಿಸಿ",5:"ಮಧ್ಯಪಾನ ನಿಲ್ಲಿಸಿ", 18:"ಹಣ್ಣು ತರಕಾರಿ ಕಾಳುಗಳನ್ನು ಸೇವಿಸಿ, ಮಾಂಸ ತಿನ್ನುವುದನ್ನು ಕಡಿಮೆ ಮಾಡಿ"};
         //console.log("from stst",mans);
         for(var i=0;i<ids.length;i++){
           if(ids[i]==id){
-            console.log(mans=="None")
+            //console.log(mans=="None")
              
               flag=true;
               this.setState({
@@ -167,9 +127,17 @@ export default class NewQues extends Component {
 
         for(var i=0;i<ids2.length;i++){
           if(ids2[i]==id){
+            var varMg;
 
-            varMg=mg[id]
-            console.log(varMg);
+            if(this.state.kannada==true){
+              varMg=mg2[id]
+              console.log(varMg);
+            }else if(this.state.kannada==false){
+              varMg=mg[id]
+              console.log(varMg);
+            }
+
+
             
              
               flag=true;
@@ -192,29 +160,40 @@ export default class NewQues extends Component {
 
       nextQuestionHandler = () => {
         // console.log('test')
-        const { myAnswer, answer, score,qid } = this.state;
-        console.log(quizData[this.state.currentQuestion].id,myAnswer,quizData[this.state.currentQuestion].answer);
+        const { myAnswer, answer, score,qid,quizDecide } = this.state;
+        var st=quizDecide;
+        console.log("nextq",quizDecide);
+        var df=String(st);
+        //this.changeState();
+        if(df=="quizData"){
+          console.log("#############quizDATA");
+          var qd1=quizData[this.state.currentQuestion].answer;
+          var qidN=quizData[this.state.currentQuestion].id;
+          console.log("ufgg",qidN);
+
+          
+        }else if(df=="quizData2"){
+          console.log("#############quizDATA2");
+          var qd1=quizData2[this.state.currentQuestion].answer;
+          var qidN=quizData2[this.state.currentQuestion].id;
+
+        }
+        console.log(qidN,myAnswer,qd1);
     
-        if (myAnswer === quizData[this.state.currentQuestion].answer && this.getStatus(quizData[this.state.currentQuestion].id,myAnswer)) {
+        if (myAnswer === qd1 && this.getStatus(qidN)) {
           console.log("visit hospital");
 
-          //this.props.navigation.navigate('AfterQuestions',{screen:'Afterques'});
-
-          // this.setState({
-          //   score: score + 1
-          //   //op:null
-          //  // quizData[this.state.currentQuestion].id
-          // });
-        }else if(quizData[this.state.currentQuestion].id=="16"){
-          flag=false;
-          if(myAnswer==="None"){
+        }else if(qidN=="16"){
+          console.log("hit qid16")
+          var flag1=false;
+          if(myAnswer==="None" || myAnswer==="ಯಾವು ಇಲ್ಲ"){
             console.log("proceed");
           }else{
-            flag=true;
+            flag1=true;
           }
 
 
-          if(flag==true){
+          if(flag1==true){
             this.setAbnormalID16();
             
             this.props.navigation.navigate('Message');
@@ -232,7 +211,22 @@ export default class NewQues extends Component {
 
         _storeData = async () => {
         try {
-          await AsyncStorage.setItem(quizData[this.state.currentQuestion].id, this.state.op);
+
+          var st=this.state.quizDecide;
+          var df=String(st);
+          if(df=="quizData"){
+            console.log("###from asyncStorage##########quizDATA");
+            
+            var qidA=quizData[this.state.currentQuestion].id;
+  
+            
+          }else if(df=="quizData"){
+            console.log("###from asyncStorage##########quizDATA2");
+            
+            var qidA=quizData2[this.state.currentQuestion].id;
+  
+          }
+          await AsyncStorage.setItem(qidA, this.state.op);
           console.log("stored");
           
         } catch (error) {
@@ -255,9 +249,16 @@ export default class NewQues extends Component {
 
 
       setAbnormalID = async (value) => {
+
+        console.log(this.state.kannada);
+
+
+        const firstPair = ["ID", this.state.abnormalID]
+        const secondPair = ["lang", String(this.state.kannada)]
         try {
-          await AsyncStorage.setItem('ID',this.state.abnormalID )
-        } catch(e) {
+          await AsyncStorage.multiSet([firstPair, secondPair])
+        }
+         catch(e) {
           // save error
         }
       
@@ -268,6 +269,7 @@ export default class NewQues extends Component {
       setAbnormalID16 = async (value) => {
         try {
           await AsyncStorage.setItem('ID',"16" );
+          await AsyncStorage.setItem('lang',this.state.kannada );
         } catch(e) {
           // save error
         }
@@ -277,14 +279,30 @@ export default class NewQues extends Component {
 
 
       componentDidUpdate(prevProps, prevState) {
+        const {quizDecide}=this.state;
+        
         if (this.state.currentQuestion !== prevState.currentQuestion) {
-          this.setState(() => {
-            return {
-              disabled: true,
-              questions: quizData[this.state.currentQuestion].question,
-              options: quizData[this.state.currentQuestion].options
-            };
-          });
+          console.log(quizDecide);
+          console.log("length$$$$$",this.state.quizDecide.length)
+          if(this.state.kannada==true){
+            this.setState(() => {
+              return {
+                disabled: true,
+                questions: quizData2[this.state.currentQuestion].question,
+                options: quizData2[this.state.currentQuestion].options
+              };
+            });
+
+          }else if(this.state.kannada==false){
+            this.setState(() => {
+              return {
+                disabled: true,
+                questions: quizData[this.state.currentQuestion].question,
+                options: quizData[this.state.currentQuestion].options
+              };
+            });
+          }
+
         }
 
                 if (prevState.decide !== this.state.decide ) {
@@ -311,6 +329,7 @@ export default class NewQues extends Component {
             //   ToastAndroid.SHORT,
             //   ToastAndroid.CENTER
             // );
+            var fg;
             fg=this.state.msg;
             Alert.alert(
               fg
@@ -325,6 +344,13 @@ export default class NewQues extends Component {
         }
         if (prevState.questions !== this.state.questions) {
           console.log('ques state has changed.',this.state.questions);
+          console.log(this.state);
+          
+        }
+
+        if (prevState.kannada !== this.state.kannada) {
+          console.log('kannada state has changed.');
+          this.loadQuizData();
           
         }
 
@@ -347,12 +373,6 @@ export default class NewQues extends Component {
           ans,
           ans2
         };
-
-        //AsyncStorage.setItem("keyQ", this.state.op).then(console.log("stored"));
-          
-
-        //this._storeData().then(console.log);
-
         const clone = JSON.parse(JSON.stringify(mystate));
         state1.push(clone);
         //console.log(state1);
@@ -363,22 +383,6 @@ export default class NewQues extends Component {
         this.setState({ myAnswer: answer, disabled: false,op:answer, ans:[mystate,...this.state.ans]});
         //console.log("after",this.state.ans);
       };
-
-
-
-
-
-//flush all keys
-
-        clearAll = async () => {
-  try {
-    await AsyncStorage.clear()
-  } catch(e) {
-    // clear error
-  }
-
-  console.log('cleared')
-}
 
 
 removeFew = async () => {
@@ -409,10 +413,6 @@ getAllKeys = async () => {
     // read key error
   }
 
-  //console.log(keys);
-  //this.clearAll();
-  // example console.log result:
-  // ['@MyApp_user', '@MyApp_key']
 }
 
 getQues = () => {
@@ -462,9 +462,6 @@ getMultiple = async () => {
     
   }
 
-
-  
-  //console.log(object);
 })();
 
 
@@ -473,12 +470,6 @@ getMultiple = async () => {
   console.log("outside");
 //console.log(content);
 this.removeFew();
-
-
-
-
-  // example console.log output:
-  // [ ['@MyApp_user', 'myUserValue'], ['@MyApp_key', 'myKeyValue'] ]
 }
 
 
@@ -490,14 +481,11 @@ this.removeFew();
 
       finishHandler = () => {
         console.log("finished");
-        if (this.state.currentQuestion === quizData.length - 1) {
+        if (this.state.currentQuestion === this.state.quizDecide.length - 1) {
           this.setState({
             isEnd: true
           });
-          
-
-
-                  //if(this.state.isEnd){
+          //if(this.state.isEnd){
                     this.getMultiple();
           ToastAndroid.show('Questions are updated in db', ToastAndroid.SHORT);
           this.props.navigation.navigate('BP & Lab reports',{screen:'Afterques'});
@@ -509,17 +497,34 @@ this.removeFew();
 //#################uncomment getmultiple####
         //this.getMultiple();
 
-
-
-
-
 };
+
+changeState=()=>{
+  this.setState({kannada: !this.state.kannada,state:this.state});
+  console.log(this.state.kannada);
+}
     
 
     render() { 
-        const { options, myAnswer, currentQuestion, isEnd } = this.state;
+        const { options, myAnswer, currentQuestion, isEnd ,quizDecide} = this.state;
+
+        var str=quizDecide;
+        
+        if(String(str)=="quizData"){
+          var df=quizData[this.state.currentQuestion].id;
+        }else if(String(str)=="quizData2"){
+          var df=quizData2[this.state.currentQuestion].id;
+        }
+        
         return (
                     <View style={styles.container}>
+  {df==0  &&   <CheckBox
+  title="change language"
+  checked={false}
+  onPress={() => this.setState({kannada: !this.state.kannada})}
+/>}
+
+
           <Text style={styles.header}>{this.state.questions} </Text>
 
           <View style={[{ width: "90%", margin: 10, backgroundColor: "#f6f6f6" }]}>
@@ -530,16 +535,8 @@ this.removeFew();
             <Button title={option} type="solid" raised="true" buttonStyle={styles.btstyle} key={this.state.questions.id} onPress={() => {this.checkAnswer(option),this.vv(option)}}/>
             <View style={styles.separator}/>
             </React.Fragment>
-              
-              
-            
-             
           ))}
-
-
-
-
-          </View>
+        </View>
 
           <View style={[{ width: "40%", margin: 10, backgroundColor: "#f6f6f6" }]}>
 
@@ -556,13 +553,9 @@ this.removeFew();
 
           </View>
 
-                        {/* {currentQuestion === quizData.length - 1 && (
-            <Button title="Finish2" className="ui inverted button" onPress={()=>this.getAllKeys()}/>
-              
-            
-          )} */}
+
           <Text>option clicked : {this.state.op} </Text>
-           <Text>Ques id :{quizData[this.state.currentQuestion].id}</Text>
+           <Text>Ques id :{df}</Text>
            
         </View>
          )
@@ -627,3 +620,99 @@ const styles = StyleSheet.create({
   },
 });
 
+
+
+
+//   getMultiple = async () => {
+
+//   let values
+//   try {
+//     values = await AsyncStorage.multiGet(['expoToken', 'expoToken1','\" Do you have hypertension ?\"'])
+//   } catch(e) {
+//     // read error
+//   }
+//   if(values){
+//   //console.log(values.length);
+//   //console.log(JSON.stringify(values));
+
+//   var object = Object.fromEntries(values);
+//   console.log(object);
+//   this.setState({ob:object});
+//   console.log(this.state.ob);
+//   console.log(JSON.stringify(this.state.ob));
+
+//   var myArray = new Array();
+//   myArray.push(this.state.ob);
+// //alert(JSON.stringify(myArray));
+// console.log(myArray);
+
+  
+
+//   (async () => {
+//   const rawResponse = await fetch('https://flask-app47.herokuapp.com/questions', {//exp://192.168.0.104:19000
+//     method: 'POST',
+//     headers: {
+//       'Accept': 'application/json',
+//       'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify({"username": "jason", "questionDetails":myArray[0]})
+//   });
+//   const content = await rawResponse.json();
+
+//   console.log(content);
+//   //console.log(object);
+// })();
+
+ 
+
+
+
+
+// }
+ 
+// }
+
+
+        // if(this.state.kannada==false){
+
+        //   this.setState(() => {
+        //     return {
+        //       questions: quizData[this.state.currentQuestion].question,
+        //       answer: quizData[this.state.currentQuestion].answer,
+        //       options: quizData[this.state.currentQuestion].options,
+        //       qid:quizData[this.state.currentQuestion].id
+        //     };
+        //   });
+
+        // }else{
+        //   this.setState(() => {
+        //     return {
+        //       questions: quizData2[this.state.currentQuestion].question,
+        //       answer: quizData2[this.state.currentQuestion].answer,
+        //       options: quizData2[this.state.currentQuestion].options,
+        //       qid:quizData2[this.state.currentQuestion].id
+        //     };
+        //   });
+        // }
+
+
+        //console.log("from load",this.state.options,this.state.answer,this.state.answer);
+
+
+
+          //this.props.navigation.navigate('AfterQuestions',{screen:'Afterques'});
+
+          // this.setState({
+          //   score: score + 1
+          //   //op:null
+          //  // quizData[this.state.currentQuestion].id
+          // });
+
+
+
+
+                        {/* {currentQuestion === quizData.length - 1 && (
+            <Button title="Finish2" className="ui inverted button" onPress={()=>this.getAllKeys()}/>
+              
+            
+          )} */}

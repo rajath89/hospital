@@ -5,6 +5,7 @@ import firebase from '../database/firebase';
 import {QuesList} from './QuesList';
 
 import { AsyncStorage } from 'react-native';
+import Constants from 'expo-constants';
 
 
 export default class updatePro extends Component {
@@ -117,46 +118,70 @@ getprof = () => {
       )
     }    
     return (
-      <View style={styles.container}>  
 
-      <Text>fetched proDetails from api</Text>
-      {/* <Text>{this.state.obj.ProfileDet.Age}</Text> */}
-                        
-      </View>
-    );
+      <View style={styles.container}>
+        <View style={styles.card}>
+ 
+<Text style={styles.textViewContainer}>Name:{this.state.obj.ProfileDet.Name}</Text>
+        </View>
+        <View style={styles.hairline} />
+
+        <View style={styles.card}>
+ 
+        <Button
+  title="Update profile"
+  type="clear"
+  onPress={() => this.props.navigation.navigate('Update Profile',{screen:'updatePro'})}
+/>
+        </View>
+        <View style={styles.hairline} />
+        </View>
+
+      
+     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    padding: 35,
-    backgroundColor: '#fff'
-  },
-  inputStyle: {
-    width: '100%',
-    marginBottom: 15,
-    paddingBottom: 15,
-    alignSelf: "center",
-    borderColor: "#ccc",
-    borderBottomWidth: 1
-  },
-  loginText: {
-    color: '#3740FE',
-    marginTop: 25,
-    textAlign: 'center'
-  },
-  preloader: {
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    position: 'absolute',
-    alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#fff'
+    paddingTop: Constants.statusBarHeight,
+    backgroundColor: '#ecf0f1',
+    padding: 8,
+    alignItems:"center"
+  },textViewContainer: {
+    textAlignVertical:'center', 
+    fontSize: 15,
+    color: '#1c1c1c',
+    left:100
+    },
+  card:{
+    height:30,
+    width:"80%",
+    backgroundColor:"white",
+    borderRadius:15,
+    borderWidth: 1,
+    borderColor: '#3740FE',
+    elevation:10,
+    padding:10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.5,
+    shadowRadius: 5
+  },
+  profileImg:{
+    width:30,
+    height:30,
+    borderRadius:50,
+    marginRight:10,
+  },
+  header: {
+    flexDirection:"row",
+  },
+  hairline: {
+    
+    height: 8,
+    width: 165
   }
 });

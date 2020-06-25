@@ -20,9 +20,17 @@ export default class Visit extends Component {
   async _retrieveData() {
     try {
       const value = await AsyncStorage.getItem('ID');
-      if (value !== null) {
+      const value2 = await AsyncStorage.getItem('lang');
+      console.log("lang",value2);
+      if (value !== null && value2=="false") {
         // We have data!!
         const text={9:"Visit Hospital",15:"Visit hospital at the earliest",16:"Visit hospital at the earliest"}
+        console.log("ID from visithos component",value);
+        this.setState({id:value,txt:text[value]});
+
+      }else if (value !== null && value2=="true") {
+        // We have data!!
+        const text={9:"ಆಸ್ಪತ್ರೆಗೆ ಭೇಟಿ ನೀಡಿ",15:"ತಕ್ಷಣ ಆಸ್ಪತ್ರೆಗೆ ಭೇಟಿ ನೀಡಿ",16:"ತಕ್ಷಣ ಆಸ್ಪತ್ರೆಗೆ ಭೇಟಿ ನೀಡಿ"}
         console.log("ID from visithos component",value);
         this.setState({id:value,txt:text[value]});
 

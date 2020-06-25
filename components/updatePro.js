@@ -88,6 +88,24 @@ export default class updatePro extends Component {
         token = await Notifications.getExpoPushTokenAsync();
         if (token){
           this.setState({ expoPushToken: token });
+          console.log(token);
+          console.log(this.state.globName);
+          (async () => {
+            const rawResponse = await fetch('https://flask-app47.herokuapp.com/expo', {//exp://192.168.0.104:19000
+              method: 'POST',
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({"username": this.state.globName,"expoToken":token})
+            });
+            const content = await rawResponse.json();
+          
+            console.log(this.state);
+            if(content){
+                this.setState({isLoading:false,obj:content})
+            }
+          })();
         }else{
              this.setState({ expoPushToken: "token not fetched" });
            }
@@ -355,7 +373,7 @@ export default class updatePro extends Component {
         <Button
           color="#3740FE"
           title="Update"
-          onPress={() => {this.upPro()}}
+          onPress={() => {this.registerForPushNotificationsAsync()}}
         />
 
 
