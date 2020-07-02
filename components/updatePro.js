@@ -297,6 +297,7 @@ export default class updatePro extends Component {
   // style={{ height: 50,left:240,width:100 }}
   style={ styles.inputStyle2 }
   onValueChange={(itemValue, itemIndex) => this.setState({ selected2: itemValue })}>
+  <Picker.Item label="select education" value="" />
   <Picker.Item label="Not educated" value="Not educated" />
   <Picker.Item label="Primary" value="Primary" />
   <Picker.Item label="Secondary" value="Secondary" />
@@ -373,7 +374,7 @@ export default class updatePro extends Component {
         <Button
           color="#3740FE"
           title="Update"
-          onPress={() => {this.registerForPushNotificationsAsync()}}
+          onPress={() => {this.upprof()}}
         />
 
 

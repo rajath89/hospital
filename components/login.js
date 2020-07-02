@@ -330,7 +330,7 @@ clearAll = async () => {
 
         <Text 
           style={styles.loginText}
-          onPress={() => {this.props.navigation.navigate('Signup')}}>
+          onPress={() => {this.props.navigation.navigate('Signup'),this.getAllKeys()}}>
           Don't have account? Click here to signup
         </Text>                          
       </View>

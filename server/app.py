@@ -20,6 +20,16 @@ config = {
     "messagingSenderId": "1074652022617",
     "appId": "1:1074652022617:web:20c1567f52ae88b8b8ae48"
   }
+  
+# config = {
+#     "apiKey": "AIzaSyBwk0GjuBX5_ZozvgldtH38FZhY2AhCu34",
+#     "authDomain": "hospitalusers-44f06.firebaseapp.com",
+#     "databaseURL": "https://hospitalusers-44f06.firebaseio.com",
+#     "projectId": "hospitalusers-44f06",
+#     "storageBucket": "hospitalusers-44f06.appspot.com",
+#     "messagingSenderId": "1020686800954",
+#     "appId": "1:1020686800954:web:003ea93c285f06847d3d03"
+#   }
 
 
 firebase=pyrebase.initialize_app(config)
@@ -68,7 +78,7 @@ def login():
 		#print(type(k1["username"]),k1["time"])
 		# st=str(k.decode("utf-8"))
 		#lt={"loginINfo":k1["time"]}
-		db.child("users").child(uName.split("@")[0]).child("loginDetails").push(k1)
+		db.child("users").child(uName.split("@")[0]).child("loginDetails").set(k1)
 
 	return jsonify({"login":"success"})
 
@@ -83,14 +93,14 @@ def register():
 
 		uName=k1["username"]
 
-		tok=k1["expoToken"]
+		#tok=k1["expoToken"]
 
-		del k1["expoToken"]
+		#del k1["expoToken"]
 
 		del k1["username"]
 
-		db.child("users").child(uName.split("@")[0]).child("RegisterDetails").push(k1)
-		db.child("users").child(uName.split("@")[0]).child("ExpoToken").push(tok)
+		db.child("users").child(uName.split("@")[0]).push(k1)
+		#db.child("users").child(uName.split("@")[0]).child("ExpoToken").push(tok)
 
 	return jsonify({"register":"success"})
 
@@ -106,6 +116,8 @@ def updatePro():
 
 
 		del k1["username"]
+		print(k1)
+		print(type(k1))
 
 		db.child("users").child(uName.split("@")[0]).child("ProfileDetails").push(k1)
 
@@ -186,7 +198,7 @@ def comments():
 
 		del k1["username"]
 
-		db.child("users").child(uName.split("@")[0]).child("comments").push(k1)
+		db.child("users").child(uName.split("@")[0]).child("comments").set(k1)
 
 	return jsonify({"comments":"success"})
 

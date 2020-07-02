@@ -27,7 +27,7 @@
 export const quizData = [
   {
     id: "0",
-    question: ` Diabetes`,
+    question: `Diabetes`,
     options: [`Yes`, `No`],
     answer: `New Delhi`
   },
@@ -63,7 +63,7 @@ export const quizData = [
   },
   {
     id: "6",
-    question: `In female Post Menopausal`,
+    question: `If female Post Menopausal`,
     options: [`Yes`, `No`],
     answer: `River Nile`
   },
@@ -133,16 +133,30 @@ export const quizData = [
     question: `Medication`,
     options: [`Yes`, `No`],
     answer: `Yes`
-  }
-  ,
+  },
   {
     id: "18",
+    question: `Smoking`,
+    options: [`Yes`, `No`],
+    answer: `Yes`
+  },
+
+
+  {
+    id: "19",
+    question: ` Alcohol`,
+    options: [`Yes`, `No`],
+    answer: `Yes`
+  },
+  
+  {
+    id: "20",
     question: `Diet (Fruits,pulses and vegetables)`,
     options: [`Yes`, `No`],
     answer: `No`
   },
   {
-    id: "19",
+    id: "21",
     question: `Regular OPD follow up`,
     options: [`Yes`, `No`],
     answer: `River Nile`

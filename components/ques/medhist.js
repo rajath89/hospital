@@ -3,8 +3,10 @@ import React, { Component } from 'react';
 
 import { Text, View , StyleSheet,  TouchableOpacity,Alert} from 'react-native';
 import { Button } from 'react-native-elements';
-import { quizData } from "./Questions/quizData";
-import {quizData2} from "./Questions/quizData2";
+//import { quizData } from "./Questions/quizData";
+import {quizData_2} from "../Questions/quizData/quizData_2";
+import {quizData2_2} from "../Questions/quizData2/quizData2_2";
+//import {quizData2} from "../Questions/quizData2";
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 // import console = require('console');
@@ -16,7 +18,7 @@ import { ToastAndroid } from 'react-native';
 import { CheckBox } from 'react-native-elements';
 
 
-export default class NewQues extends Component {
+export default class Medhist extends Component {
 
 
     state = {
@@ -34,7 +36,8 @@ export default class NewQues extends Component {
         decide:'',
         msg:"",
         kannada:false,
-        quizDecide:quizData
+        quizDecide:quizData_2,
+        alert:false
       };
 
       
@@ -73,11 +76,11 @@ async _retrieveData() {
         if(this.state.kannada==false){
           this.setState(() => {
             return {
-              questions: quizData[this.state.currentQuestion].question,
-              answer: quizData[this.state.currentQuestion].answer,
-              options: quizData[this.state.currentQuestion].options,
-              qid:quizData[this.state.currentQuestion].id,
-              quizDecide:"quizData"
+              questions: quizData_2[this.state.currentQuestion].question,
+              answer: quizData_2[this.state.currentQuestion].answer,
+              options: quizData_2[this.state.currentQuestion].options,
+              qid:quizData_2[this.state.currentQuestion].id,
+              quizDecide:"quizData_2"
             };
           });
         }
@@ -85,11 +88,11 @@ async _retrieveData() {
 
           this.setState(() => {
             return {
-              questions: quizData2[this.state.currentQuestion].question,
-              answer: quizData2[this.state.currentQuestion].answer,
-              options: quizData2[this.state.currentQuestion].options,
-              qid:quizData2[this.state.currentQuestion].id,
-              quizDecide:"quizData2"
+              questions: quizData2_2[this.state.currentQuestion].question,
+              answer: quizData2_2[this.state.currentQuestion].answer,
+              options: quizData2_2[this.state.currentQuestion].options,
+              qid:quizData2_2[this.state.currentQuestion].id,
+              quizDecide:"quizData2_2"
             };
           });
   
@@ -100,16 +103,16 @@ async _retrieveData() {
     
       componentDidMount() {
         this.loadQuizData();
-        console.log(quizData.length);
+        console.log(quizData_2.length);
         this._retrieveData();
       }
 
 
 getStatus=(id)=>{
-        var ids=[9,15];
-        var ids2=[2,5,18];
+        var ids=[8,19];
+        var ids2=[9,10,11,12,13,14,15];
         var flag=false;
-        const mg = {2:"stop smoking",5:"Limit Alcohol", 18:"Add fruits,pulses and vegetables to your diet and Reduce meat intake"};
+        const mg = {9:"Visit Hospital",10:"Visit Hospital", 11:"Visit Hospital",12:"Visit Hospital",13:"Check medication compliance.If symptoms still persisting, visit hospital at the earliest",14:"Visit hospital at the earliest",15:"Visit hospital at the earliest"};
         const mg2 = {2:"ಧೂಮಪಾನ ನಿಲ್ಲಿಸಿ",5:"ಮಧ್ಯಪಾನ ನಿಲ್ಲಿಸಿ", 18:"ಹಣ್ಣು ತರಕಾರಿ ಕಾಳುಗಳನ್ನು ಸೇವಿಸಿ, ಮಾಂಸ ತಿನ್ನುವುದನ್ನು ಕಡಿಮೆ ಮಾಡಿ"};
         //console.log("from stst",mans);
         for(var i=0;i<ids.length;i++){
@@ -165,17 +168,17 @@ getStatus=(id)=>{
         console.log("nextq",quizDecide);
         var df=String(st);
         //this.changeState();
-        if(df=="quizData"){
+        if(df=="quizData_2"){
           console.log("#############quizDATA");
-          var qd1=quizData[this.state.currentQuestion].answer;
-          var qidN=quizData[this.state.currentQuestion].id;
+          var qd1=quizData_2[this.state.currentQuestion].answer;
+          var qidN=quizData_2[this.state.currentQuestion].id;
           console.log("ufgg",qidN);
 
           
-        }else if(df=="quizData2"){
-          console.log("#############quizDATA2");
-          var qd1=quizData2[this.state.currentQuestion].answer;
-          var qidN=quizData2[this.state.currentQuestion].id;
+        }else if(df=="quizData2_2"){
+          console.log("#############quizData2_2");
+          var qd1=quizData2_2[this.state.currentQuestion].answer;
+          var qidN=quizData2_2[this.state.currentQuestion].id;
 
         }
         console.log(qidN,myAnswer,qd1);
@@ -190,13 +193,17 @@ getStatus=(id)=>{
             console.log("proceed");
           }else{
             flag1=true;
+            this.setState({alert:true})
           }
 
 
           if(flag1==true){
-            this.setAbnormalID16();
+            //this.setAbnormalID16();
             
-            this.props.navigation.navigate('Message');
+            //this.props.navigation.navigate('Message');
+            Alert.alert(
+                "Visit hospital at the earliest"
+             );
           }
 
         }
@@ -214,16 +221,16 @@ getStatus=(id)=>{
 
           var st=this.state.quizDecide;
           var df=String(st);
-          if(df=="quizData"){
+          if(df=="quizData_2"){
             console.log("###from asyncStorage##########quizDATA");
             
-            var qidA=quizData[this.state.currentQuestion].id;
+            var qidA=quizData_2[this.state.currentQuestion].id;
   
             
-          }else if(df=="quizData"){
-            console.log("###from asyncStorage##########quizDATA2");
+          }else if(df=="quizData_2"){
+            console.log("###from asyncStorage##########quizData2_2");
             
-            var qidA=quizData2[this.state.currentQuestion].id;
+            var qidA=quizData2_2[this.state.currentQuestion].id;
   
           }
           await AsyncStorage.setItem(qidA, this.state.op);
@@ -288,8 +295,8 @@ getStatus=(id)=>{
             this.setState(() => {
               return {
                 disabled: true,
-                questions: quizData2[this.state.currentQuestion].question,
-                options: quizData2[this.state.currentQuestion].options
+                questions: quizData2_2[this.state.currentQuestion].question,
+                options: quizData2_2[this.state.currentQuestion].options
               };
             });
 
@@ -297,8 +304,8 @@ getStatus=(id)=>{
             this.setState(() => {
               return {
                 disabled: true,
-                questions: quizData[this.state.currentQuestion].question,
-                options: quizData[this.state.currentQuestion].options
+                questions: quizData_2[this.state.currentQuestion].question,
+                options: quizData_2[this.state.currentQuestion].options
               };
             });
           }
@@ -353,6 +360,13 @@ getStatus=(id)=>{
           this.loadQuizData();
           
         }
+        if (prevState.alert !== this.state.alert) {
+            console.log('alert state has changed.');
+            Alert.alert(
+                "Visit hospital at the earliest"
+             );
+            
+          }
 
       }
       //check answer
@@ -417,8 +431,8 @@ getAllKeys = async () => {
 
 getQues = () => {
   var myarray= new Array();
-  for(var i=0;i<quizData.length;i++){
-    myarray.push(quizData[i].question);
+  for(var i=0;i<quizData_2.length;i++){
+    myarray.push(quizData_2[i].question);
   }
 
   return myarray;
@@ -434,42 +448,7 @@ getMultiple = async () => {
     // read error
   }
   console.log(values);
-  if(values){
-      var object = Object.fromEntries(values);
-      console.log(object);
 
-        var quesA = new Array();
-        quesA.push(object);
-//alert(JSON.stringify(myArray));
-        console.log("##########before sending",quesA[0]);
-
-        //sending to backend
-          (async () => {
-  const rawResponse = await fetch('https://flask-app47.herokuapp.com/questions', {//exp://192.168.0.104:19000
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({"username": this.state.globName, "questionDetails":quesA[0]})
-  });
-  const content = await rawResponse.json();
-
-  if(content){
-    console.log("before");
-    console.log(content);
-    console.log("after");
-    
-  }
-
-})();
-
-
-  }
-
-  console.log("outside");
-//console.log(content);
-this.removeFew();
 }
 
 
@@ -481,16 +460,16 @@ this.removeFew();
 
       finishHandler = () => {
         console.log("finished");
-        console.log(this.state.currentQuestion,quizData.length,this.state.quizDecide.length)
-        if (this.state.currentQuestion === quizData.length - 1) {
-          this.getMultiple();
+        console.log(this.state.currentQuestion,quizData_2.length,this.state.quizDecide.length)
+        if (this.state.currentQuestion === quizData_2.length - 1) {
+          //this.getMultiple();
           this.setState({
             isEnd: true
           });
           //if(this.state.isEnd){
           
           ToastAndroid.show('Questions are updated in db', ToastAndroid.SHORT);
-          this.props.navigation.navigate('BP & Lab reports',{screen:'Afterques'});
+          this.props.navigation.navigate('Cardio App');
         //}
         }
         //this.getAllKeys();
@@ -512,15 +491,15 @@ changeState=()=>{
 
         var str=quizDecide;
         
-        if(String(str)=="quizData"){
-          var df=quizData[this.state.currentQuestion].id;
-        }else if(String(str)=="quizData2"){
-          var df=quizData2[this.state.currentQuestion].id;
+        if(String(str)=="quizData_2"){
+          var df=quizData_2[this.state.currentQuestion].id;
+        }else if(String(str)=="quizData2_2"){
+          var df=quizData2_2[this.state.currentQuestion].id;
         }
         
         return (
                     <View style={styles.container}>
-  {df==0  &&   <CheckBox
+  {df==9  &&   <CheckBox
   title="change language"
   checked={false}
   onPress={() => this.setState({kannada: !this.state.kannada})}
@@ -542,12 +521,12 @@ changeState=()=>{
 
           <View style={[{ width: "40%", margin: 10, backgroundColor: "#f6f6f6" }]}>
 
-           {currentQuestion < quizData.length - 1 && (<Button title="next" type="solid" raised="true" buttonStyle={styles.btstyle} onPress={this.nextQuestionHandler} disabled={this.state.disabled}/>)}
+           {currentQuestion < quizData_2.length - 1 && (<Button title="next" type="solid" raised="true" buttonStyle={styles.btstyle} onPress={this.nextQuestionHandler} disabled={this.state.disabled}/>)}
            </View>
            
 
            <View style={[{ width: "40%", margin: 10, backgroundColor: "#f6f6f6" }]}>
-            {currentQuestion === quizData.length - 1 && (
+            {currentQuestion === quizData_2.length - 1 && (
             <Button title="Finish" type="solid" raised="true" buttonStyle={styles.btstyle} className="ui inverted button" onPress={this.finishHandler}/>
               
             
@@ -625,96 +604,3 @@ const styles = StyleSheet.create({
 
 
 
-//   getMultiple = async () => {
-
-//   let values
-//   try {
-//     values = await AsyncStorage.multiGet(['expoToken', 'expoToken1','\" Do you have hypertension ?\"'])
-//   } catch(e) {
-//     // read error
-//   }
-//   if(values){
-//   //console.log(values.length);
-//   //console.log(JSON.stringify(values));
-
-//   var object = Object.fromEntries(values);
-//   console.log(object);
-//   this.setState({ob:object});
-//   console.log(this.state.ob);
-//   console.log(JSON.stringify(this.state.ob));
-
-//   var myArray = new Array();
-//   myArray.push(this.state.ob);
-// //alert(JSON.stringify(myArray));
-// console.log(myArray);
-
-  
-
-//   (async () => {
-//   const rawResponse = await fetch('https://flask-app47.herokuapp.com/questions', {//exp://192.168.0.104:19000
-//     method: 'POST',
-//     headers: {
-//       'Accept': 'application/json',
-//       'Content-Type': 'application/json'
-//     },
-//     body: JSON.stringify({"username": "jason", "questionDetails":myArray[0]})
-//   });
-//   const content = await rawResponse.json();
-
-//   console.log(content);
-//   //console.log(object);
-// })();
-
- 
-
-
-
-
-// }
- 
-// }
-
-
-        // if(this.state.kannada==false){
-
-        //   this.setState(() => {
-        //     return {
-        //       questions: quizData[this.state.currentQuestion].question,
-        //       answer: quizData[this.state.currentQuestion].answer,
-        //       options: quizData[this.state.currentQuestion].options,
-        //       qid:quizData[this.state.currentQuestion].id
-        //     };
-        //   });
-
-        // }else{
-        //   this.setState(() => {
-        //     return {
-        //       questions: quizData2[this.state.currentQuestion].question,
-        //       answer: quizData2[this.state.currentQuestion].answer,
-        //       options: quizData2[this.state.currentQuestion].options,
-        //       qid:quizData2[this.state.currentQuestion].id
-        //     };
-        //   });
-        // }
-
-
-        //console.log("from load",this.state.options,this.state.answer,this.state.answer);
-
-
-
-          //this.props.navigation.navigate('AfterQuestions',{screen:'Afterques'});
-
-          // this.setState({
-          //   score: score + 1
-          //   //op:null
-          //  // quizData[this.state.currentQuestion].id
-          // });
-
-
-
-
-                        {/* {currentQuestion === quizData.length - 1 && (
-            <Button title="Finish2" className="ui inverted button" onPress={()=>this.getAllKeys()}/>
-              
-            
-          )} */}

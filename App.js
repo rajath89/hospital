@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { NavigationContainer ,DarkTheme} from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { Button } from 'react-native-elements';
 
 import Login from './components/login';
 import Signup from './components/signup';
@@ -13,6 +14,7 @@ import viewPro from './components/viewPro';
 import pdfViewer from './components/pdfviewer';
 import Faqpage from './components/faqPage';
 import MyDrawer from './components/drawnav';
+import Settings from './components/settings';
 import Diabetes from './components/learMaterials/diabetes';
 import Cholestrol from './components/learMaterials/cholestrol';
 import BP from './components/learMaterials/bp';
@@ -20,13 +22,17 @@ import Smoking from './components/learMaterials/smoking';
 import PA from './components/learMaterials/pa';
 import HA from './components/learMaterials/ha';
 import AP from './components/learMaterials/ap';
+import Medrisk from './components/ques/medrisk';
+import Medhist from './components/ques/medhist';
+import Treat from './components/ques/treat';
 
 
-import { Container, Button, text, ListItem, Text } from "native-base";
+// import { Container, Button, text, ListItem, Text } from "native-base";
 import Expo from "expo";
 import Visit from './components/visithos';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import CameraComponent from './components/Camera';
+
 // import Smoking from './components/learMaterials/smoking';
 
 
@@ -214,6 +220,50 @@ component={AP}
 //    {headerLeft: null} 
 //  }
 />
+
+<Stack.Screen 
+name="Medical Risk Factors" 
+component={Medrisk} 
+ options={
+   //{ title: 'Dashboard' },
+   {headerLeft: null},
+   {headerRight: () => (
+    <Button
+      onPress={() => alert('This is a button!')}
+      title="Info"
+      color="#fff"
+    />
+  )}
+ }
+/>
+
+<Stack.Screen 
+name="Medical History Symptoms" 
+component={Medhist} 
+//  options={
+//    //{ title: 'Dashboard' },
+//    {headerLeft: null} 
+//  }
+/>
+
+<Stack.Screen 
+name="Treatment Compliance" 
+component={Treat} 
+//  options={
+//    //{ title: 'Dashboard' },
+//    {headerLeft: null} 
+//  }
+/>
+
+<Stack.Screen 
+name="Settings" 
+component={Settings} 
+//  options={
+//    //{ title: 'Dashboard' },
+//    {headerLeft: null} 
+//  }
+/>
+
 
 </Stack.Navigator>
 

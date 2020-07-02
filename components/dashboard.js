@@ -186,7 +186,32 @@ export default class Fire extends React.Component {
     })
     .catch(error => this.setState({ errorMessage: error.message }))
     
-  } 
+  }
+  
+  getAllKeys = async () => {
+    let keys = []
+    try {
+      keys = await AsyncStorage.getAllKeys()
+    } catch(e) {
+      // read key error
+    }
+  
+    console.log(keys)
+    // example console.log result:
+    // ['@MyApp_user', '@MyApp_key']
+  }
+
+
+  clearAll = async () => {
+    console.log("cleared");
+    try {
+      await AsyncStorage.clear()
+    } catch(e) {
+      // clear error
+    }
+  
+  };
+  
 
 
 
@@ -205,6 +230,35 @@ export default class Fire extends React.Component {
     return (
       <View style={styles.container}>
 
+<View style={styles.card}>
+ 
+ <Button
+title="Medical Risk factors"
+type="clear"
+onPress={() => this.props.navigation.navigate('Medical Risk Factors')}
+/>
+ </View>
+ <View style={styles.hairline} />
+
+ <View style={styles.card}>
+ 
+ <Button
+title="Medical History Symptoms"
+type="clear"
+onPress={() => this.props.navigation.navigate('Medical History Symptoms')}
+/>
+ </View>
+ <View style={styles.hairline} />
+
+ <View style={styles.card}>
+ 
+ <Button
+title="Treatment Compliance"
+type="clear"
+onPress={() => {this.props.navigation.navigate('Treatment Compliance'),this.getAllKeys()}}
+/>
+ </View>
+ <View style={styles.hairline} />
 
         <View style={styles.card}>
  
@@ -214,7 +268,7 @@ export default class Fire extends React.Component {
   onPress={() => this.props.navigation.navigate('CAG & Discharge')}
 />
         </View>
-        <View style={styles.hairline} />
+        {/* <View style={styles.hairline} />
         
         <View style={styles.card}>
  
@@ -223,7 +277,7 @@ title="Questions"
 type="clear"
 onPress={() => this.props.navigation.navigate('Questions',{screen:'NewQues'})}
 />
- </View>
+ </View> */}
 
  <View style={styles.hairline} />
  {/* <View style={styles.card}>
@@ -241,7 +295,7 @@ onPress={() => this.props.navigation.navigate('FAQ page',{screen:'Faqpage'})}
  <Button
 title="Learning Materials"
 type="clear"
-onPress={() => this.props.navigation.navigate('Learning Materials',{screen:'pdfViewer'})}
+onPress={() => {this.props.navigation.navigate('Learning Materials',{screen:'pdfViewer'})}}
 />
  </View>
 

@@ -5,6 +5,8 @@ import { Button } from 'react-native-elements';
 import { Modal, View,Text, StyleSheet } from 'react-native';
 import { WebView } from 'react-native-webview';
 
+import {CheckBox} from "native-base";
+
 
  
 
@@ -50,6 +52,16 @@ export default class Profile extends Component {
 />
         </View>
         <View style={styles.hairline} />
+
+        <View style={styles.card}>
+ 
+ <Button
+title="Settings"
+type="clear"
+onPress={() => this.props.navigation.navigate('Settings')}
+
+/>
+ </View>
         
 
 
