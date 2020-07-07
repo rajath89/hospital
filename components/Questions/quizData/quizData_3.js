@@ -5,7 +5,7 @@ export const quizData_3 = [
       id: "17",
       question: `Medication`,
       options: [`Yes`, `No`],
-      answer: `Yes`
+      answer: `No`
     },
     {
       id: "18",
@@ -32,7 +32,7 @@ export const quizData_3 = [
       id: "21",
       question: `Regular OPD follow up`,
       options: [`Yes`, `No`],
-      answer: `River Nile`
+      answer: `No`
     }
   ];
   

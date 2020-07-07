@@ -65,6 +65,24 @@ async _retrieveData() {
       }
 
 
+      async _retrieveDataK() {
+        try {
+          const value = await AsyncStorage.getItem('kannadaLang');
+          if (value !== null && value=="TRUE") {
+            // We have data!!
+            console.log(value);
+            this.setState({
+              kannada:true
+            });
+            console.log("from state:",this.state.globName);
+
+          }
+        } catch (error) {
+          // Error retrieving data
+        }
+      }
+
+
 
 
 
@@ -105,6 +123,7 @@ async _retrieveData() {
         this.loadQuizData();
         console.log(quizData_2.length);
         this._retrieveData();
+        this._retrieveDataK();
       }
 
 
@@ -112,8 +131,8 @@ getStatus=(id)=>{
         var ids=[8,19];
         var ids2=[9,10,11,12,13,14,15];
         var flag=false;
-        const mg = {9:"Visit Hospital",10:"Visit Hospital", 11:"Visit Hospital",12:"Visit Hospital",13:"Check medication compliance.If symptoms still persisting, visit hospital at the earliest",14:"Visit hospital at the earliest",15:"Visit hospital at the earliest"};
-        const mg2 = {2:"ಧೂಮಪಾನ ನಿಲ್ಲಿಸಿ",5:"ಮಧ್ಯಪಾನ ನಿಲ್ಲಿಸಿ", 18:"ಹಣ್ಣು ತರಕಾರಿ ಕಾಳುಗಳನ್ನು ಸೇವಿಸಿ, ಮಾಂಸ ತಿನ್ನುವುದನ್ನು ಕಡಿಮೆ ಮಾಡಿ"};
+        const mg = {9:"Visit Hospital",10:"Visit Hospital", 11:"Visit Hospital",12:"Visit Hospital",13:"Check medication compliance.If symptoms still persisting, visit hospital at the earliest",14:"Check medication compliance.If symptoms still persisting, visit hospital at the earliest",15:"Visit hospital at the earliest"};
+        const mg2 = {9:"ಆಸ್ಪತ್ರೆಗೆ ಭೇಟಿ ನೀಡಿ",10:"ಆಸ್ಪತ್ರೆಗೆ ಭೇಟಿ ನೀಡಿ", 11:"ಆಸ್ಪತ್ರೆಗೆ ಭೇಟಿ ನೀಡಿ",12:"ಆಸ್ಪತ್ರೆಗೆ ಭೇಟಿ ನೀಡಿ",13:"ಸೂಕ್ತ ಸಮಯದಲ್ಲಿ ಔಷಧಿಯನ್ನು ತೆಗೆದುಕೊಳ್ಳಿ, ಒಂದು ವೇಳೆ ಲಕ್ಷಣಗಳು ಇನ್ನೂ ಇದ್ದಲ್ಲಿ ತಕ್ಷಣ ಆಸ್ಪತ್ರೆಗೆ ಭೇಟಿ ನೀಡಿ",14:"ಸೂಕ್ತ ಸಮಯದಲ್ಲಿ ಔಷಧಿಯನ್ನು ತೆಗೆದುಕೊಳ್ಳಿ, ಒಂದು ವೇಳೆ ಲಕ್ಷಣಗಳು ಇನ್ನೂ ಇದ್ದಲ್ಲಿ ತಕ್ಷಣ ಆಸ್ಪತ್ರೆಗೆ ಭೇಟಿ ನೀಡಿ",15:"ತಕ್ಷಣ ಆಸ್ಪತ್ರೆಗೆ ಭೇಟಿ ನೀಡಿ"};
         //console.log("from stst",mans);
         for(var i=0;i<ids.length;i++){
           if(ids[i]==id){
@@ -499,11 +518,11 @@ changeState=()=>{
         
         return (
                     <View style={styles.container}>
-  {df==9  &&   <CheckBox
+  {/* {df==9  &&   <CheckBox
   title="change language"
   checked={false}
   onPress={() => this.setState({kannada: !this.state.kannada})}
-/>}
+/>} */}
 
 
           <Text style={styles.header}>{this.state.questions} </Text>

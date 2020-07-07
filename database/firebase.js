@@ -14,15 +14,15 @@ import * as firebase from 'firebase';
 
 
 
-  //var firebaseConfig = {
-    //apiKey: "AIzaSyBwk0GjuBX5_ZozvgldtH38FZhY2AhCu34",
-    //authDomain: "hospitalusers-44f06.firebaseapp.com",
-    //databaseURL: "https://hospitalusers-44f06.firebaseio.com",
-    //projectId: "hospitalusers-44f06",
-    //storageBucket: "hospitalusers-44f06.appspot.com",
-    //messagingSenderId: "1020686800954",
-    //appId: "1:1020686800954:web:003ea93c285f06847d3d03"
-  //};
+  // var firebaseConfig = {
+  //   apiKey: "AIzaSyBwk0GjuBX5_ZozvgldtH38FZhY2AhCu34",
+  //   authDomain: "hospitalusers-44f06.firebaseapp.com",
+  //   databaseURL: "https://hospitalusers-44f06.firebaseio.com",
+  //   projectId: "hospitalusers-44f06",
+  //   storageBucket: "hospitalusers-44f06.appspot.com",
+  //   messagingSenderId: "1020686800954",
+  //   appId: "1:1020686800954:web:003ea93c285f06847d3d03"
+  // };
   
   
     var firebaseConfig = {

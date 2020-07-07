@@ -65,6 +65,24 @@ async _retrieveData() {
       }
 
 
+      async _retrieveDataK() {
+        try {
+          const value = await AsyncStorage.getItem('kannadaLang');
+          if (value !== null && value=="TRUE") {
+            // We have data!!
+            console.log(value);
+            this.setState({
+              kannada:true
+            });
+            console.log("from state:",this.state.globName);
+
+          }
+        } catch (error) {
+          // Error retrieving data
+        }
+      }
+
+
 
 
 
@@ -105,15 +123,16 @@ async _retrieveData() {
         this.loadQuizData();
         console.log(quizData_3.length);
         this._retrieveData();
+        this._retrieveDataK();
       }
 
 
 getStatus=(id)=>{
         var ids=[9,15];
-        var ids2=[2,5,18];
+        var ids2=[2,5,17,18,21];
         var flag=false;
-        const mg = {2:"stop smoking",5:"Limit Alcohol", 18:"Add fruits,pulses and vegetables to your diet and Reduce meat intake"};
-        const mg2 = {2:"ಧೂಮಪಾನ ನಿಲ್ಲಿಸಿ",5:"ಮಧ್ಯಪಾನ ನಿಲ್ಲಿಸಿ", 18:"ಹಣ್ಣು ತರಕಾರಿ ಕಾಳುಗಳನ್ನು ಸೇವಿಸಿ, ಮಾಂಸ ತಿನ್ನುವುದನ್ನು ಕಡಿಮೆ ಮಾಡಿ"};
+        const mg = {2:"stop smoking",5:"Limit Alcohol", 20:"Add fruits,pulses and vegetables to your diet and Reduce meat intake",17:"To be compliant with medication",21:"Continue treatment as advised by doctor "};
+        const mg2 = {2:"ಧೂಮಪಾನ ನಿಲ್ಲಿಸಿ",5:"ಮಧ್ಯಪಾನ ನಿಲ್ಲಿಸಿ",17:"ಸೂಕ್ತ ಸಮಯಕ್ಕೆ ಔಷಧಿಯನ್ನು ತೆಗೆದುಕೊಳ್ಳಿ", 20:"ಹಣ್ಣು ತರಕಾರಿ ಕಾಳುಗಳನ್ನು ಸೇವಿಸಿ, ಮಾಂಸ ತಿನ್ನುವುದನ್ನು ಕಡಿಮೆ ಮಾಡಿ",21:"ವೈದ್ಯರ ಚಿಕಿತ್ಸೆ ಸಲಹೆಯನ್ನು ಮುಂದುವರಿಸಿ"};
         //console.log("from stst",mans);
         for(var i=0;i<ids.length;i++){
           if(ids[i]==id){
@@ -538,11 +557,11 @@ changeState=()=>{
         
         return (
                     <View style={styles.container}>
-  {df==17  &&   <CheckBox
+  {/* {df==17  &&   <CheckBox
   title="change language"
   checked={false}
   onPress={() => this.setState({kannada: !this.state.kannada})}
-/>}
+/>} */}
 
 
           <Text style={styles.header}>{this.state.questions} </Text>

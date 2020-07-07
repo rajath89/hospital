@@ -165,7 +165,7 @@ export default class updatePro extends Component {
   upprof = () => {
 
 
-    // this.registerForPushNotificationsAsync();
+    this.registerForPushNotificationsAsync();
 
     (async () => {
     const rawResponse = await fetch('https://flask-app47.herokuapp.com/updatePro', {//exp://192.168.0.104:19000

@@ -7,6 +7,7 @@ import { Text } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { WebView } from 'react-native-webview';
 import * as WebBrowser from 'expo-web-browser';
+import { AsyncStorage } from 'react-native';
 
 
  
@@ -21,12 +22,36 @@ export default class Diabetes extends Component {
     isVisible3:false,
     isVisible4:'',
     isVisible5:null,
-    result: null
+    result: null,
+    kannada:false
   }
 
   _handlePressButtonAsync = async () => {
     let result = await WebBrowser.openBrowserAsync('https://drive.google.com/file/d/1-LgNpdUk4B_umXIKK88FOcbAhtJTkRPE/view?usp=sharing');
     this.setState({ result });
+  }
+
+
+  async _retrieveDataK() {
+    try {
+      const value = await AsyncStorage.getItem('kannadaLang');
+      if (value !== null && value=="TRUE") {
+        // We have data!!
+        console.log(value);
+        this.setState({
+          kannada:true
+        });
+        console.log("from state:",this.state.globName);
+
+      }
+    } catch (error) {
+      // Error retrieving dat
+    }
+  }
+
+  componentDidMount() {
+
+    this._retrieveDataK();
   }
 
 
@@ -36,10 +61,15 @@ export default class Diabetes extends Component {
     return (
 <View style={styles.container}>
 
-<WebView
+{this.state.kannada==false && <WebView
         source={{ uri: 'https://parikshith21.github.io/jhs-learning/diab.html' }}
         style={{ maxHeight: 700,width:380 ,flex: 1 }}
-      />
+      />}
+
+{this.state.kannada==true && <WebView
+        source={{ uri: 'https://parikshith21.github.io/jhs-learning/diab_k.html' }}
+        style={{ maxHeight: 700,width:380 ,flex: 1 }}
+      />}
       </View>
     );
   }

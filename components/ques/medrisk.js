@@ -65,6 +65,24 @@ async _retrieveData() {
       }
 
 
+      async _retrieveDataK() {
+        try {
+          const value = await AsyncStorage.getItem('kannadaLang');
+          if (value !== null && value=="TRUE") {
+            // We have data!!
+            console.log(value);
+            this.setState({
+              kannada:true
+            });
+            console.log("from state:",this.state.globName);
+
+          }
+        } catch (error) {
+          // Error retrieving data
+        }
+      }
+
+
 
 
 
@@ -106,6 +124,7 @@ async _retrieveData() {
         console.log(quizData_1.length);
         this.getAllKeys();
         this._retrieveData();
+        this._retrieveDataK();
       }
 
 
@@ -523,11 +542,11 @@ changeState=()=>{
         
         return (
                     <View style={styles.container}>
-  {df==0  &&   <CheckBox
+  {/* {df==0  &&   <CheckBox
   title="change language"
   checked={false}
   onPress={() => this.setState({kannada: !this.state.kannada})}
-/>}
+/>} */}
 
 
           <Text style={styles.header}>{this.state.questions} </Text>

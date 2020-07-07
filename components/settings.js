@@ -2,19 +2,58 @@ import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 //import {CheckBox} from "native-base"
 import { CheckBox } from 'react-native-elements'
+import { AsyncStorage } from 'react-native';
+
 
 export default class Settings extends React.Component {
   state={
-    selectedLang:1
+    selectedLang:null
   }
+
+
+
+
+ _storeData = async () => {
+
+      console.log("KANNADA lang stored");
+      try {
+        await AsyncStorage.setItem('kannadaLang', 'TRUE');
+            
+      } catch (error) {
+        // Error saving data
+      }
+     
+};
+
+_storeData2 = async () => {
+
+  console.log("ENGLISH lang stored");
+  try {
+    await AsyncStorage.setItem('kannadaLang', 'FALSE');
+        
+  } catch (error) {
+    // Error saving data
+  }
+ 
+};
 
   onPress=()=>{
 
     if(this.state.selectedLang==1){
         console.log("lang not changed");
+        this._storeData2();
+
     }else if(this.state.selectedLang==2){
         console.log("lang changed to kannada");
+        this._storeData();
+       
+
+
     }
+
+    this.props.navigation.navigate('Cardio App');
+
+
 
   }
 

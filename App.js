@@ -224,17 +224,17 @@ component={AP}
 <Stack.Screen 
 name="Medical Risk Factors" 
 component={Medrisk} 
- options={
-   //{ title: 'Dashboard' },
-   {headerLeft: null},
-   {headerRight: () => (
-    <Button
-      onPress={() => alert('This is a button!')}
-      title="Info"
-      color="#fff"
-    />
-  )}
- }
+//  options={
+//    //{ title: 'Dashboard' },
+//    {headerLeft: null},
+//    {headerRight: () => (
+//     <Button
+//       onPress={() => alert('This is a button!')}
+//       title="Info"
+//       color="#fff"
+//     />
+//   )}
+//  }
 />
 
 <Stack.Screen 

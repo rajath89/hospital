@@ -58,6 +58,7 @@
     "react-native-vector-icons": "^6.6.0",
     "react-native-web": "~0.11.7",
     "react-native-webview": "8.1.1",
+    "react-unstated": "0.0.3",
     "rn-pdf-reader-js": "^3.1.0"
   },
   "devDependencies": {
