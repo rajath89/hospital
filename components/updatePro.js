@@ -41,6 +41,7 @@ export default class updatePro extends Component {
 
   componentDidMount() {
     this._retrieveData();
+    this.registerForPushNotificationsAsync();
 
 
 }

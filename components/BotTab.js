@@ -41,7 +41,7 @@ export default function BotTab() {
             if (route.name === 'Home') {
               iconName = 'home';
             }
-             else if (route.name === 'Info') {
+             else if (route.name === 'Comment') {
               iconName = 'tag';
             } 
             else if (route.name === 'Profile') {
@@ -56,7 +56,7 @@ export default function BotTab() {
       >
         <Tab.Screen name="Home" component={dashboard}/>
         <Tab.Screen name="Profile" component={profile} />
-        <Tab.Screen name="Info" component={Comments} />
+        <Tab.Screen name="Comment" component={Comments} />
    
       </Tab.Navigator>
 

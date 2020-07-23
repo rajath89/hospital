@@ -163,7 +163,8 @@ subMit=()=>{
     console.log(content);
     if(content){
         //this.setState({isLoading:false,obj:content})
-        ToastAndroid.show('Report and details are updated', ToastAndroid.SHORT);
+        ToastAndroid.show('Comment submitted successfully', ToastAndroid.SHORT);
+        this.setState({comments:''})
         this.props.navigation.navigate('Cardio App');
     }
   })();
