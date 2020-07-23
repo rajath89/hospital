@@ -8,6 +8,7 @@ import Fire from './fire';
 
 import mulImUp from './mulImUp';
 import profile from './profile';
+import Comments from './comments';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -40,9 +41,9 @@ export default function BotTab() {
             if (route.name === 'Home') {
               iconName = 'home';
             }
-            // } else if (route.name === 'Info') {
-            //   iconName = 'tag';
-            // } 
+             else if (route.name === 'Info') {
+              iconName = 'tag';
+            } 
             else if (route.name === 'Profile') {
               iconName = 'user';
             }
@@ -55,7 +56,7 @@ export default function BotTab() {
       >
         <Tab.Screen name="Home" component={dashboard}/>
         <Tab.Screen name="Profile" component={profile} />
-        {/* <Tab.Screen name="Info" component={Fire} /> */}
+        <Tab.Screen name="Info" component={Comments} />
    
       </Tab.Navigator>
 

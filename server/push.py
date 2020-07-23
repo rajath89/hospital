@@ -51,4 +51,4 @@ def send_push_message(token, message, extra=None):
             })
         raise self.retry(exc=exc)
 
-send_push_message("ExponentPushToken[RI0yxlLmbY1Wc5bvCmLEoh]","push message")
+send_push_message("ExponentPushToken[ZAQFeDGcbx9QaXOQihVpn5]","push message")

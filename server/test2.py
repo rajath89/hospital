@@ -18,5 +18,8 @@ db = firebase.database()
 
 
 user = db.child("users").get()
-usrList=list(user.val()) # users
-pp.pprint(user.val()['rajath23']['ExpoToken'])
+
+print(type(user.val()))
+# usrList=list(user.val()) # users
+# pp.pprint(user.val()['ronnie']['ExpoToken'])
+# pp.pprint(user.val()['ronnie']['loginDetails'])

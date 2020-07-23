@@ -145,28 +145,8 @@ updateInputVal = (val, prop) => {
 }
 
 subMit=()=>{
-  //console.log(this.state);
-  const df=this.state.comments;
-
-
-  (async () => {
-    const rawResponse = await fetch('https://flask-app47.herokuapp.com/comments', {//exp://192.168.0.104:19000
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({"username": this.state.globName,"comments":df})
-    });
-    const content = await rawResponse.json();
-  
-    console.log(content);
-    if(content){
-        //this.setState({isLoading:false,obj:content})
-        ToastAndroid.show('Report and details are updated', ToastAndroid.SHORT);
-        this.props.navigation.navigate('Cardio App');
-    }
-  })();
+  ToastAndroid.show('Report and details are updated', ToastAndroid.SHORT);
+  this.props.navigation.navigate('Cardio App');
 }
 
 render() {
@@ -214,19 +194,6 @@ render() {
        
      />
      <View style={styles.hairline} />
-
-     
-
-
-
-    {/* </View> */}
-
-    <TextInput
-          style={styles.inputStyle}
-          placeholder="Comments"
-          value={this.state.comments}
-          onChangeText={(val) => this.updateInputVal(val, 'comments')}
-        />
  
 
     <Button

@@ -527,7 +527,7 @@ this.removeFew();
           //if(this.state.isEnd){
           
           ToastAndroid.show('Questions are updated in db', ToastAndroid.SHORT);
-          //this.props.navigation.navigate('Cardio App');
+          this.props.navigation.navigate('BP & Lab reports');
         //}
         }
         //this.getAllKeys();

@@ -51,8 +51,8 @@ firebase=pyrebase.initialize_app(config)
 storage=firebase.storage()
 pp = pprint.PrettyPrinter(indent=4)
 db = firebase.database()
-pickdb = pickledb.load('example1.db', False)
-pickdbLogin = pickledb.load('example.db', False)
+pickdbExpo = pickledb.load('example1.db', False)
+pickdbDate = pickledb.load('example.db', False)
 
 
 app = Flask(__name__)
@@ -147,37 +147,43 @@ def secondRun():
 def firstRun():
 	user = db.child("users").get()
 	usrList=list(user.val()) # users
-	print(usrList)
+	#print(usrList)
 
 	usrlog=[]
 	gloLog=[]
 
-	if pickdb.get("lenOfUsers")<len(usrList) or pickdb.get("lenOfUsers")==False:
-		pickdb.set("lenOfUsers",len(usrList))
+	if pickdbExpo.get("lenOfUsers")<len(usrList) or pickdbExpo.get("lenOfUsers")==False:
+		pickdbExpo.set("lenOfUsers",len(usrList))
+		pickdbExpo.dump()
 
 		for usr in usrList:
-			if usr in pickdb.getall():
+			if usr in pickdbExpo.getall():
 				continue
 			else:
-				usersLogin = db.child("users").child(usr).child("loginDetails").get()
-				usersExToken = db.child("users").child(usr).child("ExpoToken").get()
+				#for t in user.val():
+				e=user.val()[usr]['ExpoToken']
+				l=user.val()[usr]['loginDetails']['time']
+				pickdbExpo.set(usr,e)
+				pickdbDate.set(usr,l)
+				pickdbExpo.dump()
+				pickdbDate.dump()
 
-				for i in usersLogin.val():
-					#print(usr,usersLogin.val()[i])
-					usrlog.append(usersLogin.val()[i])
-				for j in usersExToken.val():
-					#print(usr,type(usersExToken.val()[j]))
-					pickdb.set(usr, usersExToken.val()[j])
-				f=usrlog.copy()
-				gloLog.append((usr,f))
-				usrlog.clear()
-		print(gloLog)
-		print("sleep...........")
-		time.sleep(60)
+		# print("sleep...........")
+		# time.sleep(60)
 
-	elif pickdb.get("lenOfUsers")==len(usrList):
+	elif pickdbExpo.get("lenOfUsers")==len(usrList):
 		print("break")
-		return
+
+		for ele in pickdbDate.getall():
+			
+			nowstr=pickdbDate.get(ele).split(" ")[0].split("-")
+			nowstr1=pickdbDate.get(ele).split(" ")[1].split(":")
+			#print(nowstr,nowstr1)
+			nowdt=dt.datetime(int(nowstr[0]), int(nowstr[1]), int(nowstr[2]),int(nowstr1[0]),int(nowstr1[1]),int(nowstr1[2]))
+			_30days=dt.timedelta(days=30)
+			future_date=nowdt+_30days
+			print(nowdt,future_date)
+		
 
 	
 
@@ -186,36 +192,51 @@ def firstRun():
 
 		
 		
-	for ele in gloLog:
-		print(ele[1])
-		nowstr=ele[1][-1]['time'].split(" ")[0].split("-")
-		nowstr1=ele[1][-1]['time'].split(" ")[1].split(":")
-		print(nowstr1)
-		nowdt=dt.datetime(int(nowstr[0]), int(nowstr[1]), int(nowstr[2]),int(nowstr1[0]),int(nowstr1[1]),int(nowstr1[2]))
-		_30days=dt.timedelta(days=30)
-		_seconds=dt.timedelta(seconds=1)
-		future_date=nowdt+_seconds#_30days
-		print(future_date)
-		print(nowdt==future_date)
-		if nowdt==future_date:
-			print("tok:  ",pickdb.get(ele[0]))
+	# for ele in gloLog:
+	# 	print(ele[1])
+	# 	nowstr=ele[1][-1]['time'].split(" ")[0].split("-")
+	# 	nowstr1=ele[1][-1]['time'].split(" ")[1].split(":")
+	# 	print(nowstr1)
+	# 	nowdt=dt.datetime(int(nowstr[0]), int(nowstr[1]), int(nowstr[2]),int(nowstr1[0]),int(nowstr1[1]),int(nowstr1[2]))
+	# 	_30days=dt.timedelta(days=30)
+	# 	_seconds=dt.timedelta(seconds=1)
+	# 	future_date=nowdt+_seconds#_30days
+	# 	print(future_date)
+	# 	print(nowdt==future_date)
+	# 	if nowdt==future_date:
+	# 		print("tok:  ",pickdb.get(ele[0]))
 			
-			send_push_message(pickdb.get(ele[0]),"push message")
-		else:
-			p={}
-			f=[]
-			p['nowdt']=str(nowdt)
-			p['future_date']=str(future_date)
-			f.append(p)
+	# 		send_push_message(pickdb.get(ele[0]),"push message")
+	# 	else:
+	# 		p={}
+	# 		f=[]
+	# 		p['nowdt']=str(nowdt)
+	# 		p['future_date']=str(future_date)
+	# 		f.append(p)
 			
-			pickdbLogin.set(ele[0],p)
-		#break
-	pickdb.dump()
-	pickdbLogin.dump()
+	# 		pickdbLogin.set(ele[0],p)
+	# 	#break
+	# pickdb.dump()
+	# pickdbLogin.dump()
 	
 
 if __name__ == '__main__':
     scheduler.add_job(id ='Scheduled task', func = firstRun, trigger = 'interval', seconds = 10)
     #scheduler.add_job(id ='Scheduled task2', func = secondRun, trigger = 'interval', seconds = 15)
     scheduler.start()
-    app.run(host = '0.0.0.0', port = 8080)
+    app.run(host = '0.0.0.0', port = 8080).
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
