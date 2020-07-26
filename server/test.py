@@ -161,7 +161,7 @@ def firstRun():
 				continue
 			else:
 				#for t in user.val():
-				e=user.val()[usr]['ExpoToken']
+				e=user.val()[usr]['ExpoToken']['expoToken']
 				l=user.val()[usr]['loginDetails']['time']
 				pickdbExpo.set(usr,e)
 				pickdbDate.set(usr,l)
@@ -224,7 +224,7 @@ if __name__ == '__main__':
     scheduler.add_job(id ='Scheduled task', func = firstRun, trigger = 'interval', seconds = 10)
     #scheduler.add_job(id ='Scheduled task2', func = secondRun, trigger = 'interval', seconds = 15)
     scheduler.start()
-    app.run(host = '0.0.0.0', port = 8080).
+    app.run(host = '0.0.0.0', port = 8080)
 
 
 

@@ -32,6 +32,7 @@ import Expo from "expo";
 import Visit from './components/visithos';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import CameraComponent from './components/Camera';
+import About from './components/about';
 
 // import Smoking from './components/learMaterials/smoking';
 
@@ -258,6 +259,16 @@ component={Treat}
 <Stack.Screen 
 name="Settings" 
 component={Settings} 
+//  options={
+//    //{ title: 'Dashboard' },
+//    {headerLeft: null} 
+//  }
+/>
+
+
+<Stack.Screen 
+name="About Us" 
+component={About} 
 //  options={
 //    //{ title: 'Dashboard' },
 //    {headerLeft: null} 

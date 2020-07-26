@@ -167,15 +167,42 @@ import { Button } from 'react-native-elements';
 import { Divider } from 'react-native-elements';
 import firebase from '../database/firebase';
 import CameraComponent from './Camera';
+import { AsyncStorage } from 'react-native';
 const profileImg ="https://reactnativemaster.com/wp-content/uploads/2019/11/React-native-master-logo-only.png"
 
 export default class Fire extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.state = { 
-      uid: '',
+  // constructor(props) {
+  //   super(props);
+  //   this.state = { 
+  //     uid: ''
+     
 
+  //   }
+  // }
+
+
+  state = {
+    isVisible: false,
+    isVisible2:false,
+    kannada:false
+  }
+
+
+  async _retrieveDataK() {
+    try {
+      const value = await AsyncStorage.getItem('kannadaLang');
+      if (value !== null && value=="TRUE") {
+        // We have data!!
+        console.log(value);
+        this.setState({
+          kannada:true
+        });
+        //console.log("from state:",this.state.globName);
+
+      }
+    } catch (error) {
+      // Error retrieving dat
     }
   }
 
@@ -211,6 +238,13 @@ export default class Fire extends React.Component {
     }
   
   };
+
+
+  componentDidMount() {
+
+    this._retrieveDataK();
+    console.log("mount............")
+  }
   
 
 
@@ -218,13 +252,13 @@ export default class Fire extends React.Component {
 
   render() {
 
-    this.state = { 
-      displayName: firebase.auth().currentUser.displayName,
-      uid: firebase.auth().currentUser.uid
+    // this.state = { 
+    //   displayName: firebase.auth().currentUser.displayName,
+    //   uid: firebase.auth().currentUser.uid
 
 
       
-    } 
+    // } 
 
 
     return (
@@ -233,7 +267,8 @@ export default class Fire extends React.Component {
 <View style={styles.card}>
  
  <Button
-title="Medical Risk factors"
+
+title={this.state.kannada == false ? 'Medical Risk factors' : 'ಹೃದಯ ರೋಗವನ್ನು ಹೆಚ್ಚಿಸುವ ಅಂಶಗಳು'} 
 type="clear"
 onPress={() => this.props.navigation.navigate('Medical Risk Factors')}
 />
@@ -243,7 +278,8 @@ onPress={() => this.props.navigation.navigate('Medical Risk Factors')}
  <View style={styles.card}>
  
  <Button
-title="Medical History Symptoms"
+
+title={this.state.kannada == false ? 'Medical History Symptoms' : 'ವೈದ್ಯಕೀಯ ಹಿನ್ನೆಲೆ ರೋಗ ಲಕ್ಷಣಗಳು'} 
 type="clear"
 onPress={() => this.props.navigation.navigate('Medical History Symptoms')}
 />
@@ -253,7 +289,8 @@ onPress={() => this.props.navigation.navigate('Medical History Symptoms')}
  <View style={styles.card}>
  
  <Button
-title="Treatment Compliance"
+
+title={this.state.kannada == false ? 'Treatment Compliance' : 'ಚಿಕಿತ್ಸೆಯ ಅನುಸರಣೆ'} 
 type="clear"
 onPress={() => {this.props.navigation.navigate('Treatment Compliance'),this.getAllKeys()}}
 />
@@ -263,7 +300,8 @@ onPress={() => {this.props.navigation.navigate('Treatment Compliance'),this.getA
         <View style={styles.card}>
  
         <Button
-  title="CAG & Discharge Report upload"
+ 
+  title={this.state.kannada == false ? 'CAG & Discharge Report upload' : 'ವರದಿಗಳನ್ನು ಅಪ್ಲೋಡ್ ಮಾಡಿ (ಎಂಜಿಯೋಗ್ರಾಮ್ ಮತ್ತು ಡಿಸ್ಚಾರ್ಜ್ ವರದಿ)'} 
   type="clear"
   onPress={() => this.props.navigation.navigate('CAG & Discharge')}
 />
@@ -293,7 +331,8 @@ onPress={() => this.props.navigation.navigate('FAQ page',{screen:'Faqpage'})}
  <View style={styles.card}>
  
  <Button
-title="Learning Materials"
+
+title={this.state.kannada == false ? 'Learning Materials' : 'ಕಲಿಕಾ ಸಾಮಗ್ರಿಗಳು'} 
 type="clear"
 onPress={() => {this.props.navigation.navigate('Learning Materials',{screen:'pdfViewer'})}}
 />
@@ -304,6 +343,7 @@ onPress={() => {this.props.navigation.navigate('Learning Materials',{screen:'pdf
  
  <Button
 title="Logout"
+title={this.state.kannada == false ? 'Logout' : 'ಲಾಗ್ ಔಟ್'} 
 type="clear"
 onPress={() => this.signOut()}
 />

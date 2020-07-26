@@ -70,7 +70,8 @@ import { Button } from 'react-native-elements';
 
 import { Modal, View,Text, StyleSheet } from 'react-native';
 import { WebView } from 'react-native-webview';
-import { CheckBox } from 'react-native-elements'
+import { AsyncStorage } from 'react-native';
+import { CheckBox } from 'react-native-elements';
 
 
  
@@ -80,6 +81,31 @@ export default class Diabetes extends Component {
     isVisible: false,
     isVisible2:false,
     kannada:false
+  }
+
+
+
+  async _retrieveDataK() {
+    try {
+      const value = await AsyncStorage.getItem('kannadaLang');
+      if (value !== null && value=="TRUE") {
+        // We have data!!
+        console.log(value);
+        this.setState({
+          kannada:true
+        });
+        //console.log("from state:",this.state.globName);
+
+      }
+    } catch (error) {
+      // Error retrieving dat
+    }
+  }
+
+
+  componentDidMount() {
+
+    this._retrieveDataK();
   }
 
 
@@ -119,7 +145,7 @@ export default class Diabetes extends Component {
         <View style={styles.card}>
  
         <Button
-  title="Cholestrol"
+ title={this.state.kannada == false ? 'Cholestrol' : 'ಕೊಲೆಸ್ಟರಾಲ್'}
   type="clear"
 
   onPress={() => this.props.navigation.navigate('Cholestrol')}
@@ -131,7 +157,8 @@ export default class Diabetes extends Component {
         <View style={styles.card}>
  
  <Button
-title="Blood Pressure"
+
+title={this.state.kannada == false ? 'Blood Pressure' : 'ರಕ್ತದೊತ್ತಡ'} 
 type="clear"
 onPress={() => this.props.navigation.navigate('Blood Pressure')}
 />
@@ -141,7 +168,8 @@ onPress={() => this.props.navigation.navigate('Blood Pressure')}
  <View style={styles.card}>
  
  <Button
-title="Smoking"
+
+title={this.state.kannada == false ? 'Smoking' : 'ಧೂಮಪಾನ'} 
 type="clear"
 
 onPress={() => this.props.navigation.navigate('Smoking')}
@@ -153,7 +181,8 @@ onPress={() => this.props.navigation.navigate('Smoking')}
  <View style={styles.card}>
  
  <Button
-title="Physical Activity"
+
+title={this.state.kannada == false ? 'Physical Activity' : 'ದೈಹಿಕ ಚಟುವಟಿಕೆ'}
 type="clear"
 onPress={() => this.props.navigation.navigate('Physical Activity')}
 />
@@ -163,7 +192,8 @@ onPress={() => this.props.navigation.navigate('Physical Activity')}
  <View style={styles.card}>
  
  <Button
-title="Heart Attack or Myocardial infraction"
+
+title={this.state.kannada == false ? 'Heart Attack or Myocardial infraction' : 'ಹೃದಯಾಘಾತದ ಮಾಹಿತಿ'}
 type="clear"
 onPress={() => this.props.navigation.navigate('Heart Attack')}
 />
@@ -174,7 +204,8 @@ onPress={() => this.props.navigation.navigate('Heart Attack')}
  <View style={styles.card}>
  
  <Button
-title="Angioplasty and life after angioplasty"
+
+title={this.state.kannada == false ? 'Angioplasty and life after angioplasty' : 'ಹೃದಯಾಘಾತ ಮತ್ತು ಆಂಜಿಯೋಪ್ಲಾಸ್ಟಿ ನಂತರದ ಜೀವನ'} 
 type="clear"
 onPress={() => this.props.navigation.navigate('Angioplasty')}
 />

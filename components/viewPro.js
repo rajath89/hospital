@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, TextInput, Button, Alert, ActivityIndicator } f
 import firebase from '../database/firebase';
 
 import {QuesList} from './QuesList';
+import { Font } from "expo";
 
 import { AsyncStorage } from 'react-native';
 import Constants from 'expo-constants';
@@ -120,13 +121,65 @@ getprof = () => {
     return (
 
       <View style={styles.container}>
-        <View style={styles.card}>
+        
  
-<Text style={styles.textViewContainer}>Name:{this.state.obj.ProfileDet.Name}</Text>
-        </View>
+<Text style={styles.textViewContainer}>Name  :  {this.state.obj.Name}</Text>
+        
         <View style={styles.hairline} />
 
-        <View style={styles.card}>
+        
+ 
+ <Text style={styles.textViewContainer}>Age  :  {this.state.obj.Age}</Text>
+         
+         <View style={styles.hairline} />
+
+         
+ 
+ <Text style={styles.textViewContainer}>Gender  :  {this.state.obj.Gender}</Text>
+         
+         <View style={styles.hairline} />
+
+       
+ 
+ <Text style={styles.textViewContainer}>Mobile Number  :  {this.state.obj.MobNumber}</Text>
+         
+         <View style={styles.hairline} />
+
+         
+ 
+ <Text style={styles.textViewContainer}>Address  :  {this.state.obj.address}</Text>
+         
+         <View style={styles.hairline} />
+
+
+
+         <Text style={styles.textViewContainer}>Email  :  {this.state.obj.email}</Text>
+         
+         <View style={styles.hairline} />
+
+
+
+
+         <Text style={styles.textViewContainer}>Education  :  {this.state.obj.selected2}</Text>
+         
+         <View style={styles.hairline} />
+
+
+         <Text style={styles.textViewContainer}>Diagnosis  :  {this.state.obj.diagnosis}</Text>
+         
+         <View style={styles.hairline} />
+
+
+         <Text style={styles.textViewContainer}>Height  :  {this.state.obj.height}</Text>
+         
+         <View style={styles.hairline} />
+
+
+         <Text style={styles.textViewContainer}>Weight  :  {this.state.obj.weight}</Text>
+         
+         <View style={styles.hairline} />
+
+        {/* <View style={styles.card}>
  
         <Button
   title="Update profile"
@@ -134,7 +187,7 @@ getprof = () => {
   onPress={() => this.props.navigation.navigate('Update Profile',{screen:'updatePro'})}
 />
         </View>
-        <View style={styles.hairline} />
+        <View style={styles.hairline} /> */}
         </View>
 
       
@@ -152,19 +205,19 @@ const styles = StyleSheet.create({
     alignItems:"center"
   },textViewContainer: {
     textAlignVertical:'center', 
-    fontSize: 15,
-    color: '#1c1c1c',
-    left:100
+    fontSize: 18,
+    fontWeight:"900",
+    color: '#1c1c1c'
     },
   card:{
-    height:30,
+    height:40,
     width:"80%",
     backgroundColor:"white",
     borderRadius:15,
     borderWidth: 1,
     borderColor: '#3740FE',
     elevation:10,
-    padding:10,
+    padding:7,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.5,

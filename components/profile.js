@@ -24,7 +24,7 @@ export default class Profile extends Component {
 
 
 <View style={styles.container}>
-        {/* <View style={styles.card}>
+        <View style={styles.card}>
 
         
  
@@ -40,7 +40,7 @@ export default class Profile extends Component {
 
 
         </View>
-        <View style={styles.hairline} /> */}
+        <View style={styles.hairline} />
 
         <View style={styles.card}>
  
@@ -62,6 +62,22 @@ onPress={() => this.props.navigation.navigate('Settings')}
 
 />
  </View>
+
+ <View style={styles.hairline} />
+
+
+ <View style={styles.card}>
+ 
+ <Button
+title="About Us"
+type="clear"
+onPress={() => this.props.navigation.navigate('About Us')}
+
+/>
+ </View>
+
+
+
         
 
 
