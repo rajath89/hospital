@@ -164,23 +164,23 @@ subMit=()=>{
   //console.log(arr);
   console.log(this.state);
 
-  (async () => {
-    const rawResponse = await fetch('https://flask-app47.herokuapp.com/CAGdetails', {//exp://192.168.0.104:19000
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({"username": this.state.globName,"CAG_DischargeDetails":this.state})
-    });
-    const content = await rawResponse.json();
+  // (async () => {
+  //   const rawResponse = await fetch('https://flask-app47.herokuapp.com/CAGdetails', {//exp://192.168.0.104:19000
+  //     method: 'POST',
+  //     headers: {
+  //       'Accept': 'application/json',
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify({"username": this.state.globName,"CAG_DischargeDetails":this.state})
+  //   });
+  //   const content = await rawResponse.json();
   
-    console.log(content);
-    if(content){
-        //this.setState({isLoading:false,obj:content})
-        ToastAndroid.show('Report and details are updated', ToastAndroid.SHORT);
-    }
-  })();
+  //   console.log(content);
+  //   if(content){
+  //       //this.setState({isLoading:false,obj:content})
+  //       ToastAndroid.show('Report and details are updated', ToastAndroid.SHORT);
+  //   }
+  // })();
 }
 
 render() {
@@ -220,6 +220,7 @@ render() {
   // style={{ height: 50,left:240,width:100 }}
   style={ styles.inputStyle2 }
   onValueChange={(itemValue, itemIndex) => this.setState({ CAG: itemValue })}>
+    <Picker.Item label="select CAG" value="" />
   <Picker.Item label="SVD" value="SVD" />
   <Picker.Item label="DVD" value="DVD" />
   <Picker.Item label="TVD" value="TVD" />
@@ -234,6 +235,7 @@ render() {
   // style={{ height: 50,left:240,width:100 }}
   style={ styles.inputStyle2 }
   onValueChange={(itemValue, itemIndex) => this.setState({ PTCA: itemValue })}>
+    <Picker.Item label="select PTCA" value="" />
   <Picker.Item label="LMCA" value="LMCA" />
   <Picker.Item label="LAD" value="LAD" />
   <Picker.Item label="LCX" value="LCX" />

@@ -52,9 +52,18 @@ export default function BotTab() {
             return <Icon name={iconName} size={22} color="#3740FE"/>;
           },
         })}
+        
 
       >
-        <Tab.Screen name="Home" component={dashboard}/>
+        <Tab.Screen name="Home" component={dashboard}
+        listeners={{
+          tabPress: e => {
+            // Prevent default action
+            //e.preventDefault();
+            console.log("home.................")
+          }
+        }}
+        />
         <Tab.Screen name="Profile" component={profile} />
         <Tab.Screen name="Comment" component={Comments} />
    
