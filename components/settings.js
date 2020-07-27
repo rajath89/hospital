@@ -5,6 +5,7 @@ import { CheckBox } from 'react-native-elements'
 import { AsyncStorage } from 'react-native';
 
 
+
 export default class Settings extends React.Component {
   state={
     selectedLang:null
@@ -38,6 +39,9 @@ _storeData2 = async () => {
 };
 
   onPress=()=>{
+
+
+
 
     if(this.state.selectedLang==1){
         console.log("lang not changed");

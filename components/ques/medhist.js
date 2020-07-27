@@ -264,8 +264,26 @@ getStatus=(id)=>{
         //console.log(typeof JSON.stringify(this.state.op));
         var g=JSON.stringify(this.state.op);
         try {
-          await AsyncStorage.setItem(this.state.questions, an);
-          console.log("stored");
+
+
+          if(this.state.kannada){
+            console.log("ID####################",this.state.qid,an);
+            if(an=="ಹೌದು"){
+              an="Yes";
+            }else if(an=="ಇಲ್ಲ"){
+              an="No";
+            }else if(an=="ಯಾವು ಇಲ್ಲ"){
+              an="None";
+            }
+
+            await AsyncStorage.setItem(this.state.qid, an);
+            console.log("stored from vv kannada");
+           
+
+          }else{
+            await AsyncStorage.setItem(this.state.questions, an);
+            console.log("stored from vv english");
+          }
           
         } catch (error) {
           // Error saving data
@@ -315,7 +333,8 @@ getStatus=(id)=>{
               return {
                 disabled: true,
                 questions: quizData2_2[this.state.currentQuestion].question,
-                options: quizData2_2[this.state.currentQuestion].options
+                options: quizData2_2[this.state.currentQuestion].options,
+                qid:quizData2_2[this.state.currentQuestion].id
               };
             });
 
@@ -453,6 +472,8 @@ getQues = () => {
   for(var i=0;i<quizData_2.length;i++){
     myarray.push(quizData_2[i].question);
   }
+
+  
 
   return myarray;
 }

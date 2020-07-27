@@ -249,8 +249,16 @@ getStatus=(id)=>{
             var qidA=quizData2_1[this.state.currentQuestion].id;
   
           }
+
+
+          // if(this.state.kannada){
+          //   console.log("ID####################",this.state.qid);
+          // }
+
+          console.log("ID####################",this.state.qid);
+
           await AsyncStorage.setItem(qidA, this.state.op);
-          console.log("stored");
+          console.log("stored from storeData");
           
         } catch (error) {
           // Error saving data
@@ -261,8 +269,29 @@ getStatus=(id)=>{
         //console.log(typeof JSON.stringify(this.state.op));
         var g=JSON.stringify(this.state.op);
         try {
-          await AsyncStorage.setItem(this.state.questions, an);
-          console.log("stored");
+          //console.log("ID####################");
+
+          if(this.state.kannada){
+            console.log("ID####################",this.state.qid,an);
+            if(an=="ಹೌದು"){
+              an="Yes";
+            }else if(an=="ಇಲ್ಲ"){
+              an="No";
+            }else if(an=="ಯಾವು ಇಲ್ಲ"){
+              an="None";
+            }
+
+            await AsyncStorage.setItem(this.state.qid, an);
+            console.log("stored from vv kannada");
+           
+
+          }else{
+            await AsyncStorage.setItem(this.state.questions, an);
+            console.log("stored from vv english");
+          }
+
+
+
           
         } catch (error) {
           // Error saving data
@@ -312,7 +341,8 @@ getStatus=(id)=>{
               return {
                 disabled: true,
                 questions: quizData2_1[this.state.currentQuestion].question,
-                options: quizData2_1[this.state.currentQuestion].options
+                options: quizData2_1[this.state.currentQuestion].options,
+                qid:quizData2_1[this.state.currentQuestion].id
               };
             });
 

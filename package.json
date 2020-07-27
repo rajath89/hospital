@@ -43,6 +43,7 @@
     "react-native-dashboard": "0.0.4",
     "react-native-dropdown-picker": "^3.0.5",
     "react-native-elements": "^2.0.0",
+    "react-native-event-listeners": "^1.0.7",
     "react-native-gesture-handler": "^1.6.1",
     "react-native-hype-card": "^1.0.2",
     "react-native-modal": "^11.5.6",

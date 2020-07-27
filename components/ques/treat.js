@@ -260,8 +260,24 @@ getStatus=(id)=>{
         //console.log(typeof JSON.stringify(this.state.op));
         var g=JSON.stringify(this.state.op);
         try {
-          await AsyncStorage.setItem(this.state.questions, an);
-          console.log("stored");
+
+
+          if(this.state.kannada){
+            console.log("ID####################",this.state.qid,an);
+            if(an=="ಹೌದು"){
+              an="Yes";
+            }else if(an=="ಇಲ್ಲ"){
+              an="No";
+            }
+
+            await AsyncStorage.setItem(this.state.qid, an);
+            console.log("stored from vv kannada");
+           
+
+          }else{
+            await AsyncStorage.setItem(this.state.questions, an);
+            console.log("stored from vv english");
+          }
           
         } catch (error) {
           // Error saving data
@@ -311,7 +327,8 @@ getStatus=(id)=>{
               return {
                 disabled: true,
                 questions: quizData2_3[this.state.currentQuestion].question,
-                options: quizData2_3[this.state.currentQuestion].options
+                options: quizData2_3[this.state.currentQuestion].options,
+                qid:quizData2_3[this.state.currentQuestion].id
               };
             });
 
@@ -442,7 +459,7 @@ getQues = () => {
 
   if(this.state.kannada==true){
     for(var i=0;i<quizData2.length;i++){
-      myarray.push(quizData2[i].question);
+      myarray.push(quizData2[i].id);
     }
     console.log("my array from get quess#######",myarray)
   }
@@ -462,6 +479,9 @@ getQues = () => {
 getMultiple = async () => {
 
   let values;
+
+  var kannObj=null;
+  var engObj=null;
   try {
     arr=this.getQues();
     values = await AsyncStorage.multiGet(arr);
@@ -472,13 +492,94 @@ getMultiple = async () => {
     console.log("values...",values);
   }
   if(values){
-      var object = Object.fromEntries(values);
-      console.log(object);
 
-        var quesA = new Array();
-        quesA.push(object);
+
+
+      if(this.state.kannada){
+        var myarray2= new Array();
+
+        var objectK = Object.fromEntries(values);
+        console.log("object from entries",objectK);
+
+        var objId={}
+        for(var i=0;i<quizData.length;i++){
+          //myarray2.push(quizData[i].question);
+          objId[quizData[i].id]=quizData[i].question;
+        }
+        console.log("all the english questions$$$$$$$$$$$$$$$$$",objId);
+
+
+       
+        var obj2={};
+        for (const [key, value] of Object.entries(objectK)) {
+
+        var ky=null;
+        ky=objId[key];
+   
+        obj2[ky]=value;
+  
+      }
+
+console.log("final obkect#####################",obj2);
+
+var quesA = new Array();
+
+quesA.push(obj2);
 //alert(JSON.stringify(myArray));
-        console.log("##########before sending",quesA[0]);
+        //console.log("##########before sending",quesA[0]);
+        console.log("#########quesA w/t [0]",quesA);
+
+        var obj23={};
+      for (const [key, value] of Object.entries(quesA[0])) {
+    var st = key.split(' ').join('_');
+    obj23[st]=value;
+      }
+
+
+
+      console.log("changed object..............",obj23);
+      kannObj=obj23;
+
+      }
+
+
+      else{
+        var object = Object.fromEntries(values);
+        console.log("object from entries",object);
+  
+          var quesA = new Array();
+
+          quesA.push(object);
+          //alert(JSON.stringify(myArray));
+                  //console.log("##########before sending",quesA[0]);
+                  console.log("#########quesA w/t [0]",quesA);
+          
+                  var obj2={};
+                for (const [key, value] of Object.entries(quesA[0])) {
+              var st = key.split(' ').join('_');
+              obj2[st]=value;
+                }
+          
+          
+          
+                console.log("changed object..............",obj2);
+                engObj=obj2;
+      }
+
+
+      var ty=null;
+
+      if(this.state.kannada){
+        ty=kannObj;
+      }
+
+      else{
+        ty=engObj;
+      }
+
+      console.log("ty********************",ty);
+
+
 
         //sending to backend
           (async () => {
@@ -488,7 +589,7 @@ getMultiple = async () => {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({"username": this.state.globName, "questionDetails":quesA[0]})
+    body: JSON.stringify({"username": this.state.globName, "questionDetails":ty})
   });
   const content = await rawResponse.json();
 
@@ -502,7 +603,7 @@ getMultiple = async () => {
 })();
 
 
-  }
+   }
 
   console.log("outside");
 //console.log(content);

@@ -94,7 +94,7 @@ export default class Diabetes extends Component {
         this.setState({
           kannada:true
         });
-        //console.log("from state:",this.state.globName);
+        console.log("from state:");
 
       }
     } catch (error) {
@@ -103,9 +103,10 @@ export default class Diabetes extends Component {
   }
 
 
-  componentDidMount() {
+  componentDidMount(props) {
 
     this._retrieveDataK();
+    console.log("dd",this.props.name);
   }
 
 

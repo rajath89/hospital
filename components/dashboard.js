@@ -168,6 +168,8 @@ import { Divider } from 'react-native-elements';
 import firebase from '../database/firebase';
 import CameraComponent from './Camera';
 import { AsyncStorage } from 'react-native';
+import pdfViewer from './pdfviewer';
+
 const profileImg ="https://reactnativemaster.com/wp-content/uploads/2019/11/React-native-master-logo-only.png"
 
 export default class Fire extends React.Component {
@@ -185,7 +187,8 @@ export default class Fire extends React.Component {
   state = {
     isVisible: false,
     isVisible2:false,
-    kannada:false
+    kannada:false,
+    data:null
   }
 
 
@@ -240,12 +243,42 @@ export default class Fire extends React.Component {
   };
 
 
+
+
+
   componentDidMount() {
 
     this._retrieveDataK();
-    console.log("mount............")
+    console.log("update...........");
+    //this.props.navigation.addListener('didFocus', this.onScreenFocus)
+    // this.Test()
+    
+
+  }
+
+    //  sayHi=()=>{
+  //   console.log("timeout..........");
+  //   this.setState({kannada:!this.state.kannada});
+  // }
+
+  // Test=()=>{
+  //   //setInterval(this.sayHi, 1000);
+  // }
+
+
+
+
+  onScreenFocus = () => {
+    console.log("focussed...............")
   }
   
+
+  propsTest=()=>{
+
+    <pdfViewer name="test"/>
+    console.log("sent");
+
+  }
 
 
 
@@ -334,7 +367,7 @@ onPress={() => this.props.navigation.navigate('FAQ page',{screen:'Faqpage'})}
 
 title={this.state.kannada == false ? 'Learning Materials' : 'ಕಲಿಕಾ ಸಾಮಗ್ರಿಗಳು'} 
 type="clear"
-onPress={() => {this.props.navigation.navigate('Learning Materials',{screen:'pdfViewer'})}}
+onPress={() => {this.props.navigation.navigate('Learning Materials',{screen:'pdfViewer'}),this.propsTest()}}
 />
  </View>
 
@@ -347,6 +380,10 @@ title={this.state.kannada == false ? 'Logout' : 'ಲಾಗ್ ಔಟ್'}
 type="clear"
 onPress={() => this.signOut()}
 />
+
+
+
+<Text>{this.props.name}</Text>
  </View>
 
 

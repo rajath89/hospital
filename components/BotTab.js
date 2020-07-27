@@ -56,13 +56,27 @@ export default function BotTab() {
 
       >
         <Tab.Screen name="Home" component={dashboard}
-        listeners={{
+        // listeners={{
+        //   tabPress: e => {
+        //     // Prevent default action
+        //     //e.preventDefault();
+        //     console.log("home.................");
+        //     navigation.navigate('Cholestrol')
+        //   }
+        // }}
+
+
+        listeners={({ navigation, route }) => ({
           tabPress: e => {
             // Prevent default action
             //e.preventDefault();
-            console.log("home.................")
-          }
-        }}
+      
+            // Do something with the `navigation` object
+            // navigation.navigate('Cardio App');
+            // dashboard.forceUpdate();
+          },
+        })}
+
         />
         <Tab.Screen name="Profile" component={profile} />
         <Tab.Screen name="Comment" component={Comments} />
