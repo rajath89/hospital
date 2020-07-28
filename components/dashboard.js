@@ -170,6 +170,8 @@ import CameraComponent from './Camera';
 import { AsyncStorage } from 'react-native';
 import pdfViewer from './pdfviewer';
 
+import Global from './contexts/global';
+
 const profileImg ="https://reactnativemaster.com/wp-content/uploads/2019/11/React-native-master-logo-only.png"
 
 export default class Fire extends React.Component {
@@ -181,7 +183,12 @@ export default class Fire extends React.Component {
      
 
   //   }
-  // }
+  // }]
+
+  constructor(props, context) {
+    super(props);
+    this.context = context;
+}
 
 
   state = {
@@ -282,7 +289,7 @@ export default class Fire extends React.Component {
 
 
 
-
+  
   render() {
 
     // this.state = { 
@@ -293,7 +300,7 @@ export default class Fire extends React.Component {
       
     // } 
 
-
+   
     return (
       <View style={styles.container}>
 

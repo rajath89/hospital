@@ -26,6 +26,8 @@ import Medrisk from './components/ques/medrisk';
 import Medhist from './components/ques/medhist';
 import Treat from './components/ques/treat';
 
+import Global from './components/contexts/global';
+
 
 // import { Container, Button, text, ListItem, Text } from "native-base";
 import Expo from "expo";
@@ -287,10 +289,14 @@ component={About}
 export default function App() {
   return (
   //theme={DarkTheme}
+  
     <NavigationContainer>
+
+
       <MyStack />
      
     </NavigationContainer>
+   
    
   );
 }

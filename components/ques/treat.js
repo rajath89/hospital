@@ -529,11 +529,34 @@ quesA.push(obj2);
         //console.log("##########before sending",quesA[0]);
         console.log("#########quesA w/t [0]",quesA);
 
-        var obj23={};
+    //     var obj23={};
+    //   for (const [key, value] of Object.entries(quesA[0])) {
+    // var st = key.split(' ').join('_');
+    // obj23[st]=value;
+    //   }
+
+
+      var obj23={};
       for (const [key, value] of Object.entries(quesA[0])) {
-    var st = key.split(' ').join('_');
-    obj23[st]=value;
-      }
+        if(key.includes(",") && !key.includes("(") ){
+          console.log("hh",key);
+          var d=key.replace(",","_");
+          var t=d.split(' ').join('_');
+          obj23[t]=value;
+        }else if(key.includes("(") && key.includes(")") && key.includes(",")){
+          var d2=key.replace("(","_");
+          var d3=d2.replace(")","_");
+          var d4=d3.replace(",","_");
+          var t2=d4.split(' ').join('_');
+          obj23[t2]=value;
+          console.log(key);
+        }else{
+             var st = key.split(' ').join('_');
+          obj23[st]=value;
+        }
+     
+     
+     }
 
 
 
@@ -554,11 +577,34 @@ quesA.push(obj2);
                   //console.log("##########before sending",quesA[0]);
                   console.log("#########quesA w/t [0]",quesA);
           
-                  var obj2={};
+              //     var obj2={};
+              //   for (const [key, value] of Object.entries(quesA[0])) {
+              // var st = key.split(' ').join('_');
+              // obj2[st]=value;
+              //   }
+
+
+                var obj2={};
                 for (const [key, value] of Object.entries(quesA[0])) {
-              var st = key.split(' ').join('_');
-              obj2[st]=value;
-                }
+                  if(key.includes(",") && !key.includes("(") ){
+                    console.log("hh",key);
+                    var d=key.replace(",","_");
+                    var t=d.split(' ').join('_');
+                    obj2[t]=value;
+                  }else if(key.includes("(") && key.includes(")") && key.includes(",")){
+                    var d2=key.replace("(","_");
+                    var d3=d2.replace(")","_");
+                    var d4=d3.replace(",","_");
+                    var t2=d4.split(' ').join('_');
+                    obj2[t2]=value;
+                    console.log(key);
+                  }else{
+                       var st = key.split(' ').join('_');
+                    obj2[st]=value;
+                  }
+               
+               
+               }
           
           
           
