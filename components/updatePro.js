@@ -32,7 +32,8 @@ export default class updatePro extends Component {
       selected2:null,
       datebool:false,
       date: new Date(),
-      procedure:''
+      procedure:'',
+      BodyMassIndex:null
 
     }
   }
@@ -41,7 +42,7 @@ export default class updatePro extends Component {
 
   componentDidMount() {
     this._retrieveData();
-    this.registerForPushNotificationsAsync();
+   // this.registerForPushNotificationsAsync();
 
 
 }
@@ -163,28 +164,54 @@ export default class updatePro extends Component {
     this.setState(state);
   }
 
+
+  calBodyMassIndex=()=>{
+    const h=this.state.height/100;
+    var BodyMassIndexcal=this.state.weight/(h*h);
+    this.setState({BodyMassIndex:BodyMassIndexcal});
+    console.log(BodyMassIndexcal);
+    //console.log(this.BodyMassIndex);
+
+  }
+
+
+
+  componentDidUpdate(prevProps, prevState) {
+    
+    
+    if (this.state.BodyMassIndex !== prevState.BodyMassIndex) {
+      console.log("BodyMassIndex state changed",this.state.BodyMassIndex);
+      this.upprof();
+    }
+  }
+
+
+
   upprof = () => {
 
 
-    this.registerForPushNotificationsAsync();
+    //this.registerForPushNotificationsAsync();
 
-    (async () => {
-    const rawResponse = await fetch('https://flask-app47.herokuapp.com/updatePro', {//exp://192.168.0.104:19000
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({"username": this.state.globName,"ProfileDet":this.state})
-    });
-    const content = await rawResponse.json();
+    //this.calBodyMassIndex();
+
+  //   (async () => {
+  //   const rawResponse = await fetch('https://flask-app47.herokuapp.com/updatePro', {//exp://192.168.0.104:19000
+  //     method: 'POST',
+  //     headers: {
+  //       'Accept': 'application/json',
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify({"username": this.state.globName,"ProfileDet":this.state})
+  //   });
+  //   const content = await rawResponse.json();
   
-    console.log(this.state);
-    if(content){
-        this.setState({isLoading:false,obj:content})
-    }
-  })();
-  console.log(this.state);
+  //   console.log(this.state);
+  //   if(content){
+  //       this.setState({isLoading:false,obj:content})
+  //   }
+  // })();
+  console.log("from upProf",this.state);
+
   
   
     // example console.log output:
@@ -375,7 +402,7 @@ export default class updatePro extends Component {
         <Button
           color="#3740FE"
           title="Update"
-          onPress={() => {this.upprof()}}
+          onPress={() => {this.calBodyMassIndex()}}
         />
 
 
