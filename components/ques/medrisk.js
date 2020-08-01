@@ -37,7 +37,9 @@ export default class Medrisk extends Component {
         decide:'',
         msg:"",
         kannada:false,
-        quizDecide:quizData_1
+        quizDecide:quizData_1,
+        butPress:null,
+        butId:null
       };
 
       
@@ -225,7 +227,9 @@ getStatus=(id)=>{
         }
     
         this.setState({
-          currentQuestion: this.state.currentQuestion + 1
+          currentQuestion: this.state.currentQuestion + 1,
+          butId:null
+         // butPress:null
           //,
           //op:null
         });
@@ -409,7 +413,7 @@ getStatus=(id)=>{
 
       }
       //check answer
-      checkAnswer = answer => {
+      checkAnswer = (answer) => {
         var arr=[]
         var arr2=[]
 
@@ -431,9 +435,14 @@ getStatus=(id)=>{
         //console.log(state1);
 
 
+        if(answer){
+         
+          this.setState({butId:answer});
 
+        }
         //console.log("not state",arr2);
         this.setState({ myAnswer: answer, disabled: false,op:answer, ans:[mystate,...this.state.ans]});
+
         //console.log("after",this.state.ans);
       };
 
@@ -586,7 +595,7 @@ changeState=()=>{
           {options.map(option => ( 
                      //,this.vv(option)
                      <React.Fragment>
-            <Button title={option} type="solid" raised="true" buttonStyle={styles.btstyle} key={this.state.questions.id} onPress={() => {this.checkAnswer(option),this.vv(option)}}/>
+            <Button title={option} type={option==this.state.butId?"solid":"outline"} raised="true" buttonStyle={styles.btstyle} key={this.state.questions.id} onPress={() => {this.checkAnswer(option),this.vv(option)}}/>
             <View style={styles.separator}/>
             </React.Fragment>
           ))}
@@ -657,15 +666,15 @@ const styles = StyleSheet.create({
   },
   btstyle:{
   
-    borderRadius:15,
-    borderWidth: 1,
-    borderColor: '#3740FE',
-    elevation:10,
+    // borderRadius:15,
+    // borderWidth: 1,
+    // borderColor: '#3740FE',
+    // elevation:10,
     
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.5,
-    shadowRadius: 10
+    // shadowColor: '#000',
+    // shadowOffset: { width: 0, height: 3 },
+    // shadowOpacity: 0.5,
+    // shadowRadius: 10
   },
   separator: {
     marginVertical: 8,

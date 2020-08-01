@@ -37,7 +37,8 @@ export default class Medhist extends Component {
         msg:"",
         kannada:false,
         quizDecide:quizData_2,
-        alert:false
+        alert:false,
+        butId:null
       };
 
       
@@ -228,7 +229,8 @@ getStatus=(id)=>{
         }
     
         this.setState({
-          currentQuestion: this.state.currentQuestion + 1
+          currentQuestion: this.state.currentQuestion + 1,
+          butId:null
           //,
           //op:null
         });
@@ -428,6 +430,11 @@ getStatus=(id)=>{
         const clone = JSON.parse(JSON.stringify(mystate));
         state1.push(clone);
         //console.log(state1);
+        if(answer){
+         
+          this.setState({butId:answer});
+
+        }
 
 
 
@@ -553,7 +560,7 @@ changeState=()=>{
           {options.map(option => ( 
                      //,this.vv(option)
                      <React.Fragment>
-            <Button title={option} type="solid" raised="true" buttonStyle={styles.btstyle} key={this.state.questions.id} onPress={() => {this.checkAnswer(option),this.vv(option)}}/>
+            <Button title={option} type={option==this.state.butId?"solid":"outline"} raised="true" buttonStyle={styles.btstyle} key={this.state.questions.id} onPress={() => {this.checkAnswer(option),this.vv(option)}}/>
             <View style={styles.separator}/>
             </React.Fragment>
           ))}
@@ -624,15 +631,15 @@ const styles = StyleSheet.create({
   },
   btstyle:{
   
-    borderRadius:15,
-    borderWidth: 1,
-    borderColor: '#3740FE',
-    elevation:10,
+    // borderRadius:15,
+    // borderWidth: 1,
+    // borderColor: '#3740FE',
+    // elevation:10,
     
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.5,
-    shadowRadius: 10
+    // shadowColor: '#000',
+    // shadowOffset: { width: 0, height: 3 },
+    // shadowOpacity: 0.5,
+    // shadowRadius: 10
   },
   separator: {
     marginVertical: 8,

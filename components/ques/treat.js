@@ -37,7 +37,8 @@ export default class Treat extends Component {
         decide:'',
         msg:"",
         kannada:false,
-        quizDecide:quizData_3
+        quizDecide:quizData_3,
+        butId:null
       };
 
       
@@ -224,7 +225,8 @@ getStatus=(id)=>{
         }
     
         this.setState({
-          currentQuestion: this.state.currentQuestion + 1
+          currentQuestion: this.state.currentQuestion + 1,
+          butId:null
           //,
           //op:null
         });
@@ -415,6 +417,11 @@ getStatus=(id)=>{
         const clone = JSON.parse(JSON.stringify(mystate));
         state1.push(clone);
         //console.log(state1);
+        if(answer){
+         
+          this.setState({butId:answer});
+
+        }
 
 
 
@@ -628,25 +635,25 @@ quesA.push(obj2);
 
 
         //sending to backend
-          (async () => {
-  const rawResponse = await fetch('https://flask-app47.herokuapp.com/questions', {//exp://192.168.0.104:19000
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({"username": this.state.globName, "questionDetails":ty})
-  });
-  const content = await rawResponse.json();
+//           (async () => {
+//   const rawResponse = await fetch('https://flask-app47.herokuapp.com/questions', {//exp://192.168.0.104:19000
+//     method: 'POST',
+//     headers: {
+//       'Accept': 'application/json',
+//       'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify({"username": this.state.globName, "questionDetails":ty})
+//   });
+//   const content = await rawResponse.json();
 
-  if(content){
-    console.log("before");
-    console.log(content);
-    console.log("after");
+//   if(content){
+//     console.log("before");
+//     console.log(content);
+//     console.log("after");
     
-  }
+//   }
 
-})();
+// })();
 
 
    }
@@ -718,7 +725,7 @@ changeState=()=>{
           {options.map(option => ( 
                      //,this.vv(option)
                      <React.Fragment>
-            <Button title={option} type="solid" raised="true" buttonStyle={styles.btstyle} key={this.state.questions.id} onPress={() => {this.checkAnswer(option),this.vv(option)}}/>
+            <Button title={option} type={option==this.state.butId?"solid":"outline"} raised="true" buttonStyle={styles.btstyle} key={this.state.questions.id} onPress={() => {this.checkAnswer(option),this.vv(option)}}/>
             <View style={styles.separator}/>
             </React.Fragment>
           ))}
@@ -789,15 +796,15 @@ const styles = StyleSheet.create({
   },
   btstyle:{
   
-    borderRadius:15,
-    borderWidth: 1,
-    borderColor: '#3740FE',
-    elevation:10,
+    // borderRadius:15,
+    // borderWidth: 1,
+    // borderColor: '#3740FE',
+    // elevation:10,
     
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.5,
-    shadowRadius: 10
+    // shadowColor: '#000',
+    // shadowOffset: { width: 0, height: 3 },
+    // shadowOpacity: 0.5,
+    // shadowRadius: 10
   },
   separator: {
     marginVertical: 8,
