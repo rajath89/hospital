@@ -6,10 +6,12 @@ import { AsyncStorage } from 'react-native';
 import { ToastAndroid } from 'react-native';
 
 
+
 import { Notifications} from 'expo';
 import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 
 import { Container, Header, Content, Form, Item, Icon } from 'native-base';
@@ -19,20 +21,21 @@ export default class updatePro extends Component {
   constructor() {
     super();
     this.state = { 
-      displayName: '',
+      
       email: '', 
       Name:'',
       Gender:'',
       Age:'',
       MobNumber:'',
       globName:'',
+      setDatePickerVisibility:false,
 
       isLoading: false,
       expoPushToken:'',
-      selected2:null,
+      Education:null,
       datebool:false,
-      date: new Date(),
-      procedure:'',
+      
+      DateOfProcedure:'',
       BodyMassIndex:null
 
     }
@@ -183,7 +186,19 @@ export default class updatePro extends Component {
       console.log("BodyMassIndex state changed",this.state.BodyMassIndex);
       this.upprof();
     }
+    if (this.state.DateOfProcedure !== prevState.DateOfProcedure) {
+      console.log("DateOfProcedure state changed",this.state.DateOfProcedure);
+      //this.upprof();
+    }
   }
+
+  // displayImage=(imageRef)=> {
+  //   imageRef.getDownloadURL().then(function(url) {
+  //     console.log(url);
+  //   }).catch(function(error) {
+  //     // Handle any errors
+  //   });
+  // }
 
 
 
@@ -207,10 +222,49 @@ export default class updatePro extends Component {
   
   //   console.log(this.state);
   //   if(content){
-  //       this.setState({isLoading:false,obj:content})
+  //       this.setState({isLoading:false,obj:content});
+  ToastAndroid.show('Profile details are updated', ToastAndroid.SHORT);
+  this.setState({ 
+   
+    email: '', 
+    Name:'',
+    Gender:'',
+    Age:'',
+    MobNumber:'',
+    
+    education:'',
+    address:'',
+    height:'',
+    weight:'',
+    diagnosis:'',
+    DateOfProcedure:'',
+
+    isLoading: false})
+  this.props.navigation.navigate('Cardio App'); 
   //   }
   // })();
   console.log("from upProf",this.state);
+
+  
+
+  // var storageRef = firebase.storage().ref("rajath/cagreport");
+
+
+
+
+  // // Now we get the references of these images
+  // storageRef.listAll().then(function(result) {
+  //   result.items.forEach(function(imageRef) {
+  //     // And finally display them
+  //     imageRef.getDownloadURL().then(function(url) {
+  //       console.log(imageRef);
+  //     }).catch(function(error) {
+  //       // Handle any errors
+  //     });
+  //   });
+  // }).catch(function(error) {
+  //   // Handle any errors
+  // });
 
   
   
@@ -218,9 +272,10 @@ export default class updatePro extends Component {
     // [ ['@MyApp_user', 'myUserValue'], ['@MyApp_key', 'myKeyValue'] ]
   }
 
+
   onValueChange2(value) {
     this.setState({
-      selected2: value
+      Education: value
     });
   }
 
@@ -273,8 +328,8 @@ export default class updatePro extends Component {
     this.setState({datebool:true});
    }
 
-   onChange=(ev,dat)=>{
-      console.log(dat);
+   onChange1=(event,date)=>{
+      console.log("log",date);
    }
 
   render() {
@@ -301,14 +356,29 @@ export default class updatePro extends Component {
           value={this.state.email}
           onChangeText={(val) => this.updateInputVal(val, 'email')}
         />
-        <TextInput
+        {/* <TextInput
           style={styles.inputStyle}
           placeholder="Gender"
           value={this.state.Gender}
           onChangeText={(val) => this.updateInputVal(val, 'Gender')}
           maxLength={15}
           
-        />  
+        />   */}
+
+<Text style={{color: "gray"}}>Gender</Text>
+
+<Picker
+  placeholder="Mobile Number"
+  selectedValue={this.state.Gender}
+  // style={{ height: 50,left:240,width:100 }}
+  style={ styles.inputStyle2 }
+  onValueChange={(itemValue, itemIndex) => this.setState({ Gender: itemValue })}>
+  <Picker.Item label="select Gender" value="" />
+  <Picker.Item label="Male" value="Male" />
+  <Picker.Item label="Female" value="Female" />
+  <Picker.Item label="Other" value="Other" />
+ 
+</Picker>
 
         <TextInput
           style={styles.inputStyle}
@@ -321,10 +391,10 @@ export default class updatePro extends Component {
 
 <Picker
   placeholder="Mobile Number"
-  selectedValue={this.state.selected2}
+  selectedValue={this.state.Education}
   // style={{ height: 50,left:240,width:100 }}
   style={ styles.inputStyle2 }
-  onValueChange={(itemValue, itemIndex) => this.setState({ selected2: itemValue })}>
+  onValueChange={(itemValue, itemIndex) => this.setState({ Education: itemValue })}>
   <Picker.Item label="select education" value="" />
   <Picker.Item label="Not educated" value="Not educated" />
   <Picker.Item label="Primary" value="Primary" />
@@ -372,28 +442,26 @@ export default class updatePro extends Component {
 
 
 
-<TextInput
+{/* <TextInput
           style={styles.inputStyle}
           placeholder="Date of Procedure"
           value={this.state.procedure}
           onChangeText={(val) => this.updateInputVal(val, 'procedure')}
 
           
-        />
-{/* {this.state.datebool&&<DateTimePicker testID="dateTimePicker" value={date} mode='default' display="default" onChange={(event,date)=>this.onChange()}/>} */}
-{/* <TouchableOpacity
+        /> */}
+{this.state.datebool&&<DateTimePicker testID="dateTimePicker" value={new Date()} mode='date' display="default" onChange={(date,m) => {this.setState({DateOfProcedure:m.toDateString(),datebool:false})}}/>}
+ <TouchableOpacity
           style={styles.button}
           onPress={this.datef}
         >
-          <Text style={{color:"gray"}}>Date of Procedure</Text>
-        </TouchableOpacity> */}
+          <Text style={{color:"#3740FE"}}>Click to select Date of Procedure</Text>
+        </TouchableOpacity>
 
-
-          
-       
 
 
         <View style={styles.hairline} />
+
 
 
 
