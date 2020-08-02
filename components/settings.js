@@ -4,11 +4,18 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { CheckBox } from 'react-native-elements'
 import { AsyncStorage } from 'react-native';
 
+import {connect} from 'react-redux';
+import english from './actions/langActions';
+import kannada from './actions/langActions2';
+import RAN from './actions/ranNumber';
+import { ToastAndroid } from 'react-native';
 
 
-export default class Settings extends React.Component {
+
+class Settings extends React.Component {
   state={
-    selectedLang:null
+    selectedLang:null,
+    red:"world"
   }
 
 
@@ -41,19 +48,29 @@ _storeData2 = async () => {
   onPress=()=>{
 
 
+    //console.log("ran%^&&&**(*(*(",this.props.RAN());
+
+
 
 
     if(this.state.selectedLang==1){
         console.log("lang not changed");
         this._storeData2();
+       this.props.english();
+        //this.props.RAN();
+        ToastAndroid.show('Language changed to english', ToastAndroid.LONG);
+        
 
     }else if(this.state.selectedLang==2){
         console.log("lang changed to kannada");
         this._storeData();
-       
+        this.props.kannada();
+        ToastAndroid.show('Language changed to kannada', ToastAndroid.LONG);
 
 
     }
+
+    
 
     this.props.navigation.navigate('Cardio App');
 
@@ -63,6 +80,7 @@ _storeData2 = async () => {
 
 
   render(){
+    console.log(this.props.red.dec);
     return (
       <View style={styles.container}>
         <Text style={styles.header}>Change Language</Text>
@@ -88,6 +106,8 @@ _storeData2 = async () => {
         <TouchableOpacity style={styles.submit} onPress={this.onPress}>
           <Text style={{color:"white"}}>UPDATE</Text>
         </TouchableOpacity>
+
+       
 
 
   
@@ -136,3 +156,12 @@ const styles = StyleSheet.create({
     marginTop:40
   }
 });
+
+function mapStateToProps(state){
+  return{
+    red:state
+  }
+}
+
+
+export default connect(mapStateToProps,{english,kannada,RAN})(Settings)

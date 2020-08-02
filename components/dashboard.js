@@ -161,7 +161,7 @@
 
 
 import * as React from 'react';
-import { Text, View, StyleSheet, Image } from 'react-native';
+import { Text, View, StyleSheet, Image,Dimensions } from 'react-native';
 import Constants from 'expo-constants';
 import { Button } from 'react-native-elements';
 import { Divider } from 'react-native-elements';
@@ -169,12 +169,24 @@ import firebase from '../database/firebase';
 import CameraComponent from './Camera';
 import { AsyncStorage } from 'react-native';
 import pdfViewer from './pdfviewer';
+import Settings from './settings';
 
-import Global from './contexts/global';
+
+import {connect} from 'react-redux';
+import dashboardV2 from './dashboardV2';
+
+
+
+//REDUX IMPORTS
+
+import english from './actions/langActions';
+import kannada from './actions/langActions2';
+import RAN from './actions/ranNumber';
+
 
 const profileImg ="https://reactnativemaster.com/wp-content/uploads/2019/11/React-native-master-logo-only.png"
-
-export default class Fire extends React.Component {
+const w = Dimensions.get('window');
+ class Fire extends React.Component {
 
   // constructor(props) {
   //   super(props);
@@ -185,17 +197,17 @@ export default class Fire extends React.Component {
   //   }
   // }]
 
-  constructor(props, context) {
-    super(props);
-    this.context = context;
-}
 
 
   state = {
     isVisible: false,
     isVisible2:false,
     kannada:false,
-    data:null
+    data:null,
+    red:8,
+    reduxState:1,
+    decide:"eng",
+    load:true
   }
 
 
@@ -205,11 +217,17 @@ export default class Fire extends React.Component {
       if (value !== null && value=="TRUE") {
         // We have data!!
         console.log(value);
+
+        this.props.kannada();
+
         this.setState({
-          kannada:true
+          kannada:true,
+          decide:"kan"
         });
         //console.log("from state:",this.state.globName);
 
+      }else if(value !== null && value=="FALSE"){
+        this.props.english();
       }
     } catch (error) {
       // Error retrieving dat
@@ -253,44 +271,60 @@ export default class Fire extends React.Component {
 
 
 
+setLoad=()=>{
+  this.setState({load:false});
+}
+
+
+   lazyLoad=()=>{
+
+    setTimeout(()=>{ this.setLoad() }, 3000);
+
+   }
+
+
+
+
+
   componentDidMount() {
 
     this._retrieveDataK();
     console.log("update...........");
-    //this.props.navigation.addListener('didFocus', this.onScreenFocus)
-    // this.Test()
+    this.lazyLoad();
+
     
 
   }
 
-    //  sayHi=()=>{
-  //   console.log("timeout..........");
-  //   this.setState({kannada:!this.state.kannada});
-  // }
 
-  // Test=()=>{
-  //   //setInterval(this.sayHi, 1000);
-  // }
+  componentDidUpdate(prevState) {
+    if (this.state.red.test !== prevState.red.test) {
+      console.log("props changed !!!!!!1");
+      //this.setState({kannada:true});
+      console.log(this.state.reduxState,this.state.kannada,this.props.red.test,this.props.red.dec);
 
 
+      if(this.props.red.test=="kannada"&&this.props.red.dec=="1234"){
+        
+        this.props.RAN();
+        
+        this.setState({kannada:true});
+       
+      }else if(this.props.red.test=="english"&&this.props.red.dec=="5678"){
+        this.props.RAN();
+        this.setState({kannada:false});
+      }
 
 
-  onScreenFocus = () => {
+
+    }
+  }
+
+onScreenFocus = () => {
     console.log("focussed...............")
   }
   
-
-  propsTest=()=>{
-
-    <pdfViewer name="test"/>
-    console.log("sent");
-
-  }
-
-
-
-  
-  render() {
+ render() {
 
     // this.state = { 
     //   displayName: firebase.auth().currentUser.displayName,
@@ -300,7 +334,30 @@ export default class Fire extends React.Component {
       
     // } 
 
-   
+    if(this.state.load){
+
+return(
+
+  <View style={styles.container}>
+  <Image
+    source={{ uri: `https://reactnative.dev/img/homepage/phones.png` }}
+    style={{ width: w.width, height: w.width }}
+    
+  />
+  </View>
+
+);
+
+
+    }
+
+
+
+
+
+
+   console.log("##############",this.props.red.dec);
+   console.log("ggg");
     return (
       <View style={styles.container}>
 
@@ -308,7 +365,7 @@ export default class Fire extends React.Component {
  
  <Button
 
-title={this.state.kannada == false ? 'Medical Risk factors' : 'ಹೃದಯ ರೋಗವನ್ನು ಹೆಚ್ಚಿಸುವ ಅಂಶಗಳು'} 
+title={this.state.kannada == false ? 'Medical Risk factor' : 'ಹೃದಯ ರೋಗವನ್ನು ಹೆಚ್ಚಿಸುವ ಅಂಶಗಳು'} 
 type="clear"
 onPress={() => this.props.navigation.navigate('Medical Risk Factors')}
 />
@@ -387,15 +444,19 @@ title={this.state.kannada == false ? 'Logout' : 'ಲಾಗ್ ಔಟ್'}
 type="clear"
 onPress={() => this.signOut()}
 />
+<Text>{this.props.red.text}</Text>
 
 
 
-<Text>{this.props.name}</Text>
+{this.props.red.dec=="english" && <Text> dispached ENGLISH</Text>}
+{this.props.red.dec=="kannada" && <Text> dispached KANNADA</Text>}
  </View>
 
 
  
       </View>
+
+
     );
   }
 }
@@ -438,3 +499,16 @@ const styles = StyleSheet.create({
     width: 165
   }
 });
+
+
+function mapStateToProps(state){
+  return{
+    red:state
+  }
+}
+
+
+export default connect(mapStateToProps,{english,kannada,RAN})(Fire)
+
+
+
