@@ -277,6 +277,7 @@ clearAll = async () => {
       });
 
       this._storeData();
+    
 
       //console.log(this.state.email,this.state.password);
       firebase
@@ -332,7 +333,18 @@ clearAll = async () => {
           style={styles.loginText}
           onPress={() => {this.props.navigation.navigate('Signup'),this.getAllKeys()}}>
           Don't have account? Click here to signup
-        </Text>                          
+        </Text>  
+
+
+        <Text 
+          style={styles.loginText}
+          onPress={() => {this.props.navigation.navigate('Forgot Password')}}>
+          Forgot Password ?
+        </Text>  
+
+
+
+
       </View>
     );
   }

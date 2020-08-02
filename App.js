@@ -38,8 +38,14 @@ import About from './components/about';
 
 // import Smoking from './components/learMaterials/smoking';
 
+import {Provider} from 'react-redux';
+import {createStore} from 'redux';
+import reducer from './components/reducers/langReducer';
+
+import ForgotPassword from './components/forgotPasswd';
 
 
+const store=createStore(reducer);
 
 
 
@@ -49,7 +55,7 @@ const Stack = createStackNavigator();
 
 function MyStack() {
 
-
+console.log(store.getState());
 
   return (
     <Stack.Navigator
@@ -277,6 +283,15 @@ component={About}
 //  }
 />
 
+<Stack.Screen 
+name="Forgot Password" 
+component={ForgotPassword} 
+//  options={
+//    //{ title: 'Dashboard' },
+//    {headerLeft: null} 
+//  }
+/>
+
 
 </Stack.Navigator>
 
@@ -289,14 +304,15 @@ component={About}
 export default function App() {
   return (
   //theme={DarkTheme}
-  
+ <Provider store={createStore(reducer)}>
+
     <NavigationContainer>
 
 
       <MyStack />
-     
+
     </NavigationContainer>
-   
+  </Provider>
    
   );
 }
