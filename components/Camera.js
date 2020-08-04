@@ -1,7 +1,7 @@
 
 
 import React from 'react';
-import { Text, View, TouchableOpacity, Image,Button,StyleSheet,TextInput ,Picker,ScrollView} from 'react-native';
+import { Text, View, TouchableOpacity, Image,Button,StyleSheet,TextInput ,Picker,ScrollView,Alert} from 'react-native';
 import * as Permissions from 'expo-permissions';
 import { Camera } from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library'; //from 'expo-media-library';
@@ -28,14 +28,14 @@ export default class CameraComponent extends React.Component {
     pdf:null,
     globName:'',
     pd:false,
-    CAG: '', 
-    hemoglobin: '',
-    PTCA:'',
-    EF:'',
-    SerumCreatinine:'',
+    CAG: null, 
+    hemoglobin:null,
+    PTCA:null,
+    EF:null,
+    SerumCreatinine:null,
     isLoading: false,
-    selected2:null,
-    TYPE_NAME:null
+    selected2:null
+    
     
   }
 
@@ -150,7 +150,7 @@ parameter=(para,type)=>{
 
   var typeName=type.split(' ')[0];
 
-  this.setState({TYPE_NAME:typeName});
+ 
 
   var typeVal=type.split(' ')[1];
 
@@ -205,16 +205,104 @@ updateInputVal = (val, prop) => {
   this.setState(state);
 }
 
+validateCAG=(cag)=>{
+  if(cag==null){
+    Alert.alert("Select CAG category");
+    return false;
+  }else{
+    return true;
+  }
+}
+
+validatePTCA=(ptca)=>{
+  if(ptca==null){
+    Alert.alert("Select PTCA category");
+    return false;
+  }else{
+    return true;
+  }
+}
+
+validateHemo=(hem)=>{
+  if(hem==null){
+    Alert.alert("Enter hemoglobin value");
+    return false;
+  }else{
+    return true;
+  }
+}
+
+
+validateEF=(ef)=>{
+  if(ef==null){
+    Alert.alert("Enter EF value");
+    return false;
+  }else{
+    return true;
+  }
+}
+
+
+validateSerum=(sem)=>{
+  if(sem==null){
+    Alert.alert("Enter Serum Creatinine value");
+    return false;
+  }else{
+    return true;
+  }
+}
+
+
 subMit=()=>{
+
+
+
+
+  var CAGbool=this.validateCAG(this.state.CAG);
+  var PTCAbool=this.validatePTCA(this.state.PTCA);
+  var hemo=this.validateHemo(this.state.hemoglobin);
+  var EFbool=this.validateEF(this.state.EF);
+  var serum=this.validateSerum(this.state.SerumCreatinine);
+
+
+if(CAGbool&&PTCAbool&&hemo&&EFbool&&serum){
+  console.log("fall through");
   console.log(this.state);
+
+    (async () => {
+    const rawResponse = await fetch('https://flask-app47.herokuapp.com/CAGdetails', {//exp://192.168.0.104:19000
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({"username": this.state.globName,"CAG_DischargeDetails":this.state})
+    });
+    const content = await rawResponse.json();
+  
+    console.log(content);
+    if(content){
+        //this.setState({isLoading:false,obj:content})
+        ToastAndroid.show('Report and details are updated', ToastAndroid.LONG);
+        this.props.navigation.navigate('Cardio App');
+    }
+  })();
+}
+//
+  //console.log(this.state);
   const df=this.state.CAG;
   const df1=this.state.hemoglobin;
 
   var arr=new Array();
   arr.push({"CAG":df});
   arr.push({"Hemoglobin":df1});
-  //console.log(arr);
-  console.log(this.state);
+  
+  //console.log(this.state);
+//
+
+
+
+
 
   // (async () => {
   //   const rawResponse = await fetch('https://flask-app47.herokuapp.com/CAGdetails', {//exp://192.168.0.104:19000

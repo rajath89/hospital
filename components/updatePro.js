@@ -34,9 +34,14 @@ export default class updatePro extends Component {
       expoPushToken:'',
       Education:null,
       datebool:false,
+      address:"",
+      height:"",
+      weight:"",
       
       DateOfProcedure:'',
-      BodyMassIndex:null
+      
+      
+      
 
     }
   }
@@ -44,8 +49,8 @@ export default class updatePro extends Component {
   
 
   componentDidMount() {
-    this._retrieveData();
-   // this.registerForPushNotificationsAsync();
+   this._retrieveData();
+   //this.registerForPushNotificationsAsync();
 
 
 }
@@ -91,6 +96,7 @@ export default class updatePro extends Component {
       console.log("hit expo token");
       try {
         token = await Notifications.getExpoPushTokenAsync();
+        //
         if (token){
           this.setState({ expoPushToken: token });
           console.log(token);
@@ -107,13 +113,12 @@ export default class updatePro extends Component {
             const content = await rawResponse.json();
           
             console.log(this.state);
-            if(content){
-                this.setState({isLoading:false,obj:content})
-            }
+
           })();
         }else{
              this.setState({ expoPushToken: "token not fetched" });
            }
+           //
     } catch (e) {
         console.error(e);
     }
@@ -168,29 +173,28 @@ export default class updatePro extends Component {
   }
 
 
-  calBodyMassIndex=()=>{
+
+
+
+  calBodyMassIndex2=()=>{
     const h=this.state.height/100;
     var BodyMassIndexcal=this.state.weight/(h*h);
-    this.setState({BodyMassIndex:BodyMassIndexcal});
-    console.log(BodyMassIndexcal);
-    //console.log(this.BodyMassIndex);
+    
+    return BodyMassIndexcal;
 
   }
 
 
+  // componentDidUpdate(prevProps, prevState) {
+    
+    
+  //   if (this.state.BodyMassIndex!=prevState.BodyMassIndex&&this.state.sendData!=prevState.sendData) {
+  //     console.log("send data through api");
+  //     console.log("sending data______",this.state);
+      
+  //   }
 
-  componentDidUpdate(prevProps, prevState) {
-    
-    
-    if (this.state.BodyMassIndex !== prevState.BodyMassIndex) {
-      console.log("BodyMassIndex state changed",this.state.BodyMassIndex);
-      this.upprof();
-    }
-    if (this.state.DateOfProcedure !== prevState.DateOfProcedure) {
-      console.log("DateOfProcedure state changed",this.state.DateOfProcedure);
-      //this.upprof();
-    }
-  }
+  // }
 
   // displayImage=(imageRef)=> {
   //   imageRef.getDownloadURL().then(function(url) {
@@ -203,6 +207,128 @@ export default class updatePro extends Component {
 
 
   upprof = () => {
+
+
+
+    
+
+    //name
+    var nameBool=this.validateName(this.state.Name);
+    console.log("namebool",nameBool);
+
+
+    //email
+    if(!this.validateEmail(this.state.email)){
+      Alert.alert("Enter valid email");
+    }else{
+      this.setState({count:this.state.count+1})
+    }
+
+    //gender
+
+    var genderBool=this.validateGender(this.state.Gender);
+
+    //age
+
+    var ageBool=this.validateAge(this.state.Age);
+
+    //education
+    var eduBool=this.validateEducation(this.state.Education);
+
+    //mob num
+    var mobBool=this.validateMob(this.state.MobNumber);
+
+    //address
+    var addressBool=this.validateAddress(this.state.address);
+
+    var diagnosisBool=this.validateDiagnosis(this.state.diagnosis);
+
+    var dateBool=this.validateDate(this.state.DateOfProcedure);
+
+
+    if(nameBool&&this.validateEmail(this.state.email)&&genderBool&&addressBool&&mobBool&&eduBool&&dateBool&&diagnosisBool){
+      console.log("fall through");
+      
+      if(this.state.height==""){
+
+        Alert.alert("Enter your height");
+        
+      }else if(this.state.weight==""){
+        Alert.alert("Enter your weight");
+      }else{
+        console.log("inside");
+        
+
+
+    (async () => {
+    const rawResponse = await fetch('https://flask-app47.herokuapp.com/updatePro', {//exp://192.168.0.104:19000
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({"username": this.state.globName,"ProfileDet":this.state})
+    });
+    const content = await rawResponse.json();
+  
+    if(content.UpdateProfile=="success"){
+
+      ////
+
+      const val1=this.calBodyMassIndex2();
+
+      (async () => {
+        const rawResponse = await fetch('https://flask-app47.herokuapp.com/BMI', {//exp://192.168.0.104:19000
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({"username": this.state.globName,"BodyMassIndex":val1})
+        });
+        const content2 = await rawResponse.json();
+
+        //
+            if(content2){
+        
+  ToastAndroid.show('Profile details are updated', ToastAndroid.SHORT);
+  this.setState({ 
+   
+    email: '', 
+    Name:'',
+    Gender:'',
+    Age:'',
+    MobNumber:'',
+    
+    education:'',
+    address:'',
+    height:'',
+    weight:'',
+    diagnosis:'',
+    DateOfProcedure:'',
+
+    isLoading: false})
+  this.props.navigation.navigate('Cardio App'); 
+    }
+
+    
+      })();
+
+      ///
+    }
+
+  })();
+        
+      }
+
+    }
+
+
+ 
+
+
+
+    
 
 
     //this.registerForPushNotificationsAsync();
@@ -223,27 +349,27 @@ export default class updatePro extends Component {
   //   console.log(this.state);
   //   if(content){
   //       this.setState({isLoading:false,obj:content});
-  ToastAndroid.show('Profile details are updated', ToastAndroid.SHORT);
-  this.setState({ 
+  // ToastAndroid.show('Profile details are updated', ToastAndroid.SHORT);
+  // this.setState({ 
    
-    email: '', 
-    Name:'',
-    Gender:'',
-    Age:'',
-    MobNumber:'',
+  //   email: '', 
+  //   Name:'',
+  //   Gender:'',
+  //   Age:'',
+  //   MobNumber:'',
     
-    education:'',
-    address:'',
-    height:'',
-    weight:'',
-    diagnosis:'',
-    DateOfProcedure:'',
+  //   education:'',
+  //   address:'',
+  //   height:'',
+  //   weight:'',
+  //   diagnosis:'',
+  //   DateOfProcedure:'',
 
-    isLoading: false})
-  this.props.navigation.navigate('Cardio App'); 
+  //   isLoading: false})
+  // this.props.navigation.navigate('Cardio App'); 
   //   }
   // })();
-  console.log("from upProf",this.state);
+  //console.log("from upProf",this.state);
 
   
 
@@ -266,10 +392,6 @@ export default class updatePro extends Component {
   //   // Handle any errors
   // });
 
-  
-  
-    // example console.log output:
-    // [ ['@MyApp_user', 'myUserValue'], ['@MyApp_key', 'myKeyValue'] ]
   }
 
 
@@ -302,7 +424,7 @@ export default class updatePro extends Component {
         
     //   })
     //   .catch(error => this.setState({ errorMessage: error.message })) 
-    ToastAndroid.show('Profile details are updated', ToastAndroid.SHORT);
+    ToastAndroid.show('Profile details are updated', ToastAndroid.LONG);
     this.setState({ 
       displayName: '',
       email: '', 
@@ -328,9 +450,102 @@ export default class updatePro extends Component {
     this.setState({datebool:true});
    }
 
+
+   
+
    onChange1=(event,date)=>{
       console.log("log",date);
    }
+
+
+ //validations
+   validateEmail = (email) => {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+    };
+
+    validateName=(name)=>{
+      if(name==''){
+        Alert.alert("Enter valid name");
+        return false;
+      }else{
+        return true;
+      }
+    }
+
+
+    validateEducation=(edu)=>{
+      if(edu==null){
+        Alert.alert("Select education");
+        return false;
+      }else{
+        return true;
+      }
+    }
+
+    validateGender=(gender)=>{
+      if(gender==""){
+        Alert.alert("Select your gender");
+        return false;
+      }else{
+        return true;
+      }
+    }
+
+
+    validateAge=(age)=>{
+      if(age==""){
+        Alert.alert("Select your age");
+        return false;
+      }else{
+        return true;
+      }
+    }
+
+
+    validateMob=(num)=>{
+      if(num==""){
+        Alert.alert("Enter your mobile number");
+        return false;
+      }else if(num.length<10){
+        Alert.alert("Mobile number should be 10 digits");
+        return false;
+      }
+
+      
+      else{
+        return true;
+      }
+    }
+
+
+    validateAddress=(addr)=>{
+      if(addr==""){
+        Alert.alert("Enter your address");
+        return false;
+      }else{
+        return true;
+      }
+    }
+
+    validateDiagnosis=(dia)=>{
+      if(dia==""){
+        Alert.alert("Enter Diagnosis");
+        return false;
+      }else{
+        return true;
+      }
+    }
+
+
+    validateDate=(date)=>{
+      if(date==""){
+        Alert.alert("Select date of procedure");
+        return false;
+      }else{
+        return true;
+      }
+    }
 
   render() {
     // if(this.state.isLoading){
@@ -351,10 +566,12 @@ export default class updatePro extends Component {
           onChangeText={(val) => this.updateInputVal(val, 'Name')}
         />      
         <TextInput
+        
           style={styles.inputStyle}
           placeholder="Email"
           value={this.state.email}
           onChangeText={(val) => this.updateInputVal(val, 'email')}
+ 
         />
         {/* <TextInput
           style={styles.inputStyle}
@@ -420,7 +637,7 @@ export default class updatePro extends Component {
           style={styles.inputStyle}
           placeholder="Height(cm)"
           value={this.state.height}
-          onChangeText={(val) => this.updateInputVal(val, 'height')}
+          onChangeText={(val) => {this.updateInputVal(val, 'height')}}
         />
 
         <TextInput
@@ -470,7 +687,7 @@ export default class updatePro extends Component {
         <Button
           color="#3740FE"
           title="Update"
-          onPress={() => {this.calBodyMassIndex()}}
+          onPress={() => {this.upprof()}}
         />
 
 
