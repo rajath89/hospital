@@ -43,6 +43,7 @@ import {createStore} from 'redux';
 import reducer from './components/reducers/langReducer';
 
 import ForgotPassword from './components/forgotPasswd';
+import AboutDoctor from './components/doctorTeam';
 
 
 const store=createStore(reducer);
@@ -286,6 +287,15 @@ component={About}
 <Stack.Screen 
 name="Forgot Password" 
 component={ForgotPassword} 
+//  options={
+//    //{ title: 'Dashboard' },
+//    {headerLeft: null} 
+//  }
+/>
+
+<Stack.Screen 
+name="Doctors" 
+component={AboutDoctor} 
 //  options={
 //    //{ title: 'Dashboard' },
 //    {headerLeft: null} 

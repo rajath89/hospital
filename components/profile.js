@@ -69,12 +69,25 @@ onPress={() => this.props.navigation.navigate('Settings')}
  <View style={styles.card}>
  
  <Button
-title="About Us"
+title="Team of Doctors"
+type="clear"
+onPress={() => this.props.navigation.navigate('Doctors')}
+
+/>
+ </View>
+
+ <View style={styles.hairline} />
+
+
+<View style={styles.card}>
+
+<Button
+title="Developers"
 type="clear"
 onPress={() => this.props.navigation.navigate('About Us')}
 
 />
- </View>
+</View>
 
 
 

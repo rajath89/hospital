@@ -12,7 +12,7 @@ import { AsyncStorage } from 'react-native';
 
  
 
-export default class About extends Component {
+export default class AboutDoctor extends Component {
 
 
 
@@ -39,7 +39,7 @@ export default class About extends Component {
 <View style={styles.container}>
 
  <WebView
-        source={{ uri: 'https://parikshith21.github.io/jhs-learning/developers.html' }}
+        source={{ uri: 'https://parikshith21.github.io/jhs-learning/team_doctors.html' }}
         style={{ maxHeight: 700,width:380 ,flex: 1 }}
       />
 

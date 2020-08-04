@@ -17,9 +17,10 @@ pp = pprint.PrettyPrinter(indent=4)
 db = firebase.database()
 
 
+
 user = db.child("users").get()
 
-print(type(user.val()))
+print(storage.child("rajath/").get_url())
 # usrList=list(user.val()) # users
 # pp.pprint(user.val()['ronnie']['ExpoToken'])
 # pp.pprint(user.val()['ronnie']['loginDetails'])
