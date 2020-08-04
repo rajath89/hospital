@@ -29,6 +29,8 @@ export default class Afterques extends React.Component {
     globName:'',
     pd:false,
     comments: '', 
+    systol:null,
+    Diastol:null,
     
     isLoading: false,
     
@@ -115,11 +117,13 @@ export default class Afterques extends React.Component {
   this.setState({ bl: blob });
   var today = new Date();
   var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-  var dateTime = date+time;
+  //var time = today.getHours() + ":" + today.geMinutes() + ":" + today.getSeconds();
+  var dateTime = date;
+
+  ToastAndroid.show('Report selected for uploading', ToastAndroid.SHORT);
 
 
-  var ref = firebase.storage().ref().child(this.state.globName.split("@")[0]+"/BP_LAB_reports/"+this.state.par+"("+dateTime+")");
+  var ref = firebase.storage().ref().child(this.state.globName.split("@")[0]+"/"+this.state.par);
   
   
   //console.log(this.state.ind);
@@ -130,8 +134,25 @@ export default class Afterques extends React.Component {
   // return ref.put(blob);
 }
 
-parameter=(para)=>{
+parameter=(para,type)=>{
   console.log(para);
+
+
+  (async () => {
+    const rawResponse = await fetch('https://flask-app47.herokuapp.com/addType', {//exp://192.168.0.104:19000
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({"username": this.state.globName,"Lab":type})
+    });
+    const content = await rawResponse.json();
+  
+    console.log(this.state);
+
+  })();
+
   this.setState({ par:para });
   console.log(this.state.par);
   
@@ -145,8 +166,48 @@ updateInputVal = (val, prop) => {
 }
 
 subMit=()=>{
-  ToastAndroid.show('Report and details are updated', ToastAndroid.SHORT);
-  this.props.navigation.navigate('Cardio App');
+  ToastAndroid.show('Report and BP values are updated', ToastAndroid.SHORT);
+  console.log(this.state);
+
+
+  const systol_value=this.state.systol;
+  const diastol_value=this.state.diastol;
+
+  var obj={};
+  obj.systol=systol_value;
+  obj.diastol=diastol_value;
+
+
+
+
+        
+          (async () => {
+  const rawResponse = await fetch('https://flask-app47.herokuapp.com/BPvalues', {//exp://192.168.0.104:19000
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({"username": this.state.globName, "BPvalues":obj})
+  });
+  const content = await rawResponse.json();
+
+  if(content){
+    console.log("before");
+    console.log(content);
+    console.log("after");
+    
+  }
+
+})();
+
+
+
+
+
+
+
+  //this.props.navigation.navigate('Cardio App');
 }
 
 render() {
@@ -162,6 +223,33 @@ render() {
    return (
     <View style={styles.container}>
 
+<View style={styles.wrapper}>
+<View>
+                <Text>Input the BP Values:</Text>
+                <View style={{flexDirection:"row"}}>
+                    <View style={{flex:1}}>
+                        <TextInput placeholder="Systol" style={{justifyContent: 'flex-start',    borderColor: "#ccc",
+        borderStartWidth : 2,
+        borderEndWidth : 3,
+        borderTopWidth : 1,
+        borderLeftWidth: 1,
+        borderRightWidth: 3,
+        borderBottomWidth : 4}} value={this.state.systol} onChangeText={(val) => this.updateInputVal(val, 'systol')}/>
+                    </View>
+                    
+                    <View style={{flex:1,left:10}}>
+                        <TextInput placeholder="Diastol" style={{justifyContent: 'flex-end',    borderColor: "#ccc",
+    borderStartWidth : 2,
+    borderEndWidth : 3,
+    borderTopWidth : 1,
+    borderLeftWidth: 2,
+    borderRightWidth: 3,
+    borderBottomWidth : 4}} value={this.state.diastol}  onChangeText={(val) => this.updateInputVal(val, 'diastol')}/>
+                    </View>
+                </View>
+            </View>
+            </View>
+
   
  
                        
@@ -169,7 +257,7 @@ render() {
 
 
     {/* <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}> */}
-      <Text>BP report</Text>
+      {/* <Text>BP report</Text>
      <Button 
        onPress={()=>{this._getPhotoLibrary(),this.parameter("BP_rep")}} 
        title="upload report in image format"
@@ -179,20 +267,21 @@ render() {
           <Button 
        onPress={()=>{this._getPdfLibrary(),this.parameter("BP_PDF_rep")}} 
        title="upload report in pdf format"
-     />
+     /> */}
 
 <Text>LAB report</Text>
      <Button 
-       onPress={()=>{this._getPhotoLibrary(),this.parameter("LAB_rep")}} 
+       onPress={()=>{this._getPhotoLibrary(),this.parameter("LAB_report_Image","Image")}} 
        title="upload report in image format"
      />
 
 <Text style={{justifyContent:'center',left:140}}>OR</Text>
           <Button 
-       onPress={()=>{this._getPdfLibrary(),this.parameter("LAB_PDF_rep")}} 
+       onPress={()=>{this._getPdfLibrary(),this.parameter("LAB_report_PDF","PDF")}} 
        title="upload report in pdf format"
        
      />
+     <View style={styles.hairline} />
      <View style={styles.hairline} />
  
 
@@ -201,6 +290,8 @@ render() {
           title="Submit"
           onPress={() =>this.subMit()}
         />  
+
+
    </View>
    );
   }
@@ -215,6 +306,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: 35,
     backgroundColor: '#fff'
+  },
+  wrapper:{
+   
+      padding: 10,
+      backgroundColor: '#FFFFFF'
+  
   },
   inputStyle: {
     width: '100%',

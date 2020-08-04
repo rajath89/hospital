@@ -34,7 +34,8 @@ export default class CameraComponent extends React.Component {
     EF:'',
     SerumCreatinine:'',
     isLoading: false,
-    selected2:null
+    selected2:null,
+    TYPE_NAME:null
     
   }
 
@@ -89,7 +90,7 @@ export default class CameraComponent extends React.Component {
    this.setState({ image: result.uri });
    this.uploadImage(this.state.image); 
    this.asySt(this.state.image);
-   //console.log(this.state.image);
+   console.log("image uri****",result);
   }
  }
 
@@ -128,19 +129,70 @@ export default class CameraComponent extends React.Component {
   var dateTime = date+time;
 
 
-  var ref = firebase.storage().ref().child(this.state.globName.split("@")[0]+"/cagreport/"+this.state.par+"("+dateTime+")");
-  
+ToastAndroid.show('Report selected for uploading', ToastAndroid.SHORT);
+
+  //var ref = firebase.storage().ref().child(this.state.globName.split("@")[0]+"/cagreport/"+this.state.par+"("+dateTime+")");
+  var ref = firebase.storage().ref().child(this.state.globName.split("@")[0]+"/"+this.state.par);
   
   //console.log(this.state.ind);
   //this.setState({ ind:1 });
   console.log("par",this.state.par);
   return ref.put(blob);
+
+
+
   // var ref = firebase.storage().ref().child("my-image");
   // return ref.put(blob);
 }
 
-parameter=(para)=>{
-  console.log(para);
+parameter=(para,type)=>{
+  console.log(para,"type$$$",type);
+
+  var typeName=type.split(' ')[0];
+
+  this.setState({TYPE_NAME:typeName});
+
+  var typeVal=type.split(' ')[1];
+
+
+
+if(typeName=="CAG"){
+  (async () => {
+    const rawResponse = await fetch('https://flask-app47.herokuapp.com/addType', {//exp://192.168.0.104:19000
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({"username": this.state.globName,"CAG":typeVal})
+    });
+    const content = await rawResponse.json();
+  
+    console.log(this.state);
+
+  })();
+}else if(typeName=="Discharge"){
+  (async () => {
+    const rawResponse = await fetch('https://flask-app47.herokuapp.com/addType', {//exp://192.168.0.104:19000
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({"username": this.state.globName,"Discharge":typeVal})
+    });
+    const content = await rawResponse.json();
+  
+    console.log(this.state);
+
+  })();
+}
+
+
+
+
+
+
   this.setState({ par:para });
   console.log(this.state.par);
   
@@ -273,25 +325,25 @@ render() {
 
 <Text>CAG report</Text>
      <Button 
-       onPress={()=>{this._getPhotoLibrary(),this.parameter("CAG")}} 
+       onPress={()=>{this._getPhotoLibrary(),this.parameter("CAG_report_Image","CAG Image")}} 
        title="upload report in image format"
      />
 
      <Text style={{justifyContent:'center',left:140}}>OR</Text>
           <Button 
-       onPress={()=>{this._getPdfLibrary(),this.parameter("CAG_PDF")}} 
+       onPress={()=>{this._getPdfLibrary(),this.parameter("CAG_report_PDF","CAG PDF")}} 
        title="upload report in pdf format"
      />
 
 <Text>Discharge report</Text>
      <Button 
-       onPress={()=>{this._getPhotoLibrary(),this.parameter("Discharge")}} 
+       onPress={()=>{this._getPhotoLibrary(),this.parameter("Discharge_report_Image","Discharge Image")}} 
        title="upload report in image format"
      />
 
 <Text style={{justifyContent:'center',left:140}}>OR</Text>
           <Button 
-       onPress={()=>{this._getPdfLibrary(),this.parameter("Discharge_PDF")}} 
+       onPress={()=>{this._getPdfLibrary(),this.parameter("Discharge_report_PDF","Discharge PDF")}} 
        style={{paddingBottom:15}}
        title="upload report in pdf format"
      />
