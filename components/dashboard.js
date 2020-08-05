@@ -340,7 +340,7 @@ return(
 
   <View style={styles.container}>
   <Image
-    source={{ uri: `https://reactnative.dev/img/homepage/phones.png` }}
+    source={{ uri: `https://firebasestorage.googleapis.com/v0/b/hospitalusers-44f06.appspot.com/o/d.png?alt=media&token=aaec30d0-986a-4a48-84fc-be7567bcad82` }}
     style={{ width: w.width, height: w.width }}
     
   />

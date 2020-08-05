@@ -635,25 +635,25 @@ quesA.push(obj2);
 
 
         //sending to backend
-//           (async () => {
-//   const rawResponse = await fetch('https://flask-app47.herokuapp.com/questions', {//exp://192.168.0.104:19000
-//     method: 'POST',
-//     headers: {
-//       'Accept': 'application/json',
-//       'Content-Type': 'application/json'
-//     },
-//     body: JSON.stringify({"username": this.state.globName, "questionDetails":ty})
-//   });
-//   const content = await rawResponse.json();
+          (async () => {
+  const rawResponse = await fetch('https://flask-app47.herokuapp.com/questions', {//exp://192.168.0.104:19000
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({"username": this.state.globName, "questionDetails":ty})
+  });
+  const content = await rawResponse.json();
 
-//   if(content){
-//     console.log("before");
-//     console.log(content);
-//     console.log("after");
+  if(content){
+    console.log("before");
+    console.log(content);
+    console.log("after");
     
-//   }
+  }
 
-// })();
+})();
 
 
    }

@@ -50,7 +50,7 @@ export default class updatePro extends Component {
 
   componentDidMount() {
    this._retrieveData();
-   //this.registerForPushNotificationsAsync();
+   this.registerForPushNotificationsAsync();
 
 
 }
@@ -95,7 +95,7 @@ export default class updatePro extends Component {
       }
       console.log("hit expo token");
       try {
-        token = await Notifications.getExpoPushTokenAsync();
+        const token = await Notifications.getExpoPushTokenAsync();
         //
         if (token){
           this.setState({ expoPushToken: token });

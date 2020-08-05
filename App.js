@@ -44,6 +44,8 @@ import reducer from './components/reducers/langReducer';
 
 import ForgotPassword from './components/forgotPasswd';
 import AboutDoctor from './components/doctorTeam';
+import Comments2 from './components/comments2';
+import DoctorComments from './components/doctorComments';
 
 
 const store=createStore(reducer);
@@ -296,6 +298,26 @@ component={ForgotPassword}
 <Stack.Screen 
 name="Doctors" 
 component={AboutDoctor} 
+//  options={
+//    //{ title: 'Dashboard' },
+//    {headerLeft: null} 
+//  }
+/>
+
+<Stack.Screen 
+name="Add Comment" 
+component={Comments2} 
+//  options={
+//    //{ title: 'Dashboard' },
+//    {headerLeft: null} 
+//  }
+/>
+
+
+
+<Stack.Screen 
+name="Doctor Comment" 
+component={DoctorComments} 
 //  options={
 //    //{ title: 'Dashboard' },
 //    {headerLeft: null} 
