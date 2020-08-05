@@ -25,26 +25,26 @@ from flask import Flask
 from flask_apscheduler import APScheduler
 from flask_cors import CORS, cross_origin
 
-config = {
-    "apiKey": "AIzaSyBwk0GjuBX5_ZozvgldtH38FZhY2AhCu34",
-    "authDomain": "hospitalusers-44f06.firebaseapp.com",
-    "databaseURL": "https://hospitalusers-44f06.firebaseio.com",
-    "projectId": "hospitalusers-44f06",
-    "storageBucket": "hospitalusers-44f06.appspot.com",
-    "messagingSenderId": "1020686800954",
-    "appId": "1:1020686800954:web:003ea93c285f06847d3d03"
-  }
-  
-  
 # config = {
-    # "apiKey": "AIzaSyBzablT_gQoi5HOl5FqZF9LeK1LkruOzKE",
-    # "authDomain": "hospitalusers-d3cda.firebaseapp.com",
-    # "databaseURL": "https://hospitalusers-d3cda.firebaseio.com",
-    # "projectId": "hospitalusers-d3cda",
-    # "storageBucket": "hospitalusers-d3cda.appspot.com",
-    # "messagingSenderId": "1074652022617",
-    # "appId": "1:1074652022617:web:20c1567f52ae88b8b8ae48"
-  # }
+#     "apiKey": "AIzaSyBwk0GjuBX5_ZozvgldtH38FZhY2AhCu34",
+#     "authDomain": "hospitalusers-44f06.firebaseapp.com",
+#     "databaseURL": "https://hospitalusers-44f06.firebaseio.com",
+#     "projectId": "hospitalusers-44f06",
+#     "storageBucket": "hospitalusers-44f06.appspot.com",
+#     "messagingSenderId": "1020686800954",
+#     "appId": "1:1020686800954:web:003ea93c285f06847d3d03"
+#   }
+  
+  
+config = {
+    "apiKey": "AIzaSyBzablT_gQoi5HOl5FqZF9LeK1LkruOzKE",
+    "authDomain": "hospitalusers-d3cda.firebaseapp.com",
+    "databaseURL": "https://hospitalusers-d3cda.firebaseio.com",
+    "projectId": "hospitalusers-d3cda",
+    "storageBucket": "hospitalusers-d3cda.appspot.com",
+    "messagingSenderId": "1074652022617",
+    "appId": "1:1074652022617:web:20c1567f52ae88b8b8ae48"
+  }
 
 
 firebase=pyrebase.initialize_app(config)
@@ -162,7 +162,7 @@ def firstRun():
 			else:
 				#for t in user.val():
 				e=user.val()[usr]['ExpoToken']['expoToken']
-				l=user.val()[usr]['loginDetails']['time']
+				l=user.val()[usr]['time']
 				pickdbExpo.set(usr,e)
 				pickdbDate.set(usr,l)
 				pickdbExpo.dump()
@@ -171,18 +171,32 @@ def firstRun():
 		# print("sleep...........")
 		# time.sleep(60)
 
-	elif pickdbExpo.get("lenOfUsers")==len(usrList):
-		print("break")
+	# elif pickdbExpo.get("lenOfUsers")==len(usrList):
+	# 	print("break")
 
-		for ele in pickdbDate.getall():
+	for ele in pickdbDate.getall():
 			
-			nowstr=pickdbDate.get(ele).split(" ")[0].split("-")
-			nowstr1=pickdbDate.get(ele).split(" ")[1].split(":")
+		nowstr=pickdbDate.get(ele).split(" ")[0].split("-")
+		nowstr1=pickdbDate.get(ele).split(" ")[1].split(":")
 			#print(nowstr,nowstr1)
-			nowdt=dt.datetime(int(nowstr[0]), int(nowstr[1]), int(nowstr[2]),int(nowstr1[0]),int(nowstr1[1]),int(nowstr1[2]))
-			_30days=dt.timedelta(days=30)
-			future_date=nowdt+_30days
-			print(nowdt,future_date)
+		nowdt=dt.datetime(int(nowstr[0]), int(nowstr[1]), int(nowstr[2]),int(nowstr1[0]),int(nowstr1[1]),int(nowstr1[2]))
+		_30days=dt.timedelta(days=30)
+		future_date=nowdt+_30days
+
+		fs=str(future_date).split(" ")[0].split("-")
+
+		#print(nowdt,future_date)
+		newFs=dt.datetime(int(fs[0]),int(fs[1]),int(fs[2]))
+		newNowdt=dt.datetime(int(nowstr[0]),int(nowstr[1]),int(nowstr[2]))
+		#if(future_date-nowdt=="")
+
+		if str(newFs-newNowdt).split(",")[0]=="30 days":
+			print("send notification")
+			send_push_message(pickdbExpo.get(ele),"push message")
+			#set future_date as nowdt
+			pickdbDate.set(ele,str(future_date))
+			#878
+			pickdbDate.dump()
 		
 
 	

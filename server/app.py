@@ -235,6 +235,27 @@ def addtype():
 
 	return jsonify({"BPvalues":"success"})
 
+
+@app.route('/BMI', methods=['GET','POST'])
+@cross_origin()
+def bmi():
+	if request.method == "POST":
+		#k=request.data
+		k1=request.json
+
+		uName=k1["username"]
+
+
+
+		del k1["username"]
+
+
+		db.child("users").child(uName.split("@")[0]).child("ProfileDet").update(k1)
+
+
+	return jsonify({"BMI":"success"})
+
+
 @app.route('/expo', methods=['GET','POST'])
 @cross_origin()
 def expo():

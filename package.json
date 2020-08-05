@@ -10,7 +10,7 @@
   "dependencies": {
     "@paraboly/react-native-card": "^0.3.0",
     "@react-native-community/cameraroll": "^1.7.2",
-    "@react-native-community/datetimepicker": "^2.4.2",
+    "@react-native-community/datetimepicker": "^2.6.1",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-native-community/picker": "^1.6.5",
     "@react-native-firebase/firestore": "^7.0.1",
@@ -47,6 +47,7 @@
     "react-native-gesture-handler": "^1.6.1",
     "react-native-hype-card": "^1.0.2",
     "react-native-modal": "^11.5.6",
+    "react-native-modal-datetime-picker": "^8.7.1",
     "react-native-modalbox": "^2.0.0",
     "react-native-multiple-select": "^0.5.5",
     "react-native-paper": "^3.10.1",
@@ -59,7 +60,9 @@
     "react-native-vector-icons": "^6.6.0",
     "react-native-web": "~0.11.7",
     "react-native-webview": "8.1.1",
+    "react-redux": "^7.2.1",
     "react-unstated": "0.0.3",
+    "redux": "^4.0.5",
     "rn-pdf-reader-js": "^3.1.0"
   },
   "devDependencies": {
