@@ -12,21 +12,23 @@ export default class Login extends Component {
   constructor() {
     super();
     this.state = { 
-      email: '', 
-      password: '',
+      email: null, 
+      password: null,
       isLoading: false,
       ob:{},
       globName:'',
-      bool:false
+      bool:false,
+      bool2:false
     }
   }
 
 
 
-  //   componentDidMount() {
-  //   //this.getMultiple();
-  //     this._retrieveData();
-  // }
+    componentDidMount() {
+    //this.getMultiple();
+      //this._retrieveData();
+      this.getUser();
+  }
 
 
 
@@ -115,7 +117,7 @@ async _retrieveData() {
 
 //check bool state and perform post request
 componentDidUpdate(prevProps, prevState) {
-  if (prevState.bool !== this.state.bool) {
+  if (prevState.bool2 !== this.state.bool2) {
     console.log('bool state has changed.');
     console.log("hit");
     var today = new Date();
@@ -136,6 +138,11 @@ componentDidUpdate(prevProps, prevState) {
   
     console.log(content);
   })();
+  }
+
+
+  else if(prevState.email !== this.state.email){
+    this.userLogin();
   }
 }
 
@@ -266,6 +273,40 @@ clearAll = async () => {
 
 };
 
+getUser = async () => {
+
+  let values
+  try {
+    values = await AsyncStorage.multiGet(['userEmail', 'passwd']);
+    //console.log(values);
+
+  } catch(e) {
+    // read error
+  }
+  console.log("login%%",values[0][1],values[1][1]);
+  if(values !== null){
+    this.setState({email:values[0][1],password:values[1][1]});
+    console.log(this.state);
+    
+}
+
+  // example console.log output:
+  // [ ['@MyApp_user', 'myUserValue'], ['@MyApp_ky', 'myKeyValue'] ]
+}
+
+
+setUser = async () => {
+  const firstPair = ["userEmail", this.state.email]
+  const secondPair = ["passwd", this.state.password]
+  try {
+    await AsyncStorage.multiSet([firstPair, secondPair])
+  } catch(e) {
+    //save error
+  }
+
+  console.log("set login details")
+}
+
 
 
   userLogin = () => {
@@ -284,16 +325,56 @@ clearAll = async () => {
       .auth()
       .signInWithEmailAndPassword(this.state.email, this.state.password)
       .then((res) => {
-        console.log(res)
-        console.log('User logged-in successfully!')
+        //console.log("resp@@@@@@@@@@@@",res)
+        //console.log('User logged-in successfully!')
+
+        this.setUser();
+        console.log(res);
         this.setState({
           isLoading: false,
+          bool2:true,
            
           password: ''
-        })
+        });
+        console.log(this.state);
         this.props.navigation.navigate('Cardio App')
       })
-      .catch(error => this.setState({ errorMessage: error.message }))
+      .catch(
+        
+        
+        
+        //error => this.setState({ errorMessage: error.message })
+        (error) =>{
+          // Handle Errors here.
+
+          this.setState({
+            isLoading: false,
+           
+            email:'',  
+            password: ''
+          });
+
+
+
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          if (errorCode === 'auth/wrong-password') {
+            alert('Wrong password');
+            
+          }else if(errorMessage==='There is no user record corresponding to this identifier. The user may have been deleted.'){
+            alert('Enter valid email address given for registration');
+          } 
+          
+          else {
+            alert(errorMessage);
+            
+          }
+          console.log(error);
+        
+        
+        
+        
+        })
     }
   }
 
