@@ -271,13 +271,13 @@ render() {
 
 <Text>LAB report</Text>
      <Button 
-       onPress={()=>{this._getPhotoLibrary(),this.parameter("LAB_report_Image","Image")}} 
+       onPress={()=>{this._getPhotoLibrary(),this.parameter("LAB_report","Image")}} 
        title="upload report in image format"
      />
 
 <Text style={{justifyContent:'center',left:140}}>OR</Text>
           <Button 
-       onPress={()=>{this._getPdfLibrary(),this.parameter("LAB_report_PDF","PDF")}} 
+       onPress={()=>{this._getPdfLibrary(),this.parameter("LAB_report","PDF")}} 
        title="upload report in pdf format"
        
      />

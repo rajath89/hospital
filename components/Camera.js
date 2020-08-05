@@ -413,25 +413,25 @@ render() {
 
 <Text>CAG report</Text>
      <Button 
-       onPress={()=>{this._getPhotoLibrary(),this.parameter("CAG_report_Image","CAG Image")}} 
+       onPress={()=>{this._getPhotoLibrary(),this.parameter("CAG_report","CAG Image")}} 
        title="upload report in image format"
      />
 
      <Text style={{justifyContent:'center',left:140}}>OR</Text>
           <Button 
-       onPress={()=>{this._getPdfLibrary(),this.parameter("CAG_report_PDF","CAG PDF")}} 
+       onPress={()=>{this._getPdfLibrary(),this.parameter("CAG_report","CAG PDF")}} 
        title="upload report in pdf format"
      />
 
 <Text>Discharge report</Text>
      <Button 
-       onPress={()=>{this._getPhotoLibrary(),this.parameter("Discharge_report_Image","Discharge Image")}} 
+       onPress={()=>{this._getPhotoLibrary(),this.parameter("Discharge_report","Discharge Image")}} 
        title="upload report in image format"
      />
 
 <Text style={{justifyContent:'center',left:140}}>OR</Text>
           <Button 
-       onPress={()=>{this._getPdfLibrary(),this.parameter("Discharge_report_PDF","Discharge PDF")}} 
+       onPress={()=>{this._getPdfLibrary(),this.parameter("Discharge_report","Discharge PDF")}} 
        style={{paddingBottom:15}}
        title="upload report in pdf format"
      />
