@@ -161,7 +161,7 @@
 
 
 import * as React from 'react';
-import { Text, View, StyleSheet, Image,Dimensions } from 'react-native';
+import { Text, View, StyleSheet, Image,Dimensions ,BackHandler} from 'react-native';
 import Constants from 'expo-constants';
 import { Button } from 'react-native-elements';
 import { Divider } from 'react-native-elements';
@@ -255,7 +255,14 @@ const w = Dimensions.get('window');
     // example console.log result:
     // ['@MyApp_user', '@MyApp_key']
   }
+  onBackButtonPressed() {
+    return true;
+}
 
+
+componentWillUnmount() {
+  BackHandler.removeEventListener('hardwareBackPress', this.onBackButtonPressed);
+} 
 
   clearAll = async () => {
     console.log("cleared");
@@ -289,6 +296,7 @@ setLoad=()=>{
   componentDidMount() {
 
     this._retrieveDataK();
+    BackHandler.addEventListener('hardwareBackPress', this.onBackButtonPressed);
     console.log("update...........");
     this.lazyLoad();
 
@@ -431,7 +439,7 @@ onPress={() => this.props.navigation.navigate('FAQ page',{screen:'Faqpage'})}
 
 title={this.state.kannada == false ? 'Learning Materials' : 'ಕಲಿಕಾ ಸಾಮಗ್ರಿಗಳು'} 
 type="clear"
-onPress={() => {this.props.navigation.navigate('Learning Materials',{screen:'pdfViewer'}),this.propsTest()}}
+onPress={() => {this.props.navigation.navigate('Learning Materials',{screen:'pdfViewer'})}}
 />
  </View>
 
