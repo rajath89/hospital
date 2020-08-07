@@ -1,13 +1,14 @@
 
 
 import React from 'react';
-import { Text, View, TouchableOpacity, Image,Button,StyleSheet,TextInput } from 'react-native';
+import { Text, View, TouchableOpacity, Image,StyleSheet,TextInput } from 'react-native';
 import * as Permissions from 'expo-permissions';
 import { Camera } from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library'; //from 'expo-media-library';
 //import  {MediaLibrary} from 'expo';
 // import { Permissions, ImagePicker } from "expo";
 import firebase from '../database/firebase';
+import { Button, Overlay } from 'react-native-elements';
 
 import { AsyncStorage } from 'react-native';
 
@@ -33,6 +34,8 @@ export default class Afterques extends React.Component {
     Diastol:null,
     
     isLoading: false,
+    butID1:false,
+    butID2:false
     
   }
 
@@ -138,6 +141,13 @@ parameter=(para,type)=>{
   console.log(para);
 
 
+  if(type=="Image"){
+    this.setState({butID1:true});
+  }else if(type=="PDF"){
+    this.setState({butID2:true});
+  }
+
+
   (async () => {
     const rawResponse = await fetch('https://flask-app47.herokuapp.com/addType', {//exp://192.168.0.104:19000
       method: 'POST',
@@ -215,7 +225,7 @@ render() {
   if (hasCameraPermission === null) {
    return <View />
   }
-  //,() => this.uploadImage2()
+  //,() => this.uploadImge2()
   else if (hasCameraPermission === false) {
    return <Text>Access to camera has been denied.</Text>;
   }
@@ -270,13 +280,15 @@ render() {
      /> */}
 
 <Text>LAB report</Text>
-     <Button 
+     <Button
+     type={this.state.butID1?"solid":"outline"}  
        onPress={()=>{this._getPhotoLibrary(),this.parameter("LAB_report","Image")}} 
        title="upload report in image format"
      />
 
 <Text style={{justifyContent:'center',left:140}}>OR</Text>
-          <Button 
+          <Button
+          type={this.state.butID2?"solid":"outline"}  
        onPress={()=>{this._getPdfLibrary(),this.parameter("LAB_report","PDF")}} 
        title="upload report in pdf format"
        

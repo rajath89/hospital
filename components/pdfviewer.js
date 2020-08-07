@@ -265,7 +265,10 @@ const styles = StyleSheet.create({
    },
    header: {
      flexDirection:"row",
-   },
+   },  modal3: {
+    height: 250,
+    width: 300
+  },
    hairline: {
      
      height: 8,
@@ -319,7 +322,7 @@ const styles = StyleSheet.create({
 // Diabetes can result from
 
 // • the ineffectiveness of the action of insulin - because
-// body develops resistance to its action.
+// body develops resistance to its acion.
 // • or insufficient release from pancreas.
 //               </Text>
 //               <Button title="Click To Close Modal" onPress = {() => {

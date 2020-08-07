@@ -359,14 +359,14 @@ setUser = async () => {
           var errorCode = error.code;
           var errorMessage = error.message;
           if (errorCode === 'auth/wrong-password') {
-            alert('Wrong password');
+            Alert.alert('Wrong password');
             
           }else if(errorMessage==='There is no user record corresponding to this identifier. The user may have been deleted.'){
-            alert('Enter valid email address given for registration');
+            Alert.alert('Enter valid email address given for registration');
           } 
           
           else {
-            alert(errorMessage);
+            Alert.alert(errorMessage);
             
           }
           console.log(error);

@@ -160,7 +160,7 @@ getprof = () => {
 
 
 
-         <Text style={styles.textViewContainer}>Education  :  {this.state.obj.selected2}</Text>
+         <Text style={styles.textViewContainer}>Education  :  {this.state.obj.Education}</Text>
          
          <View style={styles.hairline} />
 
@@ -178,6 +178,10 @@ getprof = () => {
          <Text style={styles.textViewContainer}>Weight  :  {this.state.obj.weight}</Text>
          
          <View style={styles.hairline} />
+         <Text style={styles.textViewContainer}>Body Mass Index  :  {this.state.obj.BodyMassIndex.toFixed(2)}</Text>
+         <View style={styles.hairline} />
+         <Text style={styles.textViewContainer}>Date of procedure  :  {this.state.obj.DateOfProcedure}</Text>
+
 
         {/* <View style={styles.card}>
  

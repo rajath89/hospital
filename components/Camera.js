@@ -1,13 +1,14 @@
 
 
 import React from 'react';
-import { Text, View, TouchableOpacity, Image,Button,StyleSheet,TextInput ,Picker,ScrollView,Alert} from 'react-native';
+import { Text, View, TouchableOpacity, Image,StyleSheet,TextInput ,Picker,ScrollView,Alert} from 'react-native';
 import * as Permissions from 'expo-permissions';
 import { Camera } from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library'; //from 'expo-media-library';
 //import  {MediaLibrary} from 'expo';
 // import { Permissions, ImagePicker } from "expo";
 import firebase from '../database/firebase';
+import { Button, Overlay } from 'react-native-elements';
 
 import { AsyncStorage } from 'react-native';
 
@@ -34,7 +35,11 @@ export default class CameraComponent extends React.Component {
     EF:null,
     SerumCreatinine:null,
     isLoading: false,
-    selected2:null
+    selected2:null,
+    butId1:false,
+    butId2:false,
+    butId3:false,
+    butId4:false
     
     
   }
@@ -147,6 +152,18 @@ ToastAndroid.show('Report selected for uploading', ToastAndroid.SHORT);
 
 parameter=(para,type)=>{
   console.log(para,"type$$$",type);
+
+  if(type=="CAG Image"){
+    this.setState({butId1:true});
+  }else if(type=="CAG PDF"){
+    this.setState({butId2:true});
+  }else if(type=="Discharge Image"){
+    this.setState({butId3:true});
+  }else if(type=="Discharge PDF"){
+    this.setState({butId4:true});
+  }
+
+
 
   var typeName=type.split(' ')[0];
 
@@ -264,6 +281,13 @@ subMit=()=>{
   var EFbool=this.validateEF(this.state.EF);
   var serum=this.validateSerum(this.state.SerumCreatinine);
 
+  var obj={};
+  obj["CAG"]=this.state.CAG;
+  obj["PTCA"]=this.state.PTCA;
+  obj["hemoglobin"]=this.state.hemoglobin;
+  obj["EF"]=this.state.EF;
+  obj["serum_creatinine"]=this.state.SerumCreatinine;
+
 
 if(CAGbool&&PTCAbool&&hemo&&EFbool&&serum){
   console.log("fall through");
@@ -276,7 +300,7 @@ if(CAGbool&&PTCAbool&&hemo&&EFbool&&serum){
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({"username": this.state.globName,"CAG_DischargeDetails":this.state})
+      body: JSON.stringify({"username": this.state.globName,"CAG_DischargeDetails":obj})
     });
     const content = await rawResponse.json();
   
@@ -412,25 +436,29 @@ render() {
         /> 
 
 <Text>CAG report</Text>
-     <Button 
+     <Button
+     type={this.state.butId1?"solid":"outline"} 
        onPress={()=>{this._getPhotoLibrary(),this.parameter("CAG_report","CAG Image")}} 
        title="upload report in image format"
      />
 
      <Text style={{justifyContent:'center',left:140}}>OR</Text>
-          <Button 
+          <Button
+          type={this.state.butId2?"solid":"outline"} 
        onPress={()=>{this._getPdfLibrary(),this.parameter("CAG_report","CAG PDF")}} 
        title="upload report in pdf format"
      />
 
 <Text>Discharge report</Text>
-     <Button 
+     <Button
+     type={this.state.butId3?"solid":"outline"} 
        onPress={()=>{this._getPhotoLibrary(),this.parameter("Discharge_report","Discharge Image")}} 
        title="upload report in image format"
      />
 
 <Text style={{justifyContent:'center',left:140}}>OR</Text>
-          <Button 
+          <Button
+          type={this.state.butId4?"solid":"outline"} 
        onPress={()=>{this._getPdfLibrary(),this.parameter("Discharge_report","Discharge PDF")}} 
        style={{paddingBottom:15}}
        title="upload report in pdf format"

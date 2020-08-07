@@ -348,8 +348,9 @@ return(
 
   <View style={styles.container}>
   <Image
-    source={{ uri: `https://firebasestorage.googleapis.com/v0/b/hospitalusers-44f06.appspot.com/o/d.png?alt=media&token=aaec30d0-986a-4a48-84fc-be7567bcad82` }}
+    source={{ uri: `https://firebasestorage.googleapis.com/v0/b/hospitalusers-44f06.appspot.com/o/d1.png?alt=media&token=047b2d84-1ed2-4ff6-ac7e-87da40e3e25a` }}
     style={{ width: w.width, height: w.width }}
+   
     
   />
   </View>
@@ -473,7 +474,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    paddingTop: Constants.statusBarHeight,
+    
     backgroundColor: '#ecf0f1',
     padding: 8,
     alignItems:"center"

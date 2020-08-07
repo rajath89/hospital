@@ -38,7 +38,7 @@ export default class updatePro extends Component {
       height:"",
       weight:"",
       
-      DateOfProcedure:'',
+      DateOfProcedure:null,
       
       
       
@@ -510,6 +510,9 @@ export default class updatePro extends Component {
       }else if(num.length<10){
         Alert.alert("Mobile number should be 10 digits");
         return false;
+      }else if(num.length>10){
+        Alert.alert("Mobile number should not be greater than 10 digits");
+        return false;
       }
 
       
@@ -671,8 +674,8 @@ export default class updatePro extends Component {
  <TouchableOpacity
           style={styles.button}
           onPress={this.datef}
-        >
-          <Text style={{color:"#3740FE"}}>Click to select Date of Procedure</Text>
+        ><Text style={{color:"#3740FE"}}>Click to select Date of Procedure</Text><View style={styles.hairline} />
+          {this.state.DateOfProcedure&&(<Text>Selected date : {this.state.DateOfProcedure}</Text>)}
         </TouchableOpacity>
 
 

@@ -166,8 +166,8 @@ def getRegister():
 			# f=list(dict(users.val()))
 			# fD=dict(users.val())[f[0]]
 
-			# return jsonify(user.val()[uName.split("@")[0]]['ProfileDet'])
-			return jsonify(user.val()[uName.split("@")[0]]['time'])
+			return jsonify(user.val()[uName.split("@")[0]]['ProfileDet'])
+			#return jsonify(user.val()[uName.split("@")[0]]['time'])
 
 		else:
 			return jsonify({"msg":"user not yet registerd"})
