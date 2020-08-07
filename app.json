@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "jayHos",
-    "slug": "jayHos",
+    "name": "JHS",
+    "slug": "JHS",
     "platforms": [
       "ios",
       "android",
@@ -21,6 +21,11 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    
+    "android": {
+      "package": "com.jayadeva.cardio",
+      "versionCode": 1
+    },
     "ios": {
       "supportsTablet": true
     },
