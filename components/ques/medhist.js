@@ -8,6 +8,7 @@ import {quizData_2} from "../Questions/quizData/quizData_2";
 import {quizData2_2} from "../Questions/quizData2/quizData2_2";
 //import {quizData2} from "../Questions/quizData2";
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Modal from 'react-native-modalbox';
 
 // import console = require('console');
 
@@ -38,7 +39,9 @@ export default class Medhist extends Component {
         kannada:false,
         quizDecide:quizData_2,
         alert:false,
-        butId:null
+        butId:null,
+        isVisible2:false,
+        lastQues:false
       };
 
       
@@ -129,7 +132,7 @@ async _retrieveData() {
 
 
 getStatus=(id)=>{
-        var ids=[8,19];
+        var ids=[228,226];
         var ids2=[9,10,11,12,13,14,15];
         var flag=false;
         const mg = {9:"Visit Hospital",10:"Visit Hospital", 11:"Visit Hospital",12:"Visit Hospital",13:"Check medication compliance.If symptoms still persisting, visit hospital at the earliest",14:"Check medication compliance.If symptoms still persisting, visit hospital at the earliest",15:"Visit hospital at the earliest"};
@@ -154,7 +157,7 @@ getStatus=(id)=>{
 
             if(this.state.kannada==true){
               varMg=mg2[id]
-              console.log(varMg);
+              console.log("varmg ###############3",varMg);
             }else if(this.state.kannada==false){
               varMg=mg[id]
               console.log(varMg);
@@ -210,21 +213,23 @@ getStatus=(id)=>{
           console.log("hit qid16")
           var flag1=false;
           if(myAnswer==="None" || myAnswer==="ಯಾವು ಇಲ್ಲ"){
+            this.setState({lastQues:true});
             console.log("proceed");
           }else{
             flag1=true;
-            this.setState({alert:true})
+            this.setState({alert:true,msg:"last ques",isVisible2:true})
           }
 
 
-          if(flag1==true){
-            //this.setAbnormalID16();
+          // if(flag1==true){
+          //   //this.setAbnormalID16();
             
-            //this.props.navigation.navigate('Message');
-            Alert.alert(
-                "Visit hospital at the earliest"
-             );
-          }
+          //   //this.props.navigation.navigate('Message');
+          //   // Alert.alert(
+          //   //     "Visit hospital at the earliest"
+          //   //  );
+          //   this.se
+          // }
 
         }
     
@@ -278,6 +283,12 @@ getStatus=(id)=>{
               an="None";
             }
 
+            if(this.state.currentQuestion==7&&an!=="None"){
+              this.setState({lastQues:true,isVisible2:true,msg:"ತಕ್ಷಣ ಆಸ್ಪತ್ರೆಗೆ ಭೇಟಿ ನೀಡಿ"});
+            }else if(this.state.currentQuestion==7&&an=="None"){
+              this.setState({lastQues:true});
+            }
+
             await AsyncStorage.setItem(this.state.qid, an);
             console.log("stored from vv kannada");
            
@@ -285,6 +296,12 @@ getStatus=(id)=>{
           }else{
             await AsyncStorage.setItem(this.state.questions, an);
             console.log("stored from vv english");
+            console.log(this.state);
+            if(this.state.currentQuestion==7&&an!=="None"){
+              this.setState({lastQues:true,isVisible2:true,msg:"Visit hospital at the earliest"});
+            }else if(this.state.currentQuestion==7&&an=="None"){
+              this.setState({lastQues:true});
+            }
           }
           
         } catch (error) {
@@ -364,10 +381,11 @@ getStatus=(id)=>{
             console.log("abnormal id:",this.state.abnormalID);
             this.setState({
               
-              decide:null
+              decide:null,
+              isVisible2:true
 
             });
-            this.props.navigation.navigate('Message');
+            //this.props.navigation.navigate('Message');
           }
           else if(this.state.decide=="normal"){
             console.log("non fatal");
@@ -378,12 +396,13 @@ getStatus=(id)=>{
             // );
             var fg;
             fg=this.state.msg;
-            Alert.alert(
-              fg
-           );
+          //   Alert.alert(
+          //     fg
+          //  );
             this.setState({
               modBool: true,
-              decide:null
+              decide:null,
+              isVisible2:true
 
             });
           }
@@ -566,6 +585,20 @@ changeState=()=>{
           ))}
         </View>
 
+        <Modal style={[styles.modal, styles.modal3]} position={"center"}  isOpen={this.state.isVisible2} ref={"modal3"}>
+    <Text style={styles.header2}>{this.state.msg}</Text>
+
+
+    <View style={styles.hairline} />
+    <View style={styles.hairline} />
+    <View style={styles.hairline} />
+    <View style={styles.hairline} />
+          <TouchableOpacity style={{backgroundColor:'#65a2db',width:'30%'}} onPress={() => 
+this.setState({ isVisible2:!this.state.isVisible2,lastQues:true})}>
+<Text style={{color:'white',textAlign:'center',padding:10}}>OK</Text>
+</TouchableOpacity>
+        </Modal>
+
           <View style={[{ width: "40%", margin: 10, backgroundColor: "#f6f6f6" }]}>
 
            {currentQuestion < quizData_2.length - 1 && (<Button title="next" type="solid" raised="true" buttonStyle={styles.btstyle} onPress={this.nextQuestionHandler} disabled={this.state.disabled}/>)}
@@ -573,7 +606,7 @@ changeState=()=>{
            
 
            <View style={[{ width: "40%", margin: 10, backgroundColor: "#f6f6f6" }]}>
-            {currentQuestion === quizData_2.length - 1 && (
+            {currentQuestion === quizData_2.length - 1 && this.state.lastQues&&(
             <Button title="Finish" type="solid" raised="true" buttonStyle={styles.btstyle} className="ui inverted button" onPress={this.finishHandler}/>
               
             
@@ -609,6 +642,16 @@ const styles = StyleSheet.create({
     marginBottom:40,
     marginLeft:20,
     marginRight:20
+  },  header2:{
+    fontSize:17,
+    fontWeight:"bold",
+    color:"#097fed",
+    marginBottom:40,
+    marginLeft:20,
+    marginRight:20
+  },  modal3: {
+    height: 250,
+    width: 300
   },
   item:{
     width:"80%",
@@ -646,6 +689,14 @@ const styles = StyleSheet.create({
     borderBottomColor: 'white',
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
+  modal: {
+     
+
+   justifyContent: 'center',
+   alignItems: 'center'
+     
+     
+  }, 
 });
 
 

@@ -11,31 +11,31 @@ export const quizData2_2 = [
       id: "10",
       question: `ಎರಡೂ ತೋಳುಗಳಲ್ಲಿ ನೋವು ಅಥವಾ ಅಸ್ವಸ್ಥತೆ`,
       options: [`ಹೌದು`, `ಇಲ್ಲ`],
-      answer: `River Nile`
+      answer: `ಹೌದು`
     },
     {
       id: "11",
       question: `ದವಡೆಯ ಕುತ್ತಿಗೆ, ಬೆನ್ನು ಅಥವಾ ಹೊಟ್ಟೆಯಲ್ಲಿ ನೋವು ಅಥವಾ ಅಸ್ವಸ್ಥತೆ`,
       options: [`ಹೌದು`, `ಇಲ್ಲ`],
-      answer: `River Nile`
+      answer: `ಹೌದು`
     },
     {
       id: "12",
       question: `ಬೆವರುವುದು`,
       options: [`ಹೌದು`, `ಇಲ್ಲ`],
-      answer: `River Nile`
+      answer: `ಹೌದು`
     },
     {
       id: "13",
       question: `ರಾತ್ರಿಯಲ್ಲಿ ಉಸಿರಾಟದ ತೊಂದರೆ ಅಥವಾ ಕೆಮ್ಮು`,
       options: [`ಹೌದು`, `ಇಲ್ಲ`],
-      answer: `River Nile`
+      answer: `ಹೌದು`
     },
     {
       id: "14",
       question: `ಮೊಣಕಾಲು ಊತ`,
       options: [`ಹೌದು`, `ಇಲ್ಲ`],
-      answer: `River Nile`
+      answer: `ಹೌದು`
     },
     {
       id: "15",

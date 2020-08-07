@@ -7,6 +7,7 @@ import { quizData } from "../Questions/quizData";
 import {quizData_3} from "../Questions/quizData/quizData_3";
 import {quizData2_3} from "../Questions/quizData2/quizData2_3";
 import {quizData2} from "../Questions/quizData2";
+import Modal from 'react-native-modalbox';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -38,7 +39,9 @@ export default class Treat extends Component {
         msg:"",
         kannada:false,
         quizDecide:quizData_3,
-        butId:null
+        butId:null,
+        isVisible2:false,
+        lastQues:false
       };
 
       
@@ -130,10 +133,10 @@ async _retrieveData() {
 
 getStatus=(id)=>{
         var ids=[9,15];
-        var ids2=[2,5,17,18,21];
+        var ids2=[19,5,17,18,21,20];
         var flag=false;
-        const mg = {2:"stop smoking",5:"Limit Alcohol", 20:"Add fruits,pulses and vegetables to your diet and Reduce meat intake",17:"To be compliant with medication",21:"Continue treatment as advised by doctor "};
-        const mg2 = {2:"ಧೂಮಪಾನ ನಿಲ್ಲಿಸಿ",5:"ಮಧ್ಯಪಾನ ನಿಲ್ಲಿಸಿ",17:"ಸೂಕ್ತ ಸಮಯಕ್ಕೆ ಔಷಧಿಯನ್ನು ತೆಗೆದುಕೊಳ್ಳಿ", 20:"ಹಣ್ಣು ತರಕಾರಿ ಕಾಳುಗಳನ್ನು ಸೇವಿಸಿ, ಮಾಂಸ ತಿನ್ನುವುದನ್ನು ಕಡಿಮೆ ಮಾಡಿ",21:"ವೈದ್ಯರ ಚಿಕಿತ್ಸೆ ಸಲಹೆಯನ್ನು ಮುಂದುವರಿಸಿ"};
+        const mg = {18:"stop smoking",19:"Limit Alcohol", 20:"Add fruits,pulses and vegetables to your diet and Reduce meat intake",17:"To be compliant with medication",21:"Continue treatment,follow up at advised intervals "};
+        const mg2 = {18:"ಧೂಮಪಾನ ನಿಲ್ಲಿಸಿ",19:"ಮಧ್ಯಪಾನ ನಿಲ್ಲಿಸಿ",17:"ಸೂಕ್ತ ಸಮಯಕ್ಕೆ ಔಷಧಿಯನ್ನು ತೆಗೆದುಕೊಳ್ಳಿ", 20:"ಹಣ್ಣು ತರಕಾರಿ ಕಾಳುಗಳನ್ನು ಸೇವಿಸಿ, ಮಾಂಸ ತಿನ್ನುವುದನ್ನು ಕಡಿಮೆ ಮಾಡಿ",21:"ವೈದ್ಯರ ಚಿಕಿತ್ಸೆ ಸಲಹೆಯನ್ನು ಮುಂದುವರಿಸಿ"};
         //console.log("from stst",mans);
         for(var i=0;i<ids.length;i++){
           if(ids[i]==id){
@@ -272,6 +275,12 @@ getStatus=(id)=>{
               an="No";
             }
 
+            if(this.state.currentQuestion==4&&an=="No"){
+              this.setState({lastQues:true,isVisible2:true,msg:"ವೈದ್ಯರ ಚಿಕಿತ್ಸೆ ಸಲಹೆಯನ್ನು ಮುಂದುವರಿಸಿ"});
+            }else if(this.state.currentQuestion==4&&an=="Yes"){
+              this.setState({lastQues:true});
+            }
+
             await AsyncStorage.setItem(this.state.qid, an);
             console.log("stored from vv kannada");
            
@@ -279,6 +288,12 @@ getStatus=(id)=>{
           }else{
             await AsyncStorage.setItem(this.state.questions, an);
             console.log("stored from vv english");
+            console.log(this.state);
+            if(this.state.currentQuestion==4&&an=="No"){
+              this.setState({lastQues:true,isVisible2:true,msg:"Continue treatment,follow up at advised intervals"});
+            }else if(this.state.currentQuestion==4&&an=="Yes"){
+              this.setState({lastQues:true});
+            }
           }
           
         } catch (error) {
@@ -372,12 +387,13 @@ getStatus=(id)=>{
             // );
             var fg;
             fg=this.state.msg;
-            Alert.alert(
-              fg
-           );
+          //   Alert.alert(
+          //     fg
+          //  );
             this.setState({
               modBool: true,
-              decide:null
+              decide:null,
+              isVisible2:true
 
             });
           }
@@ -635,25 +651,25 @@ quesA.push(obj2);
 
 
         //sending to backend
-          (async () => {
-  const rawResponse = await fetch('https://flask-app47.herokuapp.com/questions', {//exp://192.168.0.104:19000
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({"username": this.state.globName, "questionDetails":ty})
-  });
-  const content = await rawResponse.json();
+//           (async () => {
+//   const rawResponse = await fetch('https://flask-app47.herokuapp.com/questions', {//exp://192.168.0.104:19000
+//     method: 'POST',
+//     headers: {
+//       'Accept': 'application/json',
+//       'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify({"username": this.state.globName, "questionDetails":ty})
+//   });
+//   const content = await rawResponse.json();
 
-  if(content){
-    console.log("before");
-    console.log(content);
-    console.log("after");
+//   if(content){
+//     console.log("before");
+//     console.log(content);
+//     console.log("after");
     
-  }
+//   }
 
-})();
+// })();
 
 
    }
@@ -731,6 +747,20 @@ changeState=()=>{
           ))}
         </View>
 
+        <Modal style={[styles.modal, styles.modal3]} position={"center"}  isOpen={this.state.isVisible2} ref={"modal3"}>
+    <Text style={styles.header2}>{this.state.msg}</Text>
+
+
+    <View style={styles.hairline} />
+    <View style={styles.hairline} />
+    <View style={styles.hairline} />
+    <View style={styles.hairline} />
+          <TouchableOpacity style={{backgroundColor:'#65a2db',width:'30%'}} onPress={() => 
+this.setState({ isVisible2:!this.state.isVisible2})}>
+<Text style={{color:'white',textAlign:'center',padding:10}}>OK</Text>
+</TouchableOpacity>
+        </Modal>
+
           <View style={[{ width: "40%", margin: 10, backgroundColor: "#f6f6f6" }]}>
 
            {currentQuestion < quizData_3.length - 1 && (<Button title="next" type="solid" raised="true" buttonStyle={styles.btstyle} onPress={this.nextQuestionHandler} disabled={this.state.disabled}/>)}
@@ -738,7 +768,7 @@ changeState=()=>{
            
 
            <View style={[{ width: "40%", margin: 10, backgroundColor: "#f6f6f6" }]}>
-            {currentQuestion === quizData_3.length - 1 && (
+            {currentQuestion === quizData_3.length - 1  && this.state.lastQues && (
             <Button title="Finish" type="solid" raised="true" buttonStyle={styles.btstyle} className="ui inverted button" onPress={this.finishHandler}/>
               
             
@@ -771,6 +801,13 @@ const styles = StyleSheet.create({
     fontSize:25,
     fontWeight:"bold",
     color:"#364f6b",
+    marginBottom:40,
+    marginLeft:20,
+    marginRight:20
+  },  header2:{
+    fontSize:17,
+    fontWeight:"bold",
+    color:"#097fed",
     marginBottom:40,
     marginLeft:20,
     marginRight:20
@@ -810,6 +847,17 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     borderBottomColor: 'white',
     borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  modal: {
+     
+
+   justifyContent: 'center',
+   alignItems: 'center'
+     
+     
+  },  modal3: {
+    height: 250,
+    width: 300
   },
 });
 

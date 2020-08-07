@@ -1,11 +1,13 @@
 
 import React, { Component } from 'react';
 
-import { Text, View , StyleSheet,  TouchableOpacity,Alert} from 'react-native';
-import { Button } from 'react-native-elements';
+import { Text, View , StyleSheet,  TouchableOpacity,Alert,Dimensions} from 'react-native';
+import { Button, Overlay } from 'react-native-elements';
+import Modal from 'react-native-modalbox';
 //import { quizData } from "./Questions/quizData";
 import {quizData2_1} from "../Questions/quizData2/quizData2_1";
 import {quizData_1} from "../Questions/quizData/quizData_1";
+
 
 
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -39,7 +41,8 @@ export default class Medrisk extends Component {
         kannada:false,
         quizDecide:quizData_1,
         butPress:null,
-        butId:null
+        butId:null,
+        isVisible2:false
       };
 
       
@@ -134,8 +137,8 @@ getStatus=(id)=>{
         var ids=[9,15];
         var ids2=[2,5,18];
         var flag=false;
-        const mg = {2:"stop smoking",5:"Limit Alcohol", 18:"Add fruits,pulses and vegetables to your diet and Reduce meat intake"};
-        const mg2 = {2:"ಧೂಮಪಾನ ನಿಲ್ಲಿಸಿ",5:"ಮಧ್ಯಪಾನ ನಿಲ್ಲಿಸಿ", 18:"ಹಣ್ಣು ತರಕಾರಿ ಕಾಳುಗಳನ್ನು ಸೇವಿಸಿ, ಮಾಂಸ ತಿನ್ನುವುದನ್ನು ಕಡಿಮೆ ಮಾಡಿ"};
+        const mg = {2:"stop smoking",5:"Limit Alcohol"};
+        const mg2 = {2:"ಧೂಮಪಾನ ನಿಲ್ಲಿಸಿ",5:"ಮಧ್ಯಪಾನ ನಿಲ್ಲಿಸಿ"};
         //console.log("from stst",mans);
         for(var i=0;i<ids.length;i++){
           if(ids[i]==id){
@@ -388,15 +391,24 @@ getStatus=(id)=>{
             // );
             var fg;
             fg=this.state.msg;
-            Alert.alert(
-              fg
-           );
+          //   Alert.alert(
+          //     fg
+          //  );
+
+          
+
             this.setState({
               modBool: true,
-              decide:null
+              decide:null,
+              isVisible2:true
 
             });
+
+            //this.refs.modal4.open()
+            //this.refs.modal3.close()
           }
+
+
           
         }
         if (prevState.questions !== this.state.questions) {
@@ -600,6 +612,46 @@ changeState=()=>{
             </React.Fragment>
           ))}
         </View>
+{/* 
+        <Modal animationIn="slideInUp" animationOut="slideOutDown"  swipeDirection="right" visible={this.state.isVisible2} style={{backgroundColor:'black',maxHeight:Dimensions.get('window').height / 2}}>
+<View style={{ flex: 1,justifyContent:'center',maxHeight:Dimensions.get('window').height / 2}}>
+<Text style={{textAlign:'center'}}>This is the modal content for now!</Text>
+</View>
+<View style={{ flex: 1,justifyContent:'center',position:'absolute',bottom:0}}>
+<View style={{flexDirection:'row',}}>
+<TouchableOpacity style={{backgroundColor:'green',width:'50%'}}>
+<Text style={{color:'white',textAlign:'center',padding:10}}>Ok</Text>
+</TouchableOpacity>
+<TouchableOpacity style={{backgroundColor:'red',width:'50%'}} onPress={() => 
+this.setState({ isVisible2:!this.state.isVisible2})}>
+<Text style={{color:'white',textAlign:'center',padding:10}}>OK</Text>
+</TouchableOpacity>
+</View>
+</View>
+</Modal> */}
+{/* 
+<Overlay isVisible={this.state.isVisible2} onBackdropPress={() => 
+this.setState({ isVisible2:!this.state.isVisible2})}>
+  <View>
+        <Text>Hello from Overlay! Hello from Overlay! Hello from Overlay! Hello from Overlay! Hello from Overlay!</Text>
+        </View>
+
+      </Overlay> */}
+
+<Modal style={[styles.modal, styles.modal3]} position={"center"}  isOpen={this.state.isVisible2} ref={"modal3"}>
+    <Text style={styles.header2}>{this.state.msg}</Text>
+
+
+    <View style={styles.hairline} />
+    <View style={styles.hairline} />
+    <View style={styles.hairline} />
+    <View style={styles.hairline} />
+          <TouchableOpacity style={{backgroundColor:'#65a2db',width:'30%'}} onPress={() => 
+this.setState({ isVisible2:!this.state.isVisible2})}>
+<Text style={{color:'white',textAlign:'center',padding:10}}>OK</Text>
+</TouchableOpacity>
+        </Modal>
+
 
           <View style={[{ width: "40%", margin: 10, backgroundColor: "#f6f6f6" }]}>
 
@@ -644,6 +696,13 @@ const styles = StyleSheet.create({
     marginBottom:40,
     marginLeft:20,
     marginRight:20
+  },  header2:{
+    fontSize:17,
+    fontWeight:"bold",
+    color:"#097fed",
+    marginBottom:40,
+    marginLeft:20,
+    marginRight:20
   },
   item:{
     width:"80%",
@@ -681,6 +740,22 @@ const styles = StyleSheet.create({
     borderBottomColor: 'white',
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
+     modal: {
+        
+
+      justifyContent: 'center',
+      alignItems: 'center'
+        
+        
+     },  modal3: {
+      height: 250,
+      width: 300
+    },
+    hairline: {
+      
+      height: 8,
+      width: 165
+    }
 });
 
 
