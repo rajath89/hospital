@@ -346,13 +346,40 @@ onScreenFocus = () => {
 
 return(
 
-  <View style={styles.container}>
+  <View style={styles.container2}>
   <Image
     source={{ uri: `https://firebasestorage.googleapis.com/v0/b/hospitalusers-44f06.appspot.com/o/d1.png?alt=media&token=047b2d84-1ed2-4ff6-ac7e-87da40e3e25a` }}
-    style={{ width: w.width, height: w.width }}
+    style={{ width:390, height: 400 }}
    
     
   />
+
+<View style={styles.hairline} />
+<View style={styles.hairline} />
+<View style={styles.hairline} />
+
+<View style={styles.hairline} />
+<View style={styles.hairline} />
+
+  <Text style={styles.header2}>Sri.Jayadeva Institute of Cardiovascular</Text>
+  <Text style={styles.header2}>Sciences and Research,Mysore</Text>
+
+  <View style={styles.hairline} />
+<View style={styles.hairline} />
+<View style={styles.hairline} />
+<View style={styles.hairline} />
+<View style={styles.hairline} />
+<View style={styles.hairline} />
+
+<Text style={styles.header2}>from</Text>
+
+<View style={styles.hairline2} />
+
+<Text style={styles.header3}>VVCE , MYSORE</Text>
+
+
+
+
   </View>
 
 );
@@ -474,9 +501,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    
+    //#e6e6ff
     backgroundColor: '#ecf0f1',
     padding: 8,
+    alignItems:"center"
+  },  container2: {
+    flex: 1,
+    
+    //#e6e6f
+    backgroundColor: '#ecf0f1',
+    
     alignItems:"center"
   },
   card:{
@@ -506,7 +540,31 @@ const styles = StyleSheet.create({
     
     height: 8,
     width: 165
-  }
+  },
+  hairline2: {
+    
+    height: 3,
+    width: 165
+  },
+  header2:{
+    fontSize:18,
+    
+    
+    color:"#000000",
+    marginBottom:10,
+    marginLeft:20,
+    marginRight:20
+  },
+  header3:{
+    fontSize:18,
+    fontWeight:"bold",
+    
+    
+    color:"#000000",
+    marginBottom:10,
+    marginLeft:20,
+    marginRight:20
+  },
 });
 
 

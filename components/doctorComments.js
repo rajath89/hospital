@@ -7,6 +7,7 @@ import { Font } from "expo";
 
 import { AsyncStorage } from 'react-native';
 import Constants from 'expo-constants';
+import { Card} from 'react-native-elements'
 
 
 export default class DoctorComments extends Component {
@@ -17,8 +18,8 @@ export default class DoctorComments extends Component {
       email: '', 
       password: '',
       isLoading: true,
-      ob:{},
-      obj:{},
+      ob:false,
+      obj:null,
       globName:''
     }
   }
@@ -87,7 +88,7 @@ export default class DoctorComments extends Component {
 getprof = () => {
 
   (async () => {
-  const rawResponse = await fetch('https://flask-app47.herokuapp.com/getProfile', {//exp://192.168.0.104:19000
+  const rawResponse = await fetch('https://flask-app47.herokuapp.com/getDocComment', {//exp://192.168.0.104:19000
     method: 'POST',
     headers: {
       'Accept': 'application/json',
@@ -95,17 +96,21 @@ getprof = () => {
     },
     body: JSON.stringify({"username": this.state.globName})
   });
+
+
+
   const content = await rawResponse.json();
 
   console.log(content);
-  if(content){
-      this.setState({isLoading:false,obj:content})
+  if(content.msg=="no comments" || content.msg=="error"){
+      this.setState({isLoading:false,ob:true})
+  }else{
+    console.log(content);
+    
+    this.setState({isLoading:false,obj:content.comment})
   }
 })();
 
-
-  // example console.log output:
-  // [ ['@MyApp_user', 'myUserValue'], ['@MyApp_key', 'myKeyValue'] ]
 }
 
 
@@ -121,8 +126,33 @@ getprof = () => {
     return (
 
       <View style={styles.container}>
+       
+
+        {/* {this.state.obj &&(<Card
+  title='Comment given by doctor'
+  >
+  <Text style={styles.header2}>
+  Comment given by doctor
+  </Text>
+
+</Card>)} */}
+
+
+{this.state.obj!==null && <View style={styles2.card}>
+          <View style={styles2.header}>
+           
+            <Text style={{fontSize:20,padding:10}}>Comment given by doctor</Text>
+          </View>
+
+
+          <View style={styles.hairline} />
+          
+<Text style={styles.header2}>{this.state.obj}</Text>
+        </View>}
+
+        {this.state.ob &&<Text style={styles.header2}>No reply from Doctor, check back later</Text>}
         
-<Text>No reply from Doctor, check back later </Text>
+
         </View>
 
       
@@ -143,6 +173,14 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight:"900",
     color: '#1c1c1c'
+    },
+    header2:{
+      fontSize:17,
+      
+      color:"black",
+      marginBottom:10,
+      marginLeft:20,
+      marginRight:20
     },
   card:{
     height:40,
@@ -172,4 +210,48 @@ const styles = StyleSheet.create({
     height: 8,
     width: 165
   }
+});
+
+
+
+const styles2 = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingTop: Constants.statusBarHeight,
+    backgroundColor: '#ecf0f1',
+    padding: 8,
+    alignItems:"center"
+  },
+  card:{
+    alignItems:"center",
+    justifyContent: 'center',
+
+   
+    width:"90%",
+    backgroundColor:"white",
+    borderRadius:15,
+    elevation:10,
+    padding:20
+  },
+  profileImg:{
+    width:30,
+    height:30,
+    borderRadius:50,
+    marginRight:10,
+  },
+  header: {
+    flexDirection:"row",
+  },
+    hairline: {
+      
+      height: 8,
+      width: 165
+    },textViewContainer: {
+          textAlignVertical:'center', 
+          fontSize: 19,
+          
+          
+          color: 'purple'
+          },
 });

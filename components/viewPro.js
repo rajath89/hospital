@@ -7,6 +7,7 @@ import { Font } from "expo";
 
 import { AsyncStorage } from 'react-native';
 import Constants from 'expo-constants';
+import { Card} from 'react-native-elements'
 
 
 export default class updatePro extends Component {
@@ -17,8 +18,8 @@ export default class updatePro extends Component {
       email: '', 
       password: '',
       isLoading: true,
-      ob:{},
-      obj:{},
+      ob:false,
+      obj:null,
       globName:''
     }
   }
@@ -97,9 +98,13 @@ getprof = () => {
   });
   const content = await rawResponse.json();
 
-  console.log(content);
-  if(content){
-      this.setState({isLoading:false,obj:content})
+  console.log(content.msg);
+  if(content.msg=="user not yet registerd"){
+    this.setState({isLoading:false,ob:true})
+      
+  }else{
+    this.setState({isLoading:false,obj:content})
+    
   }
 })();
 
@@ -120,84 +125,132 @@ getprof = () => {
     }    
     return (
 
-      <View style={styles.container}>
-        
- 
-<Text style={styles.textViewContainer}>Name  :  {this.state.obj.Name}</Text>
-        
-        <View style={styles.hairline} />
 
+<View style={styles.container}>
+
+
+
+  {this.state.obj && <View style={styles.card}>
+          {/* <View style={styles.header}>
+            
+            <Text style={{fontWeight:"bold",fontSize:18,left:120}}>Profile</Text>
+          </View> */}
+
+          <View style={styles.hairline} />
+           <Text style={styles.textViewContainer}>Name  :  {this.state.obj.Name}</Text>
         
- 
- <Text style={styles.textViewContainer}>Age  :  {this.state.obj.Age}</Text>
-         
          <View style={styles.hairline} />
 
+        
+ 
+  <Text style={styles.textViewContainer}>Age  :  {this.state.obj.Age}</Text>
+         
+          <View style={styles.hairline} />
+
          
  
- <Text style={styles.textViewContainer}>Gender  :  {this.state.obj.Gender}</Text>
+  <Text style={styles.textViewContainer}>Gender  :  {this.state.obj.Gender}</Text>
          
-         <View style={styles.hairline} />
+          <View style={styles.hairline} />
 
        
  
- <Text style={styles.textViewContainer}>Mobile Number  :  {this.state.obj.MobNumber}</Text>
+  <Text style={styles.textViewContainer}>Mobile Number  :  {this.state.obj.MobNumber}</Text>
          
-         <View style={styles.hairline} />
+          <View style={styles.hairline} />
 
          
  
- <Text style={styles.textViewContainer}>Address  :  {this.state.obj.address}</Text>
+  <Text style={styles.textViewContainer}>Address  :  {this.state.obj.address}</Text>
          
-         <View style={styles.hairline} />
+          <View style={styles.hairline} />
 
 
 
-         <Text style={styles.textViewContainer}>Email  :  {this.state.obj.email}</Text>
+          <Text style={styles.textViewContainer}>Email  :  {this.state.obj.email}</Text>
          
-         <View style={styles.hairline} />
+          <View style={styles.hairline} />
 
 
 
 
-         <Text style={styles.textViewContainer}>Education  :  {this.state.obj.Education}</Text>
+          <Text style={styles.textViewContainer}>Education  :  {this.state.obj.Education}</Text>
          
-         <View style={styles.hairline} />
+          <View style={styles.hairline} />
 
 
-         <Text style={styles.textViewContainer}>Diagnosis  :  {this.state.obj.diagnosis}</Text>
+          <Text style={styles.textViewContainer}>Diagnosis  :  {this.state.obj.diagnosis}</Text>
+                   <View style={styles.hairline} />
+
+
+          <Text style={styles.textViewContainer}>Height  :  {this.state.obj.height}</Text>
          
-         <View style={styles.hairline} />
+          <View style={styles.hairline} />
 
 
-         <Text style={styles.textViewContainer}>Height  :  {this.state.obj.height}</Text>
+          <Text style={styles.textViewContainer}>Weight  :  {this.state.obj.weight}</Text>
          
-         <View style={styles.hairline} />
+          <View style={styles.hairline} />
+          <Text style={styles.textViewContainer}>Body Mass Index  :  {this.state.obj.BodyMassIndex.toFixed(2)}</Text>
+          <View style={styles.hairline} />
+          <Text style={styles.textViewContainer}>Date of procedure  :  {this.state.obj.DateOfProcedure}</Text>
+
+        </View>}
 
 
-         <Text style={styles.textViewContainer}>Weight  :  {this.state.obj.weight}</Text>
-         
-         <View style={styles.hairline} />
-         <Text style={styles.textViewContainer}>Body Mass Index  :  {this.state.obj.BodyMassIndex.toFixed(2)}</Text>
-         <View style={styles.hairline} />
-         <Text style={styles.textViewContainer}>Date of procedure  :  {this.state.obj.DateOfProcedure}</Text>
-
-
-        {/* <View style={styles.card}>
- 
-        <Button
-  title="Update profile"
-  type="clear"
-  onPress={() => this.props.navigation.navigate('Update Profile',{screen:'updatePro'})}
-/>
-        </View>
-        <View style={styles.hairline} /> */}
-        </View>
+        {this.state.ob &&<Text style={styles.header2}>Update your profile</Text>}
+        
+      </View>
 
       
      );
   }
 }
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     paddingTop: Constants.statusBarHeight,
+//     backgroundColor: '#ecf0f1',
+//     padding: 8,
+//     alignItems:"center"
+//   },textViewContainer: {
+//     textAlignVertical:'center', 
+//     fontSize: 18,
+//     fontWeight:"900",
+//     color: '#1c1c1c'
+//     },
+//   card:{
+//     height:40,
+//     width:"80%",
+//     backgroundColor:"white",
+//     borderRadius:15,
+//     borderWidth: 1,
+//     borderColor: '#3740FE',
+//     elevation:10,
+//     padding:7,
+//     shadowColor: '#000',
+//     shadowOffset: { width: 0, height: 3 },
+//     shadowOpacity: 0.5,
+//     shadowRadius: 5
+//   },
+//   profileImg:{
+//     width:30,
+//     height:30,
+//     borderRadius:50,
+//     marginRight:10,
+//   },
+//   header: {
+//     flexDirection:"row",
+//   },
+//   hairline: {
+    
+//     height: 8,
+//     width: 165
+//   }
+// });
+
 
 const styles = StyleSheet.create({
   container: {
@@ -207,25 +260,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#ecf0f1',
     padding: 8,
     alignItems:"center"
-  },textViewContainer: {
-    textAlignVertical:'center', 
-    fontSize: 18,
-    fontWeight:"900",
-    color: '#1c1c1c'
-    },
+  },
   card:{
-    height:40,
-    width:"80%",
+   
+    width:"90%",
     backgroundColor:"white",
     borderRadius:15,
-    borderWidth: 1,
-    borderColor: '#3740FE',
     elevation:10,
-    padding:7,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.5,
-    shadowRadius: 5
+    padding:20
   },
   profileImg:{
     width:30,
@@ -236,9 +278,23 @@ const styles = StyleSheet.create({
   header: {
     flexDirection:"row",
   },
-  hairline: {
-    
-    height: 8,
-    width: 165
-  }
+    hairline: {
+      
+      height: 8,
+      width: 165
+    },textViewContainer: {
+          textAlignVertical:'center', 
+          fontSize: 19,
+          
+          
+          color: 'purple'
+          },
+          header2:{
+            fontSize:17,
+            
+            color:"black",
+            marginBottom:10,
+            marginLeft:20,
+            marginRight:20
+          },
 });

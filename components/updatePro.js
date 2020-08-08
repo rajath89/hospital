@@ -37,6 +37,7 @@ export default class updatePro extends Component {
       address:"",
       height:"",
       weight:"",
+      dateB:false,
       
       DateOfProcedure:null,
       
@@ -289,32 +290,34 @@ export default class updatePro extends Component {
         const content2 = await rawResponse.json();
 
         //
-            if(content2){
-        
-  ToastAndroid.show('Profile details are updated', ToastAndroid.SHORT);
-  this.setState({ 
-   
-    email: '', 
-    Name:'',
-    Gender:'',
-    Age:'',
-    MobNumber:'',
-    
-    education:'',
-    address:'',
-    height:'',
-    weight:'',
-    diagnosis:'',
-    DateOfProcedure:'',
 
-    isLoading: false})
-  this.props.navigation.navigate('Cardio App'); 
-    }
 
     
       })();
 
       ///
+
+      if(content){
+        
+        ToastAndroid.show('Profile details are updated', ToastAndroid.SHORT);
+        this.setState({ 
+         
+          email: '', 
+          Name:'',
+          Gender:'',
+          Age:'',
+          MobNumber:'',
+          
+          education:'',
+          address:'',
+          height:'',
+          weight:'',
+          diagnosis:'',
+          DateOfProcedure:'',
+      
+          isLoading: false})
+        this.props.navigation.navigate('Cardio App'); 
+          }
     }
 
   })();
@@ -447,7 +450,7 @@ export default class updatePro extends Component {
 
 
    datef=()=>{
-    this.setState({datebool:true});
+    this.setState({datebool:true,dateB:true});
    }
 
 
@@ -671,12 +674,14 @@ export default class updatePro extends Component {
           
         /> */}
 {this.state.datebool&&<DateTimePicker testID="dateTimePicker" value={new Date()} mode='date' display="default" onChange={(date,m) => {this.setState({DateOfProcedure:m.toDateString(),datebool:false})}}/>}
- <TouchableOpacity
-          style={styles.button}
-          onPress={this.datef}
-        ><Text style={{color:"#3740FE"}}>Click to select Date of Procedure</Text><View style={styles.hairline} />
-          {this.state.DateOfProcedure&&(<Text>Selected date : {this.state.DateOfProcedure}</Text>)}
-        </TouchableOpacity>
+ <TouchableOpacity style={styles.button} onPress={this.datef}>
+<Text style={{color:"#3740FE"}}>Click to select Date of Procedure</Text>
+</TouchableOpacity>
+
+
+        <View style={styles.hairline} />
+
+        {this.state.dateB&&<Text>Selected date : {this.state.DateOfProcedure}</Text>}
 
 
 

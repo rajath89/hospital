@@ -207,6 +207,7 @@ subMit=()=>{
     console.log(content);
     console.log("after");
     
+    
   }
 
 })();
@@ -216,8 +217,8 @@ subMit=()=>{
 
 
 
-
-  //this.props.navigation.navigate('Cardio App');
+ToastAndroid.show('Details are updated', ToastAndroid.SHORT);
+  this.props.navigation.navigate('Cardio App');
 }
 
 render() {

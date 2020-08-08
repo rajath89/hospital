@@ -11,25 +11,25 @@ import pyrebase
 #     "measurementId": "G-M7NF81475B"
 #   }
 
-# config = {
-#     "apiKey": "AIzaSyBzablT_gQoi5HOl5FqZF9LeK1LkruOzKE",
-#     "authDomain": "hospitalusers-d3cda.firebaseapp.com",
-#     "databaseURL": "https://hospitalusers-d3cda.firebaseio.com",
-#     "projectId": "hospitalusers-d3cda",
-#     "storageBucket": "hospitalusers-d3cda.appspot.com",
-#     "messagingSenderId": "1074652022617",
-#     "appId": "1:1074652022617:web:20c1567f52ae88b8b8ae48"
-#   }
-  
 config = {
-    "apiKey": "AIzaSyBwk0GjuBX5_ZozvgldtH38FZhY2AhCu34",
-    "authDomain": "hospitalusers-44f06.firebaseapp.com",
-    "databaseURL": "https://hospitalusers-44f06.firebaseio.com",
-    "projectId": "hospitalusers-44f06",
-    "storageBucket": "hospitalusers-44f06.appspot.com",
-    "messagingSenderId": "1020686800954",
-    "appId": "1:1020686800954:web:003ea93c285f06847d3d03"
+    "apiKey": "AIzaSyBzablT_gQoi5HOl5FqZF9LeK1LkruOzKE",
+    "authDomain": "hospitalusers-d3cda.firebaseapp.com",
+    "databaseURL": "https://hospitalusers-d3cda.firebaseio.com",
+    "projectId": "hospitalusers-d3cda",
+    "storageBucket": "hospitalusers-d3cda.appspot.com",
+    "messagingSenderId": "1074652022617",
+    "appId": "1:1074652022617:web:20c1567f52ae88b8b8ae48"
   }
+  
+# config = {
+#     "apiKey": "AIzaSyBwk0GjuBX5_ZozvgldtH38FZhY2AhCu34",
+#     "authDomain": "hospitalusers-44f06.firebaseapp.com",
+#     "databaseURL": "https://hospitalusers-44f06.firebaseio.com",
+#     "projectId": "hospitalusers-44f06",
+#     "storageBucket": "hospitalusers-44f06.appspot.com",
+#     "messagingSenderId": "1020686800954",
+#     "appId": "1:1020686800954:web:003ea93c285f06847d3d03"
+#   }
 
 
 firebase=pyrebase.initialize_app(config)
@@ -156,21 +156,16 @@ def getRegister():
 
 
 		user = db.child("users").get()
-		#users = db.child("users").child(uName.split("@")[0]).child("ProfileDet").get()
-		#print(user.val()['rajath']['ProfileDet'])
 
-		if user.val() is not None:
 
-			#pp.pprint(list(dict(users.val())))
-			#print(users.val())
-			# f=list(dict(users.val()))
-			# fD=dict(users.val())[f[0]]
 
+		try:
 			return jsonify(user.val()[uName.split("@")[0]]['ProfileDet'])
-			#return jsonify(user.val()[uName.split("@")[0]]['time'])
 
-		else:
+		except KeyError:
 			return jsonify({"msg":"user not yet registerd"})
+
+
 
 
 @app.route('/CAGdetails', methods=['GET','POST'])
@@ -275,6 +270,35 @@ def expo():
 		db.child("users").child(uName.split("@")[0]).child("ExpoToken").push(tok)
 
 	return jsonify({"expo":"success"})
+
+
+@app.route('/getDocComment', methods=['GET','POST'])
+@cross_origin()
+def doccomments():
+
+	#fdict={}
+	if request.method == "POST":
+		k1=request.json
+		uName=k1["username"]
+
+		del k1["username"]
+
+
+
+		user = db.child("users").get()
+
+
+		try:
+			obj=user.val()[uName.split("@")[0]]['doctorsComments']
+			print(jsonify({"comment": obj}))
+			if obj=="none":
+				return jsonify({"msg":"no comments"})
+			else:
+				return jsonify({"comment": obj})
+		except KeyError:
+			return jsonify({"msg":"error"})
+
+
 
 
 

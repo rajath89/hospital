@@ -16,7 +16,7 @@ import {CheckBox} from "native-base";
 
  
 
-export default class Comment extends Component {
+export default class Comments extends Component {
   state = {
     isVisible: false,
     isVisible2:false

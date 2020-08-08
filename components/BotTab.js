@@ -1,12 +1,11 @@
 import * as React from 'react';
-import { Text, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import dashboard from './dashboard';
-import CameraComponent from './Camera';
+
 import Fire from './fire';
 
-import mulImUp from './mulImUp';
+
 import profile from './profile';
 import Comments from './comments';
 
