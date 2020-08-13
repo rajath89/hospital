@@ -281,6 +281,14 @@ getStatus=(id)=>{
               an="No";
             }else if(an=="ಯಾವು ಇಲ್ಲ"){
               an="None";
+            }else if(an=="ಮಲದಲ್ಲಿ ರಕ್ತ ಹೋಗುವುದು"){
+              an="Black tarry stools";
+            }else if(an=="ದೇಹದ ಇತರೆಡೆ ರಕ್ತಸ್ರಾವ"){
+              an="Bleeding from any other site";
+            }else if(an=="ಸ್ನಾಯು ನೋವು"){
+              an="Muscle pain";
+            }else if(an=="ತೊಡೆಯ ಸಂದಿಯ ಭಾಗದಲ್ಲಿ ಊತ"){
+              an="Swelling at site of procedure";
             }
 
             if(this.state.currentQuestion==7&&an!=="None"){
