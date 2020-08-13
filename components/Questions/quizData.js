@@ -51,7 +51,7 @@ export const quizData = [
   },
   {
     id: "4",
-    question: `Lack of physical activity`,
+    question: `Lack of Physical Activity`,
     options: [`Yes`, `No`],
     answer: `River Nile`
   },
@@ -63,7 +63,7 @@ export const quizData = [
   },
   {
     id: "6",
-    question: `If female Post Menopausal`,
+    question: `If female, Post Menopausal`,
     options: [`Yes`, `No`],
     answer: `River Nile`
   },
@@ -93,7 +93,7 @@ export const quizData = [
   },
   {
     id: "11",
-    question: `Pain or discomfort in Jaw neck,back or stomach`,
+    question: `Pain or discomfort in Jaw neck, Back or Stomach`,
     options: [`Yes`, `No`],
     answer: `River Nile`
   },
@@ -125,7 +125,7 @@ export const quizData = [
   {
     id: "16",
     question: `Post procedure complications`,
-    options: [`Black tarry stools`, `Skin rashes`,`Muscle pain`,`Swelling at sight of procedure`,`None`],
+    options: [`Black tarry stools`, `Bleeding from any other site`,`Muscle pain`,`Swelling at sight of procedure`,`None`],
     answer: `None`
   },
   {
@@ -151,7 +151,7 @@ export const quizData = [
   
   {
     id: "20",
-    question: `Diet (Fruits,pulses and vegetables)`,
+    question: `Diet (Fruits, Pulses and Vegetables)`,
     options: [`Yes`, `No`],
     answer: `No`
   },

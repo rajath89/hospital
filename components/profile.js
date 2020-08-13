@@ -84,7 +84,7 @@ onPress={() => this.props.navigation.navigate('Doctors')}
 <Button
 title="Developers"
 type="clear"
-onPress={() => this.props.navigation.navigate('About Us')}
+onPress={() => this.props.navigation.navigate('Developers')}
 
 />
 </View>

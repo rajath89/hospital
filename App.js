@@ -280,7 +280,7 @@ component={Settings}
 
 
 <Stack.Screen 
-name="About Us" 
+name="Developers" 
 component={About} 
 //  options={
 //    //{ title: 'Dashboard' },
