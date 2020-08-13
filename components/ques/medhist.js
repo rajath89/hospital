@@ -535,7 +535,7 @@ getMultiple = async () => {
           //if(this.state.isEnd){
           
           ToastAndroid.show('Questions are updated in db', ToastAndroid.SHORT);
-          this.props.navigation.navigate('Cardio App');
+          this.props.navigation.navigate('Jayadeva Hrudaya Spandana');
         //}
         }
         //this.getAllKeys();
@@ -585,7 +585,7 @@ changeState=()=>{
           ))}
         </View>
 
-        <Modal style={[styles.modal, styles.modal3]} position={"center"}  isOpen={this.state.isVisible2} ref={"modal3"}>
+        <Modal style={[styles.modal, styles.modal3]} position={"center"}  isOpen={this.state.isVisible2} ref={"modal3"} backdropPressToClose={false}>
     <Text style={styles.header2}>{this.state.msg}</Text>
 
 
@@ -615,8 +615,8 @@ this.setState({ isVisible2:!this.state.isVisible2,lastQues:true})}>
           </View>
 
 
-          <Text>option clicked : {this.state.op} </Text>
-           <Text>Ques id :{df}</Text>
+          {/* <Text>option clicked : {this.state.op} </Text>
+           <Text>Ques id :{df}</Text> */}
            
         </View>
          )

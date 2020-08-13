@@ -24,7 +24,7 @@ export const quizData_3 = [
     
     {
       id: "20",
-      question: `Diet (Fruits,pulses and vegetables)`,
+      question: `Diet (Fruits, Pulses and Vegetables)`,
       options: [`Yes`, `No`],
       answer: `No`
     },

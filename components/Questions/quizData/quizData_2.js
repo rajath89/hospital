@@ -15,7 +15,7 @@ export const quizData_2 = [
     },
     {
       id: "11",
-      question: `Pain or discomfort in Jaw neck,back or stomach`,
+      question: `Pain or discomfort in Jaw neck, Back or Stomach`,
       options: [`Yes`, `No`],
       answer: `Yes`
     },
@@ -47,7 +47,7 @@ export const quizData_2 = [
     {
       id: "16",
       question: `Post procedure complications`,
-      options: [`Black tarry stools`, `Skin rashes`,`Muscle pain`,`Swelling at sight of procedure`,`None`],
+      options: [`Black tarry stools`, `Bleeding from any other site`,`Muscle pain`,`Swelling at site of procedure`,`None`],
       answer: `None`
     }
   ];

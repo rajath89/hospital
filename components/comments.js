@@ -35,7 +35,7 @@ export default class Comments extends Component {
         
  
         <Button
-  title="Add comment"
+  title="Ask your Doctor"
   type="clear"
   
   onPress={() => this.props.navigation.navigate('Add Comment')}
@@ -51,7 +51,7 @@ export default class Comments extends Component {
         <View style={styles.card}>
  
         <Button
-  title="View doctor's reply"
+  title="Doctor's reply"
   type="clear"
   onPress={() => this.props.navigation.navigate('Doctor Comment')}
   

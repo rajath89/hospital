@@ -80,7 +80,7 @@ subMit=()=>{
         //this.setState({isLoading:false,obj:content})
         ToastAndroid.show('Comment submitted successfully', ToastAndroid.SHORT);
         this.setState({comments:''})
-        this.props.navigation.navigate('Cardio App');
+        this.props.navigation.navigate('Jayadeva Hrudaya Spandana');
     }
   })();
 }

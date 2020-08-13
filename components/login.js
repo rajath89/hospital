@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, Button, Alert, ActivityIndicator } from 'react-native';
 import firebase from '../database/firebase';
 
+import PasswordInputText from 'react-native-hide-show-password-input';
+
 import {QuesList} from './QuesList';
 
 import { AsyncStorage } from 'react-native';
@@ -13,12 +15,13 @@ export default class Login extends Component {
     super();
     this.state = { 
       email: null, 
-      password: null,
+      password: '',
       isLoading: false,
       ob:{},
       globName:'',
       bool:false,
-      bool2:false
+      bool2:false,
+      pass:false
     }
   }
 
@@ -123,7 +126,7 @@ componentDidUpdate(prevProps, prevState) {
     var today = new Date();
     var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
     var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-    var dateTime = date+' '+time;
+    var dateTime = date+','+time;
     this._storeData2();
     (async () => {
     const rawResponse = await fetch('https://flask-app47.herokuapp.com/login', {//exp://192.168.0.104:19000
@@ -337,7 +340,7 @@ setUser = async () => {
           password: ''
         });
         console.log(this.state);
-        this.props.navigation.navigate('Cardio App')
+        this.props.navigation.navigate('Jayadeva Hrudaya Spandana')
       })
       .catch(
         
@@ -395,17 +398,26 @@ setUser = async () => {
           value={this.state.email}
           onChangeText={(val) => this.updateInputVal(val, 'email')}
         />
-        <TextInput
+        {/* <TextInput
           style={styles.inputStyle}
           placeholder="Password"
           value={this.state.password}
           onChangeText={(val) => this.updateInputVal(val, 'password')}
           maxLength={15}
-          secureTextEntry={true}
-        />   
+          secureTextEntry={this.state.pass ? false :true}
+        /> */}
+
+<View style={{margin: 10}}>
+                <PasswordInputText
+                    value={this.state.password}
+                    onChangeText={ (password) => this.setState({ password }) }
+                />
+            </View>
+
+
         <Button
           color="#3740FE"
-          title="Signin"
+          title="Sign In"
           onPress={() => {this.userLogin(),this.getDateTime()}}
         />   
         {/* <QuesList /> */}
@@ -413,7 +425,7 @@ setUser = async () => {
         <Text 
           style={styles.loginText}
           onPress={() => {this.props.navigation.navigate('Signup'),this.getAllKeys()}}>
-          Don't have account? Click here to signup
+          Don't have an account? Click here to SIGNUP!
         </Text>  
 
 
@@ -442,8 +454,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff'
   },
   inputStyle: {
-    width: '100%',
-    marginBottom: 15,
+    width: '93%',
+    marginBottom: 1,
     paddingBottom: 15,
     alignSelf: "center",
     borderColor: "#ccc",

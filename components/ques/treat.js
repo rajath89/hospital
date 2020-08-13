@@ -686,6 +686,29 @@ this.removeFew();
 
 
 
+finishTime=()=>{
+  var today = new Date();
+  var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  var dateTime = date+','+time;
+
+  (async () => {
+  const rawResponse = await fetch('https://flask-app47.herokuapp.com/login', {//exp://192.168.0.104:19000
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({"username": this.state.globName, "quesAttendDate": dateTime})
+  });
+  const content = await rawResponse.json();
+
+  console.log(content);
+})();
+}
+
+
+
       finishHandler = () => {
         console.log("finished");
         console.log(this.state.currentQuestion,quizData_3.length,this.state.quizDecide.length)
@@ -695,6 +718,7 @@ this.removeFew();
         //     isEnd: true
         //   });
           //if(this.state.isEnd){
+            this.finishTime();
           
           ToastAndroid.show('Questions are updated in db', ToastAndroid.SHORT);
           this.props.navigation.navigate('BP & Lab reports');
@@ -747,7 +771,7 @@ changeState=()=>{
           ))}
         </View>
 
-        <Modal style={[styles.modal, styles.modal3]} position={"center"}  isOpen={this.state.isVisible2} ref={"modal3"}>
+        <Modal style={[styles.modal, styles.modal3]} position={"center"}  isOpen={this.state.isVisible2} ref={"modal3"} backdropPressToClose={false}>
     <Text style={styles.header2}>{this.state.msg}</Text>
 
 
@@ -777,8 +801,8 @@ this.setState({ isVisible2:!this.state.isVisible2})}>
           </View>
 
 
-          <Text>option clicked : {this.state.op} </Text>
-           <Text>Ques id :{df}</Text>
+          {/* <Text>option clicked : {this.state.op} </Text>
+           <Text>Ques id :{df}</Text> */}
            
         </View>
          )

@@ -174,6 +174,7 @@ import Settings from './settings';
 
 import {connect} from 'react-redux';
 import dashboardV2 from './dashboardV2';
+import OneSignal from 'react-native-onesignal';
 
 
 
@@ -196,7 +197,16 @@ const w = Dimensions.get('window');
 
   //   }
   // }]
+  // constructor(properties) {
+  //   super(properties);
+  //   //Remove this method to stop OneSignal Debugging 
+  //   OneSignal.setLogLevel(6, 0);
+  //   console.log("constructor")
+    
+  //   // Replace 'YOUR_ONESIGNAL_APP_ID' with your OneSignal App ID.
+  //   OneSignal.init("54079f91-989e-49a5-91b0-642020fab0ff", {kOSSettingsKeyAutoPrompt : false, kOSSettingsKeyInAppLaunchURL: false, kOSSettingsKeyInFocusDisplayOption:2});
 
+  // }
 
 
   state = {
@@ -297,7 +307,10 @@ setLoad=()=>{
 
     this._retrieveDataK();
     BackHandler.addEventListener('hardwareBackPress', this.onBackButtonPressed);
-    console.log("update...........");
+    
+    //OneSignal.init("54079f91-989e-49a5-91b0-642020fab0ff", {kOSSettingsKeyAutoPrompt : false, kOSSettingsKeyInAppLaunchURL: false, kOSSettingsKeyInFocusDisplayOption:2});
+ 
+    console.log("update...........,onsignal");
     this.lazyLoad();
 
     
@@ -362,7 +375,7 @@ return(
 <View style={styles.hairline} />
 
   <Text style={styles.header2}>Sri.Jayadeva Institute of Cardiovascular</Text>
-  <Text style={styles.header2}>Sciences and Research,Mysore</Text>
+  <Text style={styles.header2}>Sciences and Research, Mysore</Text>
 
   <View style={styles.hairline} />
 <View style={styles.hairline} />
@@ -370,12 +383,20 @@ return(
 <View style={styles.hairline} />
 <View style={styles.hairline} />
 <View style={styles.hairline} />
+<View style={styles.hairline} />
+<View style={styles.hairline} />
+<View style={styles.hairline} />
+<View style={styles.hairline} />
+<View style={styles.hairline} />
+<View style={styles.hairline} />
+
+
 
 <Text style={styles.header2}>from</Text>
 
-<View style={styles.hairline2} />
 
-<Text style={styles.header3}>VVCE , MYSORE</Text>
+
+<Text style={styles.header3}>VVCE, MYSURU</Text>
 
 
 
@@ -401,7 +422,7 @@ return(
  
  <Button
 
-title={this.state.kannada == false ? 'Medical Risk factor' : 'ಹೃದಯ ರೋಗವನ್ನು ಹೆಚ್ಚಿಸುವ ಅಂಶಗಳು'} 
+title={this.state.kannada == false ? 'Medical Risk Factors' : 'ಹೃದಯ ರೋಗವನ್ನು ಹೆಚ್ಚಿಸುವ ಅಂಶಗಳು'} 
 type="clear"
 onPress={() => this.props.navigation.navigate('Medical Risk Factors')}
 />
@@ -412,9 +433,9 @@ onPress={() => this.props.navigation.navigate('Medical Risk Factors')}
  
  <Button
 
-title={this.state.kannada == false ? 'Medical History Symptoms' : 'ವೈದ್ಯಕೀಯ ಹಿನ್ನೆಲೆ ರೋಗ ಲಕ್ಷಣಗಳು'} 
+title={this.state.kannada == false ? 'Symptoms' : 'ರೋಗ ಲಕ್ಷಣಗಳು'} 
 type="clear"
-onPress={() => this.props.navigation.navigate('Medical History Symptoms')}
+onPress={() => this.props.navigation.navigate('Symptoms')}
 />
  </View>
  <View style={styles.hairline} />
@@ -425,7 +446,7 @@ onPress={() => this.props.navigation.navigate('Medical History Symptoms')}
 
 title={this.state.kannada == false ? 'Treatment Compliance' : 'ಚಿಕಿತ್ಸೆಯ ಅನುಸರಣೆ'} 
 type="clear"
-onPress={() => {this.props.navigation.navigate('Treatment Compliance'),this.getAllKeys()}}
+onPress={() => {this.props.navigation.navigate('Treatment Compliance')}}
 />
  </View>
  <View style={styles.hairline} />
@@ -434,7 +455,7 @@ onPress={() => {this.props.navigation.navigate('Treatment Compliance'),this.getA
  
         <Button
  
-  title={this.state.kannada == false ? 'CAG & Discharge Report upload' : 'ವರದಿಗಳನ್ನು ಅಪ್ಲೋಡ್ ಮಾಡಿ (ಎಂಜಿಯೋಗ್ರಾಮ್ ಮತ್ತು ಡಿಸ್ಚಾರ್ಜ್ ವರದಿ)'} 
+  title={this.state.kannada == false ? 'CAG & Discharge Report Upload' : 'ವರದಿಗಳನ್ನು ಅಪ್ಲೋಡ್ ಮಾಡಿ (ಎಂಜಿಯೋಗ್ರಾಮ್ ಮತ್ತು ಡಿಸ್ಚಾರ್ಜ್ ವರದಿ)'} 
   type="clear"
   onPress={() => this.props.navigation.navigate('CAG & Discharge')}
 />
@@ -551,7 +572,7 @@ const styles = StyleSheet.create({
     
     
     color:"#000000",
-    marginBottom:10,
+    
     marginLeft:20,
     marginRight:20
   },

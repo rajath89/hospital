@@ -72,7 +72,7 @@ _storeData2 = async () => {
 
     
 
-    this.props.navigation.navigate('Cardio App');
+    this.props.navigation.navigate('Jayadeva Hrudaya Spandana');
 
 
 

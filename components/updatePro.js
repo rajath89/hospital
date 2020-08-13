@@ -38,6 +38,9 @@ export default class updatePro extends Component {
       height:"",
       weight:"",
       dateB:false,
+      IPnum:null,
+      lazyload:true,
+
       
       DateOfProcedure:null,
       
@@ -47,11 +50,70 @@ export default class updatePro extends Component {
     }
   }
 
+
+
+
+  getprof = () => {
+
+    (async () => {
+    const rawResponse = await fetch('https://flask-app47.herokuapp.com/getProfile', {//exp://192.168.0.104:19000
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({"username": this.state.globName})
+    });
+    const content = await rawResponse.json();
+  
+    console.log(content);
+    if(content.msg=="user not yet registerd"){
+     console.log("not registerd");
+     this.setState({lazyload:false})
+        
+    }else{
+      console.log("from getprof",content.Age);
+
+      this.setState({
+        email: content.email, 
+        Name:content.Name,
+        Gender:content.Gender,
+        Age:content.Age,
+        MobNumber:content.MobNumber,
+
+        Education:content.Education,
+        
+        address:content.address,
+        height:content.height,
+        weight:content.weight,
+        dateB:true,
+        IPnum:content.IPnum,
+        
+        DateOfProcedure:content.DateOfProcedure,
+        diagnosis:content.diagnosis,
+        lazyload:false
+        
+        
+        
+  
+      
+
+
+
+      })
+      
+    }
+  })();
+}
+
+  
+
   
 
   componentDidMount() {
    this._retrieveData();
-   this.registerForPushNotificationsAsync();
+   //this.registerForPushNotificationsAsync();
+   
 
 
 }
@@ -68,12 +130,12 @@ export default class updatePro extends Component {
           globName:value
         });
         console.log("from state:",this.state.globName);
-        // if(this.state.globName){
-        //   //this.getMultiple();
-        //   console.log("globNmae");
-        //   //this.getMultiple();
-        //   console.log("after getmultiple");
-        // }
+        if(this.state.globName){
+          //this.getMultiple();
+          console.log("globNmae");
+          //this.getMultiple();
+          this.getprof();
+        }
       }
     } catch (error) {
       // Error retrieving data
@@ -316,7 +378,7 @@ export default class updatePro extends Component {
           DateOfProcedure:'',
       
           isLoading: false})
-        this.props.navigation.navigate('Cardio App'); 
+        this.props.navigation.navigate('Jayadeva Hrudaya Spandana'); 
           }
     }
 
@@ -554,17 +616,25 @@ export default class updatePro extends Component {
     }
 
   render() {
-    // if(this.state.isLoading){
-    //   return(
-    //     <View style={styles.preloader}>
-    //       <ActivityIndicator size="large" color="#9E9E9E"/>
-    //     </View>
-    //   )
-    // }    
+    if(this.state.lazyload){
+      return(
+        <View style={styles.preloader}>
+          <ActivityIndicator size="large" color="#9E9E9E"/>
+        </View>
+      )
+    }    
     const { date } = this.state;
     return (
       <ScrollView>
       <View style={styles.container}>  
+
+      <TextInput
+          style={styles.inputStyle}
+          placeholder="IP Number"
+          value={this.state.IPnum}
+          onChangeText={(val) => this.updateInputVal(val, 'IPnum')}
+        />
+
         <TextInput
           style={styles.inputStyle}
           placeholder="Name"
@@ -596,7 +666,7 @@ export default class updatePro extends Component {
   // style={{ height: 50,left:240,width:100 }}
   style={ styles.inputStyle2 }
   onValueChange={(itemValue, itemIndex) => this.setState({ Gender: itemValue })}>
-  <Picker.Item label="select Gender" value="" />
+  <Picker.Item label="Select Gender" value="" />
   <Picker.Item label="Male" value="Male" />
   <Picker.Item label="Female" value="Female" />
   <Picker.Item label="Other" value="Other" />
@@ -618,7 +688,7 @@ export default class updatePro extends Component {
   // style={{ height: 50,left:240,width:100 }}
   style={ styles.inputStyle2 }
   onValueChange={(itemValue, itemIndex) => this.setState({ Education: itemValue })}>
-  <Picker.Item label="select education" value="" />
+  <Picker.Item label="Select Education" value="" />
   <Picker.Item label="Not educated" value="Not educated" />
   <Picker.Item label="Primary" value="Primary" />
   <Picker.Item label="Secondary" value="Secondary" />

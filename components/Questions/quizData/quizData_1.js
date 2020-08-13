@@ -25,7 +25,7 @@ export const quizData_1 = [
     },
     {
       id: "4",
-      question: `Lack of physical activity`,
+      question: `Lack of Physical Activity`,
       options: [`Yes`, `No`],
       answer: `River Nile`
     },
@@ -37,7 +37,7 @@ export const quizData_1 = [
     },
     {
       id: "6",
-      question: `If female Post Menopausal`,
+      question: `If female, Post Menopausal`,
       options: [`Yes`, `No`],
       answer: `River Nile`
     },

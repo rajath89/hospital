@@ -563,7 +563,7 @@ getQues = () => {
           //if(this.state.isEnd){
           
           ToastAndroid.show('Questions are updated in db', ToastAndroid.SHORT);
-          this.props.navigation.navigate('Cardio App');
+          this.props.navigation.navigate('Jayadeva Hrudaya Spandana');
         //}
         }
         //this.getAllKeys();
@@ -638,7 +638,7 @@ this.setState({ isVisible2:!this.state.isVisible2})}>
 
       </Overlay> */}
 
-<Modal style={[styles.modal, styles.modal3]} position={"center"}  isOpen={this.state.isVisible2} ref={"modal3"}>
+<Modal style={[styles.modal, styles.modal3]} position={"center"}  isOpen={this.state.isVisible2} ref={"modal3"} backdropPressToClose={false}>
     <Text style={styles.header2}>{this.state.msg}</Text>
 
 
@@ -668,9 +668,9 @@ this.setState({ isVisible2:!this.state.isVisible2})}>
 
           </View>
 
-
+{/* 
           <Text>option clicked : {this.state.op} </Text>
-           <Text>Ques id :{df}</Text>
+           <Text>Ques id :{df}</Text> */}
            
         </View>
          )

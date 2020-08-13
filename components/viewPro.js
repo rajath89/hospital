@@ -98,7 +98,7 @@ getprof = () => {
   });
   const content = await rawResponse.json();
 
-  console.log(content.msg);
+  console.log(content);
   if(content.msg=="user not yet registerd"){
     this.setState({isLoading:false,ob:true})
       
@@ -135,6 +135,11 @@ getprof = () => {
             
             <Text style={{fontWeight:"bold",fontSize:18,left:120}}>Profile</Text>
           </View> */}
+
+<View style={styles.hairline} />
+           <Text style={styles.textViewContainer}>IP Number  :  {this.state.obj.IPnum}</Text>
+        
+
 
           <View style={styles.hairline} />
            <Text style={styles.textViewContainer}>Name  :  {this.state.obj.Name}</Text>

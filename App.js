@@ -26,6 +26,8 @@ import Medrisk from './components/ques/medrisk';
 import Medhist from './components/ques/medhist';
 import Treat from './components/ques/treat';
 
+import OneSignal from 'react-native-onesignal';
+
 import Global from './components/contexts/global';
 
 
@@ -87,7 +89,7 @@ console.log(store.getState());
         }
       />
       <Stack.Screen 
-       name="Cardio App" 
+       name="Jayadeva Hrudaya Spandana" 
        component={dashboardV2} 
        options={
          { headerLeft: null }
@@ -250,7 +252,7 @@ component={Medrisk}
 />
 
 <Stack.Screen 
-name="Medical History Symptoms" 
+name="Symptoms" 
 component={Medhist} 
 //  options={
 //    //{ title: 'Dashboard' },
@@ -334,8 +336,11 @@ component={DoctorComments}
 }
 
 export default function App() {
+  OneSignal.setLogLevel(6, 0);
+  console.log("from app.js###############")
   return (
   //theme={DarkTheme}
+  
  <Provider store={createStore(reducer)}>
 
     <NavigationContainer>

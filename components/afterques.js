@@ -218,7 +218,7 @@ subMit=()=>{
 
 
 ToastAndroid.show('Details are updated', ToastAndroid.SHORT);
-  this.props.navigation.navigate('Cardio App');
+  this.props.navigation.navigate('Jayadeva Hrudaya Spandana');
 }
 
 render() {
@@ -236,10 +236,10 @@ render() {
 
 <View style={styles.wrapper}>
 <View>
-                <Text>Input the BP Values:</Text>
+                <Text>Enter BP Values:</Text>
                 <View style={{flexDirection:"row"}}>
                     <View style={{flex:1}}>
-                        <TextInput placeholder="Systol" style={{justifyContent: 'flex-start',    borderColor: "#ccc",
+                        <TextInput placeholder="Systolic" style={{justifyContent: 'flex-start',    borderColor: "#ccc",
         borderStartWidth : 2,
         borderEndWidth : 3,
         borderTopWidth : 1,
@@ -249,7 +249,7 @@ render() {
                     </View>
                     
                     <View style={{flex:1,left:10}}>
-                        <TextInput placeholder="Diastol" style={{justifyContent: 'flex-end',    borderColor: "#ccc",
+                        <TextInput placeholder="Diastolic" style={{justifyContent: 'flex-end',    borderColor: "#ccc",
     borderStartWidth : 2,
     borderEndWidth : 3,
     borderTopWidth : 1,
