@@ -1,3 +1,5 @@
+//version 1.0.0
+
 import * as React from 'react';
 import { NavigationContainer ,DarkTheme} from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
