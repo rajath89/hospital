@@ -10,11 +10,33 @@ import { ToastAndroid } from 'react-native';
 import { Notifications} from 'expo';
 import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
+
+
+
+//new notification api
+
+// import Constants from 'expo-constants';
+// import * as Notifications from 'expo-notifications';
+// import * as Permissions from 'expo-permissions';
+
+
 import DateTimePicker from '@react-native-community/datetimepicker';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 
 import { Container, Header, Content, Form, Item, Icon } from 'native-base';
+
+
+
+
+//new notf api
+// Notifications.setNotificationHandler({
+//   handleNotification: async () => ({
+//     shouldShowAlert: true,
+//     shouldPlaySound: true,
+//     shouldSetBadge: false,
+//   }),
+// });
 
 export default class updatePro extends Component {
   
@@ -40,6 +62,7 @@ export default class updatePro extends Component {
       dateB:false,
       IPnum:null,
       lazyload:true,
+      tokenBool:false,
 
       
       DateOfProcedure:null,
@@ -112,7 +135,7 @@ export default class updatePro extends Component {
 
   componentDidMount() {
    this._retrieveData();
-   //this.registerForPushNotificationsAsync();
+   this.registerForPushNotificationsAsync();
    
 
 
@@ -164,20 +187,22 @@ export default class updatePro extends Component {
           this.setState({ expoPushToken: token });
           console.log(token);
           console.log(this.state.globName);
-          (async () => {
-            const rawResponse = await fetch('https://flask-app47.herokuapp.com/expo', {//exp://192.168.0.104:19000
-              method: 'POST',
-              headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({"username": this.state.globName,"expoToken":token})
-            });
-            const content = await rawResponse.json();
+          // (async () => {
+          //   const rawResponse = await fetch('https://flask-app47.herokuapp.com/expo', {//exp://192.168.0.104:19000
+          //     method: 'POST',
+          //     headers: {
+          //       'Accept': 'application/json',
+          //       'Content-Type': 'application/json'
+          //     },
+          //     body: JSON.stringify({"username": this.state.globName,"expoToken":token})
+          //   });
+          //   const content = await rawResponse.json();
           
-            console.log(this.state);
+          //   console.log(this.state);
 
-          })();
+          // })();
+
+
         }else{
              this.setState({ expoPushToken: "token not fetched" });
            }
@@ -223,6 +248,43 @@ export default class updatePro extends Component {
       });
     }
   };
+
+
+
+
+
+  //new notf api
+
+  // registerForPushNotificationsAsync2 = async () => {
+  //   let token;
+  //   if (Constants.isDevice) {
+  //     const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+  //     let finalStatus = existingStatus;
+  //     if (existingStatus !== 'granted') {
+  //       const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+  //       finalStatus = status;
+  //     }
+  //     if (finalStatus !== 'granted') {
+  //       alert('Failed to get push token for push notification!');
+  //       return;
+  //     }
+  //     token = (await Notifications.getExpoPushTokenAsync()).data;
+  //     console.log(token);
+  //   } else {
+  //     alert('Must use physical device for Push Notifications');
+  //   }
+  
+  //   if (Platform.OS === 'android') {
+  //     Notifications.setNotificationChannelAsync('default', {
+  //       name: 'default',
+  //       importance: Notifications.AndroidImportance.MAX,
+  //       vibrationPattern: [0, 250, 250, 250],
+  //       lightColor: '#FF231F7C',
+  //     });
+  //   }
+  
+  //   return token;
+  // }
 
 
 
@@ -615,6 +677,13 @@ export default class updatePro extends Component {
       }
     }
 
+
+
+
+    getToken=()=>{
+      this.setState({tokenBool:true});
+    }
+
   render() {
     if(this.state.lazyload){
       return(
@@ -767,6 +836,18 @@ export default class updatePro extends Component {
           title="Update"
           onPress={() => {this.upprof()}}
         />
+
+<View style={styles.hairline} />
+
+
+
+<Button
+          color="#3740FE"
+          title="get token"
+          onPress={() => {this.getToken()}}
+        />
+
+        {this.state.tokenBool&&<Text>token : {this.state.expoPushToken}</Text>}
 
 
 

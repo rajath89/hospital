@@ -26,6 +26,7 @@
     "expo-image-picker-multiple": "^1.1.5",
     "expo-media-library": "~8.1.0",
     "expo-multiple-media-imagepicker": "^1.2.1",
+    "expo-notifications": "~0.1.1",
     "expo-screen-orientation": "~1.0.0",
     "expo-web-browser": "^8.2.1",
     "firebase": "^7.14.3",
