@@ -187,20 +187,20 @@ export default class updatePro extends Component {
           this.setState({ expoPushToken: token });
           console.log(token);
           console.log(this.state.globName);
-          // (async () => {
-          //   const rawResponse = await fetch('https://flask-app47.herokuapp.com/expo', {//exp://192.168.0.104:19000
-          //     method: 'POST',
-          //     headers: {
-          //       'Accept': 'application/json',
-          //       'Content-Type': 'application/json'
-          //     },
-          //     body: JSON.stringify({"username": this.state.globName,"expoToken":token})
-          //   });
-          //   const content = await rawResponse.json();
+          (async () => {
+            const rawResponse = await fetch('https://flask-app47.herokuapp.com/expo', {//exp://192.168.0.104:19000
+              method: 'POST',
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({"username": this.state.globName,"expoToken":token})
+            });
+            const content = await rawResponse.json();
           
-          //   console.log(this.state);
+            console.log(this.state);
 
-          // })();
+          })();
 
 
         }else{
@@ -841,13 +841,13 @@ export default class updatePro extends Component {
 
 
 
-<Button
+{/* <Button
           color="#3740FE"
           title="get token"
           onPress={() => {this.getToken()}}
         />
 
-        {this.state.tokenBool&&<Text>token : {this.state.expoPushToken}</Text>}
+        {this.state.tokenBool&&<Text>token : {this.state.expoPushToken}</Text>} */}
 
 
 

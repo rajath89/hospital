@@ -50,6 +50,7 @@ import ForgotPassword from './components/forgotPasswd';
 import AboutDoctor from './components/doctorTeam';
 import Comments2 from './components/comments2';
 import DoctorComments from './components/doctorComments';
+import Diet from './components/learMaterials/diet';
 
 
 const store=createStore(reducer);
@@ -322,6 +323,16 @@ component={Comments2}
 <Stack.Screen 
 name="Doctor Comment" 
 component={DoctorComments} 
+//  options={
+//    //{ title: 'Dashboard' },
+//    {headerLeft: null} 
+//  }
+/>
+
+
+<Stack.Screen 
+name="Diet" 
+component={Diet} 
 //  options={
 //    //{ title: 'Dashboard' },
 //    {headerLeft: null} 

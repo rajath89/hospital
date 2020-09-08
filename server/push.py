@@ -50,5 +50,6 @@ def send_push_message(token, message, extra=None):
                 'push_response': exc.push_response._asdict(),
             })
         raise self.retry(exc=exc)
-
-send_push_message("ExponentPushToken[ZAQFeDGcbx9QaXOQihVpn5]","push message")
+#35PYYbFVUNBJDWbL8gJ9fu
+#ExponentPushToken[hICY_gPPoCK_ZkNsGVq-vW]
+send_push_message("ExponentPushToken[35PYYbFVUNBJDWbL8gJ9fu]","push message")

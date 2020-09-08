@@ -14,6 +14,7 @@ import { WebView } from 'react-native-webview';
 import {CheckBox} from "native-base";
 
 
+
  
 
 export default class Comments extends Component {
@@ -58,6 +59,11 @@ export default class Comments extends Component {
 />
         </View>
         <View style={styles.hairline} />
+
+
+
+
+
 
        
 

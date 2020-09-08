@@ -67,7 +67,8 @@
     "react-redux": "^7.2.1",
     "react-unstated": "0.0.3",
     "redux": "^4.0.5",
-    "rn-pdf-reader-js": "^3.1.0"
+    "rn-pdf-reader-js": "^3.1.0",
+    "expo-av": "~8.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",

@@ -212,6 +212,21 @@ onPress={() => this.props.navigation.navigate('Angioplasty')}
 />
  </View>
 
+ <View style={styles.hairline} />
+
+
+ <View style={styles.card}>
+ 
+ <Button
+
+title={this.state.kannada == false ? 'Diet' : 'ಆಹಾರ ಕ್ರಮ'} 
+type="clear"
+onPress={() => this.props.navigation.navigate('Diet')}
+/>
+ </View>
+
+
+
  
  
 
