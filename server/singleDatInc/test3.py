@@ -137,32 +137,7 @@ def send_push_message(token, message, extra=None):
             })
         raise self.retry(exc=exc)
         
-        
-def secondRun():
-	uname=pickdbLogin.getall()
-	if len(uname)!=0:
-		delItems=[]
-		print(type(uname))
-		for un in uname:
-			print(un)
-			locVal=pickdbLogin.get(un)
-			print(type(locVal))
-			for v in locVal:
-				#print(list(v))
-				print(locVal['nowdt'],locVal['future_date'])
-				nt_obj = datetime.strptime(locVal['nowdt'], "%Y-%m-%d %H:%M:%S")
-				ft_obj = datetime.strptime(locVal['future_date'], "%Y-%m-%d %H:%M:%S")
-			if nt_obj==ft_obj or ft_obj>nt_obj:
-				print("tok:  ",pickdb.get(un))
-				
-				send_push_message(pickdb.get(un),"push message")
-				delItems.append(un)
-				print(delItems)
-		if len(delItems)!=0:
-			print("hit")
-			for name in delItems:
-				pickdbLogin.rem(name)
-			pickdbLogin.dump()
+
 
 
 
@@ -170,45 +145,69 @@ def secRun():
 	user = db.child("users").get()
 	usrList=list(user.val()) # users
 
+	if pickdbDate.get("valRead")=="true":
 
-	if pickdbIndExpo.get("lenOfUsers")<len(usrList) or pickdbIndExpo.get("lenOfUsers")==False:
-		pickdbIndExpo.set("lenOfUsers",len(usrList))
-		pickdbIndExpo.dump()
+			for ele in pickdbDate.getall():
+				print(ele)
 
-		for usr in usrList:
-			if usr in pickdbIndExpo.getall():
-				continue
-			else:
-				try:
-					e=user.val()[usr]['ExpoToken']['expoToken']
-
-				
-					pickdbIndExpo.set(usr,e)
-				
-					pickdbIndExpo.dump()
-				except KeyError as ke:
-					pickdbIndExpo.set("lenOfUsers",len(usrList)-1)
-					pickdbIndExpo.dump()
-	if pickdbIndExpo.get("lenOfUsers")>0:
-		for i in range(20):
-			for ele in pickdbIndExpo.getall():
-				if ele=="lenOfUsers":
+				if ele=="valRead":
 					continue
-				print("sent notf to ",ele,i)
-				send_push_message(pickdbIndExpo.get(ele),"push message")
+
+				
+				nowstr=pickdbDate.get(ele)["origDate"]
+					
 
 
-	
-
-
+				nowstr2=pickdbDate.get(ele)["nextDate"].split(",")[0].split("-")
+				nowstr2i=pickdbDate.get(ele)["nextDate"].split(",")[1].split(":")
+				_1day=dt.timedelta(days=1)
+				#future_date=nowstr2+_1day
+					
+				
+				
+				nowdt2=dt.datetime(int(nowstr2[0]), int(nowstr2[1]), int(nowstr2[2]),int(nowstr2i[0]), int(nowstr2i[1]), int(nowstr2i[2]))
+				future_date=nowdt2+_1day
+				
+				print("orig",nowstr)
+				print("next date",future_date)
+				print("setting next date")
+				r=str(future_date)
+				res=r.replace(" ",",")
+				dc={}
+				dc["origDate"]=nowstr
+				dc["nextDate"]=res
+				pickdbDate.set(ele,dc)
+				pickdbDate.dump()
 		
 
-				
+
+	# if pickdbIndExpo.get("lenOfUsers")<len(usrList) or pickdbIndExpo.get("lenOfUsers")==False:
+	# 	pickdbIndExpo.set("lenOfUsers",len(usrList))
+	# 	pickdbIndExpo.dump()
+
+	# 	for usr in usrList:
+	# 		if usr in pickdbIndExpo.getall():
+	# 			continue
+	# 		else:
+	# 			try:
+	# 				e=user.val()[usr]['ExpoToken']['expoToken']
 
 				
-			
-        
-        
+	# 				pickdbIndExpo.set(usr,e)
+				
+	# 				pickdbIndExpo.dump()
+	# 			except KeyError as ke:
+	# 				pickdbIndExpo.set("lenOfUsers",len(usrList)-1)
+	# 				pickdbIndExpo.dump()
+	# if pickdbIndExpo.get("lenOfUsers")>0:
+	# 	for i in range(20):
+	# 		for ele in pickdbIndExpo.getall():
+	# 			if ele=="lenOfUsers":
+	# 				continue
+	# 			print("sent notf to ",ele,i)
+	# 			send_push_message(pickdbIndExpo.get(ele),"push message")
+
+
 def firstRun():
 	user = db.child("users").get()
 	usrList=list(user.val()) # users
@@ -230,7 +229,10 @@ def firstRun():
 					e=user.val()[usr]['ExpoToken']['expoToken']
 					l=user.val()[usr]['time']
 					pickdbExpo.set(usr,e)
-					pickdbDate.set(usr,l)
+					d={}
+					d["origDate"]=l
+					d["nextDate"]=l
+					pickdbDate.set(usr,d)
 					pickdbExpo.dump()
 					pickdbDate.dump()
 
@@ -238,11 +240,6 @@ def firstRun():
 					pickdbExpo.set("lenOfUsers",len(usrList)-1)
 					pickdbExpo.dump()
 
-		# print("sleep...........")
-		# time.sleep(60)
-
-	# elif pickdbExpo.get("lenOfUsers")==len(usrList):
-	# 	print("break")
 	i=0
 	if pickdbExpo.get("lenOfUsers")>0:
 		
@@ -253,107 +250,48 @@ def firstRun():
 			if ele=="valRead":
 				continue
 
-			if pickdbDate.get("valRead")==False:
-				nowstr=pickdbDate.get(ele).split(",")[0].split("-")
-				nowstr1=pickdbDate.get(ele).split(",")[1].split(":")
-				print(nowstr,nowstr1)
-				nowdt=dt.datetime(int(nowstr[0]), int(nowstr[1]), int(nowstr[2]),int(nowstr1[0]),int(nowstr1[1]),int(nowstr1[2]))
-				_30days=dt.timedelta(days=30)
-				_10mins=dt.timedelta(minutes=10)
-				#future_date=nowdt+_30days
-				future_date=nowdt+_10mins
+			
+			nowstr=pickdbDate.get(ele)["origDate"].split(",")[0].split("-")
+			#nowstr_2i=pickdbDate.get(ele)["origDate"].split(",")[1].split(":")
+				
 
-				nowRealDt = dt.datetime.now()
-				print("nowDt",nowdt)
-				print("_10mFutured",future_date)
-			else:
-				nowstr=pickdbDate.get(ele).split(" ")[0].split("-")
-				nowstr1=pickdbDate.get(ele).split(" ")[1].split(":")
-				print(nowstr,nowstr1)
-				nowdt=dt.datetime(int(nowstr[0]), int(nowstr[1]), int(nowstr[2]),int(nowstr1[0]),int(nowstr1[1]),int(nowstr1[2]))
-				_30days=dt.timedelta(days=30)
-				_10mins=dt.timedelta(minutes=10)
-				#future_date=nowdt+_30days
-				future_date=nowdt+_10mins
 
-				nowRealDt = dt.datetime.now()
-				print("nowDt",nowdt)
-				print("_10mFutured",future_date)
+			nowstr2=pickdbDate.get(ele)["nextDate"].split(",")[0].split("-")
+			nowstr2i=pickdbDate.get(ele)["nextDate"].split(",")[1].split(":")
+				
+			print(nowstr,nowstr2)
+			nowdt=dt.datetime(int(nowstr[0]), int(nowstr[1]), int(nowstr[2]))
+			nowdt2=dt.datetime(int(nowstr2[0]), int(nowstr2[1]), int(nowstr2[2]))
+			t6=nowdt2-nowdt
+			d=str(t6).split(",")[0]
+			print("diff",nowdt2-nowdt)
+
+			if d=="30 days" or d=="31 days":
+				print("send notification")
+				nowdt2i_nextDate=dt.datetime(int(nowstr2[0]), int(nowstr2[1]), int(nowstr2[2]),int(nowstr2i[0]), int(nowstr2i[1]), int(nowstr2i[2]))
+				_str=str(nowdt2i_nextDate).replace(" ",",")
+				nxt_dc={}
+				nxt_dc["origDate"]=_str
+				nxt_dc["nextDate"]=_str
+				pickdbDate.set(ele,nxt_dc)
+
+
 
 		
 
 
-			if nowRealDt>future_date or nowRealDt==future_date:
-				print("send notification to ",ele)
-				#set future_date as nowdt
-				pickdbDate.set(ele,str(future_date)) 
-				#pickdbDate.set("valRead","true") 
-				pickdbDate.dump()
+
 
 		pickdbDate.set("valRead","true") 
 		pickdbDate.dump()
 
 		                    
 
-
-
-
-
-
-			# fs=str(future_date).split(" ")[0].split("-")
-
-			# print(nowdt,future_date)
-			# newFs=dt.datetime(int(fs[0]),int(fs[1]),int(fs[2]))
-			# newNowdt=dt.datetime(int(nowstr[0]),int(nowstr[1]),int(nowstr[2]))
-			
-
-			# if str(newFs-newNowdt).split(",")[0]=="30 days":
-			# 	print("send notification")
-			# 	send_push_message(pickdbExpo.get(ele),"push message")
-
-				#set future_date as nowdt
-				#pickdbDate.set(ele,str(future_date))  *************
-				#pickdbDate.dump()                      ***********
-		
-
-	
-
-
-        
-
-		
-		
-	# for ele in gloLog:
-	# 	print(ele[1])
-	# 	nowstr=ele[1][-1]['time'].split(" ")[0].split("-")
-	# 	nowstr1=ele[1][-1]['time'].split(" ")[1].split(":")
-	# 	print(nowstr1)
-	# 	nowdt=dt.datetime(int(nowstr[0]), int(nowstr[1]), int(nowstr[2]),int(nowstr1[0]),int(nowstr1[1]),int(nowstr1[2]))
-	# 	_30days=dt.timedelta(days=30)
-	# 	_seconds=dt.timedelta(seconds=1)
-	# 	future_date=nowdt+_seconds#_30days
-	# 	print(future_date)
-	# 	print(nowdt==future_date)
-	# 	if nowdt==future_date:
-	# 		print("tok:  ",pickdb.get(ele[0]))
-			
-	# 		send_push_message(pickdb.get(ele[0]),"push message")
-	# 	else:
-	# 		p={}
-	# 		f=[]
-	# 		p['nowdt']=str(nowdt)
-	# 		p['future_date']=str(future_date)
-	# 		f.append(p)
-			
-	# 		pickdbLogin.set(ele[0],p)
-	# 	#break
-	# pickdb.dump()
-	# pickdbLogin.dump()
 	
 
 if __name__ == '__main__':
-    scheduler.add_job(id ='Scheduled task', func = firstRun, trigger = 'interval', minutes = 3)
-    #scheduler.add_job(id ='Scheduled task2', func = secRun, trigger = 'interval', seconds = 15)
+    scheduler.add_job(id ='Scheduled task', func = firstRun, trigger = 'interval', seconds=30)
+    scheduler.add_job(id ='Scheduled task2', func = secRun, trigger = 'interval', seconds = 60)
     scheduler.start()
     app.run(host = '0.0.0.0', port = 8080)
 

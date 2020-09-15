@@ -11,6 +11,8 @@ import { Notifications} from 'expo';
 import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
 
+import * as Constant from '../const';
+
 
 
 //new notification api
@@ -79,7 +81,7 @@ export default class updatePro extends Component {
   getprof = () => {
 
     (async () => {
-    const rawResponse = await fetch('https://flask-app47.herokuapp.com/getProfile', {//exp://192.168.0.104:19000
+    const rawResponse = await fetch(Constant.API_URL+'getProfile', {//exp://192.168.0.104:19000
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -188,7 +190,7 @@ export default class updatePro extends Component {
           console.log(token);
           console.log(this.state.globName);
           (async () => {
-            const rawResponse = await fetch('https://flask-app47.herokuapp.com/expo', {//exp://192.168.0.104:19000
+            const rawResponse = await fetch(Constant.API_URL+'expo', {//exp://192.168.0.104:19000
               method: 'POST',
               headers: {
                 'Accept': 'application/json',
@@ -841,13 +843,13 @@ export default class updatePro extends Component {
 
 
 
-{/* <Button
+<Button
           color="#3740FE"
           title="get token"
           onPress={() => {this.getToken()}}
         />
 
-        {this.state.tokenBool&&<Text>token : {this.state.expoPushToken}</Text>} */}
+        {this.state.tokenBool&&<Text>token : {Constant.API_URL+'expo'}</Text>}
 
 
 

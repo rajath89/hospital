@@ -1,7 +1,12 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
+
+
+const Expo = require("expo-server-sdk").Expo;
+
+
 admin.initializeApp();
-// const fetch = require('node-fetch');
+const fetch = require('node-fetch');
 
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
@@ -43,33 +48,61 @@ exports.helloWorld = functions.https.onRequest((request, response) => {
       // const tokens = Object.keys(tokensSnapshot.val());
        //functions.logger.info("Hello tokens!", results);
 
-       var gloV="hi";
+//        var gloV="hi";
 
 
-             (async () => {
-const snapshott = await admin.database().ref('/tokens').once('value');
+//              (async () => {
+// const snapshott = await admin.database().ref('/tokens').once('value');
 
 
 
-if(snapshott!=null){
-	functions.logger.info("Hello tokens from async before json!", snapshott.toJSON());
-	response.send(snapshott.toJSON());
+// if(snapshott!=null){
+// 	functions.logger.info("Hello tokens from async before json!", snapshott.toJSON());
+// 	response.send(snapshott.toJSON());
 
-}
+// }
 
-functions.logger.info("Hello tokens from async after!", snapshott);
-gloV=snapshott.toJSON();
+// functions.logger.info("Hello tokens from async after!", snapshott);
+// gloV=snapshott.toJSON();
 
+// })();
+
+
+// functions.logger.info("glov",gloV);
+// Create a new Expo SDK client
+// let expo = new Expo();
+// var messages = [{
+//     to: "ExponentPushToken[kcPTFZO0Eu2sHhdq3A6Gf-]",
+//     sound: 'default',
+//     body: 'This is a test notification',
+//     data: { withSome: 'data' },
+//   }];
+
+// (async () => {
+//     let ticketChunk = await expo.sendPushNotificationsAsync(messages);
+//     functions.logger.info("TICKET_CHUNK", ticketChunk);
+//   })();
+
+
+//https://flask-app47.herokuapp.com/register
+//https://pubsub.googleapis.com/$discovery/rest?version=v1
+
+    (async () => {
+    const rawResponse = await fetch('https://flask-app47.herokuapp.com/test', {//exp://192.168.0.104:19000
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    });
+    const content = await rawResponse.json();
+    response.send(content);
 })();
-
-
-functions.logger.info("glov",gloV);
-
-
+  
 
   
 
-    // response.send("hi");
+ // response.send("hi");
 });
 
 

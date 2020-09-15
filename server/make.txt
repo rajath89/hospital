@@ -1,7 +1,7 @@
 [sudo] pip install pigar
 [sudo] pip install gunicorn
 
-run => pigar --> req.txt --> gunicorn==19.0.0
+run => pigar --> req.txt --> gunicorn==19.0.0 --> requests==2.11.1
 
 
 
