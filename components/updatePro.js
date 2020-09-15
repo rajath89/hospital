@@ -843,13 +843,13 @@ export default class updatePro extends Component {
 
 
 
-<Button
+{/* <Button
           color="#3740FE"
           title="get token"
           onPress={() => {this.getToken()}}
         />
 
-        {this.state.tokenBool&&<Text>token : {Constant.API_URL+'expo'}</Text>}
+        {this.state.tokenBool&&<Text>token : {Constant.API_URL+'expo'}</Text>} */}
 
 
 
